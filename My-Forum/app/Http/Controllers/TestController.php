@@ -8,6 +8,6 @@ class TestController extends Controller
 {
     //
     public function test(){
-        dd('测试数据123456789');
+        return view("test");
     }
 }

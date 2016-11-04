@@ -19,3 +19,6 @@ Route::get('/', function () {
 //Route::get('test/test', 'TestController@test')->name('test.test');
 
 Route::any('/test/test',['as'=>'test.test','uses'=>'TestController@test']);
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
