@@ -62,12 +62,15 @@
             <!-- 登入后的状态 -->
             <a class="avatar" href="../user/index.html">
                 <img src="http://tp4.sinaimg.cn/1345566427/180/5730976522/0">
-                <cite>贤心</cite>
-                <i>VIP2</i>
+                <cite>{{\Illuminate\Support\Facades\Auth::user()->name}}</cite>
+                <i>{{""}}</i>{{--这里输出加粗字体--}}
             </a>
             <div class="nav">
                 <a href="../user/set.html"><i class="iconfont icon-shezhi"></i>设置</a>
-                <a href=""><i class="iconfont icon-tuichu" style="top: 0; font-size: 22px;"></i>退了</a>
+                <a href="{{url('/logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="iconfont icon-tuichu" style="top: 0; font-size: 22px;"></i>退了</a>
+                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
             </div>
         </div>
         @endif
