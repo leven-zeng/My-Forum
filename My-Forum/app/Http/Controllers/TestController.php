@@ -9,7 +9,7 @@ class TestController extends Controller
     //
     public function test(){
         $test="123";
-        dd(phpinfo());
+        //dd(phpinfo());
         return view("test");
     }
 }
