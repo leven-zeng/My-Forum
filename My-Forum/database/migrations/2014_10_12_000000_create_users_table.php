@@ -16,16 +16,15 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('gender')->comment('0女 1男 ');
+            $table->integer('gender')->comment('0女 1男 ')->nullable();
             $table->string('email')->unique();
             $table->integer('isValiDataEmail')->default(0)->comment('是否验证邮箱 0未验证 1已验证');
             $table->string('password');
             $table->string('register_from')->default('web_form')->index()->comment('注册来源');
-            $table->string('profile_image')->nullable(true)->defautl('default.jpg')->comment('头像');
+            $table->string('profile_image')->nullable(true)->default('default.jpg')->comment('头像');
             $table->string('description')->nullable(true)->comment('一句简短的说明性文字，个性签名');
             $table->rememberToken();
             $table->timestamps();
-            $table->comment('用户表');
         });
     }
 

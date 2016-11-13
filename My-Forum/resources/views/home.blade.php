@@ -1,5 +1,8 @@
 @extends('layouts.head')
 
+
+<?php $user=Auth::user()  ?>
+
 @section('content')
 
     <div class="main layui-clear">
@@ -34,7 +37,7 @@
         <div class="edge">
             <div class="user-about">
                 <a href="set.html#avatar" title="修改头像">
-                    <img class="user-avatar" src="http://tp4.sinaimg.cn/1345566427/180/5730976522/0">
+                    <img class="user-avatar" src="images/{{Auth::user()->profile_image}}">
                 </a>
                 <p>
                     <span style="color:#333">{{Auth::user()->name}}</span>
@@ -42,14 +45,22 @@
                     <!-- <span style="color:#5FB878;">管理员</span> -->
                 </p>
                 <p>
-                    <span>加入时间：2016-10-26</span>
-        <span>
+                    <span>加入时间：{{date('Y-m-d',strtotime( Auth::user()->created_at))}}</span>
+        {{--<span>
           飞吻：<em style="color:#FF7200">5200</em>
-        </span>
+        </span>--}}
                 </p>
                 <p>
-                    <span>城市：杭州</span>
-                    <span>性别：男</span>
+                    <span>城市：未知</span>
+                    <span>性别：
+                        @if($user->gender==1)
+                            <span>男</span>
+                        @elseif($user->gender==2)
+                            <span>女</span>
+                        @else
+                            <span>未知</span>
+                        @endif</span>
+
                 </p>
 
                 <div class="user-looklog" style="padding-bottom:200px;">

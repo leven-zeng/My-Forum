@@ -61,7 +61,7 @@
         @else<div class="nav-user">
             <!-- 登入后的状态 -->
             <a class="avatar" href="../user/index.html">
-                <img src="http://tp4.sinaimg.cn/1345566427/180/5730976522/0">
+                <img src="images/{{Auth::user()->profile_image}}">
                 <cite>{{\Illuminate\Support\Facades\Auth::user()->name}}</cite>
                 <i>{{""}}</i>{{--这里输出加粗字体--}}
             </a>
