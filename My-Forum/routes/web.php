@@ -22,3 +22,9 @@ Route::any('/test/test',['as'=>'test.test','uses'=>'TestController@test']);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::any('/user',['as'=>'user.index','middleware'=>['auth'],'uses'=>'UserController@index']);
+
+Route::any('/user/set',['as'=>'user.set','middleware'=>['auth'],'uses'=>'UserController@set']);
+
+Route::post('/user/postset',['as'=>'user.postset','middleware'=>['auth'],'uses'=>'UserController@postset']);

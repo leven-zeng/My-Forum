@@ -1,6 +1,5 @@
 @extends('layouts.head')
 
-
 <?php $user=Auth::user()  ?>
 
 @section('content')
