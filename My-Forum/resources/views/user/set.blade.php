@@ -31,12 +31,12 @@
         <div class="layui-form-item">
           <label for="L_username" class="layui-form-label">昵称</label>
           <div class="layui-input-inline">
-            <input type="text" id="L_username" name="username" required="" lay-verify="required" autocomplete="off" value="{{$user->name}}" class="layui-input">
+            <input type="text" id="L_username" name="name" required="" lay-verify="required" autocomplete="off" value="{{$user->name}}" class="layui-input">
           </div>
           <div class="layui-inline">            
             <div class="layui-input-inline">              
-              <input type="radio" name="sex" value="1" {{$user->gender==1?"checked='checked'":""}} title="男"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>男</span></div>              
-              <input type="radio" name="sex" value="0" {{$user->gender==0?"checked='checked'":""}} title="女"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>            
+              <input type="radio" name="gender" value="1" {{$user->gender==1?"checked='checked'":""}} title="男"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>男</span></div>
+              <input type="radio" name="gender" value="0" {{$user->gender==0?"checked='checked'":""}} title="女"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
             </div>          
           </div>
         </div>

@@ -35,19 +35,30 @@ class UserController extends Controller
         return view('user.set');
     }
 
-    public function postset(){
+    public function postset(Request $request){
         //dd(Input::all());
-        $rules=array(
-            name=>'required|min:3',
-            email=>'required',
-            city=>'required',
-            gender=>'required'
-        );
 
-        $iputs=Input::all();
-        $validator=Validator::make($iputs,$rules);
 
-        if($validator->passes()){
+        $input=Input::all();
+        $v = Validator::make($input, [
+            'name'=>'required|min:3',
+            'email'=>'required|email',
+            'city'=>'required',
+            'gender'=>'required'
+        ]);
+
+        if ($v->fails())
+        {
+            return $v->errors()->all();
+        }
+
+/*        $this->validate($request, ['name'=>'required|min:3',
+            'email'=>'required|email',
+            'city'=>'required',
+            'gender'=>'required']);*/
+
+
+
             $user=User::find(Auth::user()->id);
             $user->name=Input::get('name');
             $user->gender=Input::get('gender');
@@ -58,12 +69,12 @@ class UserController extends Controller
                 $user->email=Input::get('email');
                 $user->isValiDataEmail=0;
             }
-        }
+
 
         if($user->save()){
-
+            return "success";
         }else{
-
+            return "error";
         }
     }
 }
