@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->integer('gender')->comment('0女 1男 ')->nullable();
             $table->string('email')->unique();
             $table->integer('isValiDataEmail')->default(0)->comment('是否验证邮箱 0未验证 1已验证');
+            $table->string('city',20)->nullable(true)->comment('城市');
             $table->string('password');
             $table->string('register_from')->default('web_form')->index()->comment('注册来源');
             $table->string('profile_image')->nullable(true)->default('default.jpg')->comment('头像');

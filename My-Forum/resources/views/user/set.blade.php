@@ -19,7 +19,7 @@
   
   <div class="user-mine">
     <div class="layui-form layui-form-pane mine-view" style="display: block;">
-      <form method="post" action="postset">
+      <form id="form_userinfo" method="post" action="postset">
         {{ csrf_field() }}
         <div class="layui-form-item">
           <label for="L_email" class="layui-form-label">邮箱</label>
@@ -43,13 +43,13 @@
         <div class="layui-form-item">
           <label for="L_city" class="layui-form-label">城市</label>
           <div class="layui-input-inline">
-            <input type="text" id="L_city" name="city" autocomplete="off" lay-verify="required" value="{{$user->city}}" class="layui-input">
+            <input type="text" id="L_city" name="city" autocomplete="off"  value="{{$user->city}}" class="layui-input">
           </div>
         </div>
         <div class="layui-form-item layui-form-text">
           <label for="L_sign" class="layui-form-label">签名</label>
           <div class="layui-input-block">
-            <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="sign" autocomplete="off" class="layui-textarea" style="height: 80px;"></textarea>
+            <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="description" autocomplete="off" class="layui-textarea" style="height: 80px;">{{$user->description}}</textarea>
           </div>
         </div>
         <div class="layui-form-item">
@@ -123,8 +123,8 @@
 
 @include('layouts.foot')
 <script src="../../res/layui/layui.js"></script>
-<script>
-layui.cache.page = 'user';
+<script type="text/javascript">
+layui.cache.page = '/res/mods/user';
 layui.cache.user = {
   username: '游客'
   ,uid: -1
@@ -134,9 +134,40 @@ layui.cache.user = {
 };
 layui.config({
   version: "1.0.0"
-  ,base: '../../res/mods/'
+//  ,base: '../../res/mods/'
 }).extend({
-  fly: 'index'
+  fly: '/res/mods/index',
 }).use('fly');
+
+
+
+    /*$(function(){
+      $("#form_userinfo").submit(function(){
+        var postData=new FormData("#form_userinfo");
+        console.log(postData);
+
+        $.ajax({
+          type: "POST",
+          url: "{{ url('postset') }}",
+          dataType: 'json',
+          processData: false,
+          contentType: false,
+          cache: false,
+          data: articleData
+        })
+                .done(function (data) {
+                  $(".alert-success").prop("hidden", false);
+                })
+                .fail(function (data) {
+                  $.each(data.responseJSON, function (key, value) {
+                    var input = '#formArticle input[name=' + key + ']';
+                    $(input + '+span>strong').text(value);
+                    $(input).parent().parent().addClass('has-error');
+                  });
+
+      });
+
+      });
+    });*/
 </script>
 @endsection

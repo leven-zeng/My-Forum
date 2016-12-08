@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Psy\Util\Json;
 
 
 class UserController extends Controller
@@ -37,19 +39,23 @@ class UserController extends Controller
 
     public function postset(Request $request){
         //dd(Input::all());
-
-
         $input=Input::all();
         $v = Validator::make($input, [
             'name'=>'required|min:3',
             'email'=>'required|email',
-            'city'=>'required',
+            'city'=>'required|max:20',
             'gender'=>'required'
+        ],[],[
+            'name'=>'昵称',
+            'email'=>'邮箱',
+            'city'=>'城市',
+            'gender'=>'性别'
         ]);
 
         if ($v->fails())
         {
-            return $v->errors()->all();
+//            return response()->json(['status' => '500', 'msg' =>$v->errors()->first()]);
+        return    $this->getJsonString('500',$v->errors()->first());
         }
 
 /*        $this->validate($request, ['name'=>'required|min:3',
@@ -72,9 +78,11 @@ class UserController extends Controller
 
 
         if($user->save()){
-            return "success";
+//            return "success";
+        return    $this->getJsonString('0','保存成功');
         }else{
-            return "error";
+//            return "error";
+        return    $this->getJsonString('500',$v->errors()->first());
         }
     }
 }
