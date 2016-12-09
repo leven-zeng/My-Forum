@@ -27,4 +27,6 @@ Route::any('/user',['as'=>'user.index','middleware'=>['auth'],'uses'=>'UserContr
 
 Route::any('/user/set',['as'=>'user.set','middleware'=>['auth'],'uses'=>'UserController@set']);
 
-Route::post('/user/postset',['as'=>'user.postset','middleware'=>['auth'],'uses'=>'UserController@postset']);
+Route::post('/user/set',['as'=>'user.postset','middleware'=>['auth'],'uses'=>'UserController@postset']);
+
+Route::post('/user/upload',['as'=>'user.upload','middleware'=>['auth'],'uses'=>'UserController@upload']);

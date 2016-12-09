@@ -40,6 +40,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
       var that = this;
       options = options || {};
       data = data || {};
+      console.log(data);
       return $.ajax({
         type: options.type || 'post',
         dataType: options.dataType || 'json',

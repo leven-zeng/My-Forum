@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    {{--<link href="/css/app.css" rel="stylesheet">--}}
     <link rel="stylesheet" href="../res/layui/css/layui.css">
     <link rel="stylesheet" href="../res/css/global.css">
 
@@ -61,7 +61,7 @@
         @else<div class="nav-user">
             <!-- 登入后的状态 -->
             <a class="avatar" href="../user/index.html">
-                <img src="/images/{{Auth::user()->profile_image}}">
+                <img src="/images/userimages/{{Auth::user()->profile_image}}">
                 <cite>{{\Illuminate\Support\Facades\Auth::user()->name}}</cite>
                 <i>{{""}}</i>{{--这里输出加粗字体--}}
             </a>

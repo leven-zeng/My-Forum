@@ -19,7 +19,7 @@
   
   <div class="user-mine">
     <div class="layui-form layui-form-pane mine-view" style="display: block;">
-      <form id="form_userinfo" method="post" action="postset">
+      <form method="post">
         {{ csrf_field() }}
         <div class="layui-form-item">
           <label for="L_email" class="layui-form-label">邮箱</label>
@@ -61,17 +61,18 @@
         <div class="layui-form-item">
           <div class="avatar-add">
             <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过30KB</p>
+            {!! csrf_field() !!}
             <div class="upload-img">
               <div class="layui-box layui-upload-button"><form target="layui-upload-iframe" method="post" key="set-mine" enctype="multipart/form-data" action="/user/upload/"><input type="file" name="file" id="LAY-file" lay-title="上传头像"></form><span class="layui-upload-icon"><i class="layui-icon"></i>上传头像</span></div>
             </div>
-            <img src="http://tp4.sinaimg.cn/1345566427/180/5730976522/0">
+            <img src="/images/userimages/{{$user->profile_image}}">
             <span class="loading"></span>
           </div>
         </div>
       </div>
-      
+
       <div class="layui-form layui-form-pane mine-view" style="display: none;">
-        
+        {!! csrf_field() !!}
           <div class="layui-form-item">
             <label for="L_nowpass" class="layui-form-label">当前密码</label>
             <div class="layui-input-inline">
