@@ -30,3 +30,7 @@ Route::any('/user/set',['as'=>'user.set','middleware'=>['auth'],'uses'=>'UserCon
 Route::post('/user/set',['as'=>'user.postset','middleware'=>['auth'],'uses'=>'UserController@postset']);
 
 Route::post('/user/upload',['as'=>'user.upload','middleware'=>['auth'],'uses'=>'UserController@upload']);
+
+//Route::any('/forum',['as'=>'forum.index','uses'=>'ForumController@index']);
+
+Route::get('/forum',['as'=>'forum.index','uses'=> 'ForumController@index']);
