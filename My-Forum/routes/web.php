@@ -34,3 +34,5 @@ Route::post('/user/upload',['as'=>'user.upload','middleware'=>['auth'],'uses'=>'
 //Route::any('/forum',['as'=>'forum.index','uses'=>'ForumController@index']);
 
 Route::get('/forum',['as'=>'forum.index','uses'=> 'ForumController@index']);
+
+Route::any('forum/detail',['as'=>'forum.detail','uses'=>'ForumController@detail']);

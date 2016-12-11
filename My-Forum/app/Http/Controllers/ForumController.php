@@ -23,4 +23,13 @@ class ForumController extends Controller
         //dd($articles);
         return view('forum.index',['articles'=>$articles]);
     }
+
+    public function detail(Request $request)
+    {
+        $article=  Articles::where('aid',$request->get('aid'))
+            ->leftjoin('users','articles.userid','=','users.id')
+            ->select('articles.*','users.profile_image','users.name')
+            ->first();
+        return view('forum.detail',['article'=>$article]);
+    }
 }
