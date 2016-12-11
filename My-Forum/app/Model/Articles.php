@@ -27,10 +27,13 @@ class Articles extends Model
 
     public function isCurrUser()
     {
+        if(Auth::check())
+        {
         $user=Auth::user();
         if($this->userid==$user->id)
         {
             return true;
+        }
         }
         return false;
     }
