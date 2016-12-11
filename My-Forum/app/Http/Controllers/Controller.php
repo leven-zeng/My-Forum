@@ -12,13 +12,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function formatValidationErrors(Validator $validator)
+    protected function getJsonString($status,$msg,$src,$title)
     {
-        return $validator->errors()->all();
-    }
-
-    protected function getJsonString($status,$msg)
-    {
-        return response()->json(['status'=>$status,'msg'=>$msg]);
+        return response()->json(['status'=>$status,'msg'=>$msg,'data'=>['src'=>$src,'title'=>$title]]);
     }
 }

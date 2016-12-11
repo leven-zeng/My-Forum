@@ -35,4 +35,10 @@ Route::post('/user/upload',['as'=>'user.upload','middleware'=>['auth'],'uses'=>'
 
 Route::get('/forum',['as'=>'forum.index','uses'=> 'ForumController@index']);
 
-Route::any('forum/detail',['as'=>'forum.detail','uses'=>'ForumController@detail']);
+Route::any('/forum/detail',['as'=>'forum.detail','uses'=>'ForumController@detail']);
+
+Route::any('/forum/add/',['as'=>'forum.add','uses'=>'ForumController@add']);
+
+Route::post('/forum/add/',['as'=>'forum.add','uses'=>'ForumController@postadd']);
+
+Route::post('/forum/upload/',['as'=>'forum.upload','uses'=>'ForumController@upload']);

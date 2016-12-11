@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Article\PermissionFormRequest;
 use App\Model\Articles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 class ForumController extends Controller
 {
@@ -31,5 +35,54 @@ class ForumController extends Controller
             ->select('articles.*','users.profile_image','users.name')
             ->first();
         return view('forum.detail',['article'=>$article]);
+    }
+
+    public function add()
+    {
+        return view('forum.add');
+    }
+
+    public function postadd(Request $request)
+    {
+        $input=Input::all();
+        $v=Validator::make($input,
+        [
+            'title'=>'required|max:30',
+            'content'=>'required'
+        ],[],[
+                'title'=>'标题',
+                'content'=>'内容',
+            ]);
+
+        if ($v->fails())
+        {
+            return    $this->getJsonString('500',$v->errors()->first(),'','');
+        }
+
+    $article=    Articles::create([
+            'userid'=>Auth::user()->id,
+            'title'=>$request->get('title'),
+            'content'=>$request->get('content'),
+            'reward'=>$request->get('reward'),
+            'tagid'=>$request->get('tagid')
+        ]);
+
+        return    $this->getJsonString('0','保存成功,即将为你跳转','',$article->id);
+
+    }
+
+
+    public function upload(Request $request)
+    {
+        if($request->hasFile('file'))
+        {
+            $images=$request->file('file'); //使用laravel 自带的request类来获取一下文件.
+            $extension=$images->getClientOriginalExtension();//获取扩展名
+            $newImageName=md5(time().random_int(5,5)).'.'.$extension;
+            $images->move('images/userimages/',$newImageName);
+            return response()->json(['code'=>'0','msg'=>'','data'=>['src'=>'/images/userimages/'.$newImageName,'title'=>$newImageName]]);
+
+        }
+        return response()->json(['code'=>'500','msg'=>'','data'=>['src'=>'/images/userimages/','title'=>'']]);
     }
 }

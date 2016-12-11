@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 class Articles extends Model
 {
+    protected $fillable = [
+        'userid', 'title', 'content','reward','status','isgood','tagid'
+    ];
     //
     public function getprofile_image()
     {

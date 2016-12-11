@@ -55,7 +55,7 @@ $article=$article;
             </div>
 
             <div class="detail-body photos" style="margin-bottom: 20px;">
-                {{$article->content}}
+                {!! $article->content !!}
             </div>
 
             <a name="comment"></a>
