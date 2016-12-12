@@ -62,10 +62,10 @@ class UserController extends Controller
             Auth::user()->profile_image=$newImageName;
             if(Auth::user()->save())
             {
-                return $this->getJsonString('0','头像上传完成');
+                return $this->getJsonString('0','头像上传完成','images/userimages/',$newImageName);
             }
         }
-        return $this->getJsonString('500','头像不知道为什么丢了，再试一次吧');
+        return $this->getJsonString('500','头像不知道为什么丢了，再试一次吧','images/userimages/','');
     }
 
 
@@ -86,7 +86,7 @@ class UserController extends Controller
 
         if ($v->fails())
         {
-            return    $this->getJsonString('500',$v->errors()->first());
+            return    $this->getJsonString('500',$v->errors()->first(),'','');
         }
 
         $user=User::find(Auth::user()->id);
@@ -101,9 +101,9 @@ class UserController extends Controller
         }
 
         if($user->save()){
-            return    $this->getJsonString('0','保存成功');
+            return    $this->getJsonString('0','保存成功','','');
         }else{
-            return    $this->getJsonString('500',$v->errors()->first());
+            return    $this->getJsonString('500',$v->errors()->first(),'','');
         }
     }
 
@@ -121,27 +121,27 @@ class UserController extends Controller
 
         if($v->fails())
         {
-            return $this->getJsonString('500',$v->errors()->first());
+            return $this->getJsonString('500',$v->errors()->first(),'','');
         }
 
         if(Input::get('pass')<>Input::get('repass'))
         {
-            return $this->getJsonString('500','新密码必须一致');
+            return $this->getJsonString('500','新密码必须一致','','');
         }
         $user=Auth::user();
         $nowPass=Input::get('nowpass');
         $newPass=Input::get('pass');
         if(!Hash::check($nowPass,$user->password))
         {
-            return $this->getJsonString('500','当前密码错误');
+            return $this->getJsonString('500','当前密码错误','','');
         }
         $user->password=bcrypt($newPass);
         if($user->save())
         {
-            return $this->getJsonString('0','密码已更新');
+            return $this->getJsonString('0','密码已更新','','');
         }else
         {
-            return $this->getJsonString('6','更新未完成');
+            return $this->getJsonString('6','更新未完成','','');
         }
     }
 }

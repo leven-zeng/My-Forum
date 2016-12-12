@@ -27,7 +27,7 @@
     <div class="main">
         <a class="logo" href="/" title="Fly">zlove社区</a>
         <div class="nav">
-            <a class="nav-this" href="index.html">
+            <a class="nav-this" href="{{route('forum.index')}}">
                 <i class="iconfont icon-wenda"></i>问答
             </a>
             <a href="http://www.layui.com/" target="_blank">
@@ -60,7 +60,7 @@
         </div>
         @else<div class="nav-user">
             <!-- 登入后的状态 -->
-            <a class="avatar" href="../user/index.html">
+            <a class="avatar" href="{{url('/home')}}">
                 <img src="/images/userimages/{{Auth::user()->profile_image}}">
                 <cite>{{\Illuminate\Support\Facades\Auth::user()->name}}</cite>
                 <i>{{""}}</i>{{--这里输出加粗字体--}}

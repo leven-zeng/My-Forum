@@ -35,8 +35,8 @@
 
         <div class="edge">
             <div class="user-about">
-                <a href="set.html#avatar" title="修改头像">
-                    <img class="user-avatar" src="images/{{Auth::user()->profile_image}}">
+                <a href="{{url('user/set#avatar')}}" title="修改头像">
+                    <img class="user-avatar" src="images/userimages/{{Auth::user()->profile_image}}">
                 </a>
                 <p>
                     <span style="color:#333">{{Auth::user()->name}}</span>
@@ -50,7 +50,7 @@
         </span>--}}
                 </p>
                 <p>
-                    <span>城市：未知</span>
+                    <span>城市：{{$user->city}}</span>
                     <span>性别：
                         @if($user->gender==1)
                             <span>男</span>
