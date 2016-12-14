@@ -14,7 +14,7 @@ class CreateCommentTable extends Migration
     public function up()
     {
         //
-        Schema::create("comment",function(Blueprint $table){
+        Schema::create("comments",function(Blueprint $table){
             $table->increments('ID')->comment('ID');
             $table->integer('articleID')->comment('所评论的文章ID');
             $table->integer('userID')->comment('评论用户ID');
@@ -22,7 +22,7 @@ class CreateCommentTable extends Migration
             $table->integer('forUserID')->default(0)->comment('回复某用户的评论 形式如 @某人');
             $table->integer('status')->default('0')->comment('状态 0正常 1删除');
             $table->integer('likeNum')->default(0)->comment('点赞数');
-
+            $table->timestamps();
         });
     }
 

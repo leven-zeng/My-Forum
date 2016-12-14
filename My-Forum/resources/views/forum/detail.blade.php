@@ -126,17 +126,22 @@ $article=$article;
             </ul>
 
             <div class="layui-form layui-form-pane">
-                <form action="/jie/reply/" method="post">
+                <form>
+                    {!! csrf_field() !!}
                     <div class="layui-form-item layui-form-text">
                         <div class="layui-input-block">
-                            <textarea id="L_content" name="content" required="" lay-verify="required" placeholder="我要回答'" class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+                            {{--<textarea id="L_content" name="content" required="" lay-verify="required" placeholder="我要回答'" class="layui-textarea fly-editor" style="height: 150px;"></textarea>--}}
+                            <textarea class="layui-textarea" id="LAY_demo1" style="display: none"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <input type="hidden" name="jid" value="">
-                        <button class="layui-btn" lay-filter="*" lay-submit="">提交回答</button>
+
                     </div>
+                    <input type="hidden" id="content" value="" name="content">
+                    <input type="hidden" id="articleID" name="articleID" value="{{$article->aid}}">
                 </form>
+                <button class="layui-btn" lay-filter="*" lay-submit="" onclick="return postcomment();">提交回答</button>
             </div>
 
         </div>
@@ -149,75 +154,70 @@ $article=$article;
                 <a href=" ">Layui 官网 在线演示页面 全面增加 查看代码 功能</a>
                 <span><i class="iconfont"></i> 6087</span>
             </li>
-            <li>
-                <a href=" ">Java实现LayIM后端的核心代码</a>
-                <span><i class="iconfont"></i> 767</span>
-            </li>
-            <li>
-                <a href=" ">Layui 官网 在线演示页面 全面增加 查看代码 功能</a>
-                <span><i class="iconfont"></i> 767</span>
-            </li>
-            <li>
-                <a href=" ">Layui 官网 在线演示页面 全面增加 查看代码 功能</a>
-                <span><i class="iconfont"></i> 767</span>
-            </li>
-            <li>
-                <a href=" ">Layui 官网 在线演示页面 全面增加 查看代码 功能</a>
-                <span><i class="iconfont"></i> 767</span>
-            </li>
-            <li>
-                <a href=" ">Layui 官网 在线演示页面 全面增加 查看代码 功能</a>
-                <span><i class="iconfont"></i> 767</span>
-            </li>
-            <li>
-                <a href=" ">Layui 官网 在线演示页面 全面增加 查看代码 功能</a>
-                <span><i class="iconfont"></i> 767</span>
-            </li>
-            <li>
-                <a href=" ">Layui 官网 在线演示页面 全面增加 查看代码 功能</a>
-                <span><i class="iconfont"></i> 767</span>
-            </li>
         </ol>
-
         <h3 class="page-title">近期热议</h3>
         <ol class="fly-list-one">
             <li>
                 <a href=" ">盛赞！大赞狂赞！Layui完美兼容Vue.js</a>
                 <span><i class="iconfont"></i> 96</span>
             </li>
-            <li>
-                <a href=" ">盛赞！大赞狂赞！Layui完美兼容Vue.js</a>
-                <span><i class="iconfont"></i> 96</span>
-            </li>
-            <li>
-                <a href=" ">盛赞！大赞狂赞！Layui完美兼容Vue.js</a>
-                <span><i class="iconfont"></i> 96</span>
-            </li>
-            <li>
-                <a href=" ">盛赞！大赞狂赞！Layui完美兼容Vue.js</a>
-                <span><i class="iconfont"></i> 96</span>
-            </li>
-            <li>
-                <a href=" ">盛赞！大赞狂赞！Layui完美兼容Vue.js</a>
-                <span><i class="iconfont"></i> 96</span>
-            </li>
-            <li>
-                <a href=" ">盛赞！大赞狂赞！Layui完美兼容Vue.js</a>
-                <span><i class="iconfont"></i> 96</span>
-            </li>
-            <li>
-                <a href=" ">Java实现LayIM后端的核心代码</a>
-                <span><i class="iconfont"></i> 96</span>
-            </li>
-            <li>
-                <a href=" ">Java实现LayIM后端的核心代码</a>
-                <span><i class="iconfont"></i> 96</span>
-            </li>
         </ol>
 
     </div>
 </div>
-
     @include('layouts.foot')
+<script src="../../res/layui/layui.js"></script>
+<script>
+    var layedit;
+    var index;
+    layui.use('layedit', function(){
+        layedit = layui.layedit
+                ,$ = layui.jquery;
+
+        //自定义工具栏
+        index= layedit.build('LAY_demo1', {
+         tool: ['face','image', 'link', 'unlink', 'left', 'center', 'right']
+             ,uploadImage: {
+                 url: '{{route('forum.upload')}}' //接口url
+                 ,type: 'post' //默认post
+             }
+         ,height: 200
+         })
+    });
+
+    function postcomment(){
+
+        layer.load();
+        var content= layedit.getContent(index);
+        if(content.length<=0){
+            layer.msg('不允许空的回复', {shift: 6});
+            return false;
+        }
+        $('#content').val(content);
+
+        var data=$('form').serialize();
+        $.ajax({
+            type: 'post',
+            dataType:  'json',
+            data: data,
+            url: "{{route('forum.postcomment')}}",
+            success: function(res){
+                layer.closeAll('loading');
+                if(res.status === "0") {
+                    layer.msg(res.msg, {shift: 6},function(){
+
+                    });
+
+                } else {
+                    console.log(res);
+                    layer.msg(res.msg, {shift: 6});
+                }
+            }, error: function(e){
+                layer.closeAll('loading');
+                options.error || layer.msg('请求异常，请重试', {shift: 6});
+            }
+        });
+    }
+</script>
     @endsection
 

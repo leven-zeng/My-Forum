@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Comment;
 
 class ForumController extends Controller
 {
@@ -59,7 +60,7 @@ class ForumController extends Controller
             return    $this->getJsonString('500',$v->errors()->first(),'','');
         }
 
-    $article=    Articles::create([
+         $article=    Articles::create([
             'userid'=>Auth::user()->id,
             'title'=>$request->get('title'),
             'content'=>$request->get('content'),
@@ -71,7 +72,7 @@ class ForumController extends Controller
 
     }
 
-
+    //上传图片
     public function upload(Request $request)
     {
         if($request->hasFile('file'))
@@ -84,5 +85,36 @@ class ForumController extends Controller
 
         }
         return response()->json(['code'=>'500','msg'=>'','data'=>['src'=>'/images/userimages/','title'=>'']]);
+    }
+
+    //添加评论
+    public  function postcomment(Request $request)
+    {
+        if(Auth::check()==false)
+        {
+            return $this->getJsonString('500','请先登录','','');
+        }
+
+        $input=Input::all();
+        $v=Validator::make($input,
+            [
+                'articleID'=>'required',
+                'content'=>'required'
+            ],[],[
+                'content'=>'内容',
+            ]);
+
+        if ($v->fails())
+        {
+            return    $this->getJsonString('500',$v->errors()->first(),'','');
+        }
+
+        $comment=    \App\Model\Comments::create([
+            'userid'=>Auth::user()->id,
+            'articleID'=>$request->get('articleID'),
+            'content'=>$request->get('content')
+        ]);
+
+        return  $this->getJsonString('0','保存成功,即将为你跳转','',$comment->id);
     }
 }
