@@ -35,7 +35,16 @@ class ForumController extends Controller
             ->leftjoin('users','articles.userid','=','users.id')
             ->select('articles.*','users.profile_image','users.name')
             ->first();
-        return view('forum.detail',['article'=>$article]);
+
+        //读取评论
+        $comments = DB::table('comments as a')
+            ->leftjoin('articles', 'a.articleID', '=', 'articles.aid')
+            ->leftjoin('users','a.userID','=','users.id')
+            ->select('a.*','users.name','users.profile_image')
+            ->orderBy('a.ID','desc')
+            ->paginate(1);
+
+        return view('forum.detail',['article'=>$article,'comments'=>$comments]);
     }
 
     public function add()
@@ -115,6 +124,6 @@ class ForumController extends Controller
             'content'=>$request->get('content')
         ]);
 
-        return  $this->getJsonString('0','保存成功,即将为你跳转','',$comment->id);
+        return  $this->getJsonString('0','提交回答已完成','',$comment->id);
     }
 }

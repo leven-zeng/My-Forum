@@ -62,13 +62,14 @@ $article=$article;
             <h2 class="page-title">热忱回答<span>（<em id="jiedaCount">18</em>）</span></h2>
 
             <ul class="jieda photos" id="jieda">
+                @foreach($comments as $comment)
                 <li data-id="12" class="jieda-daan">
                     <a name="item-121212121212"></a>
                     <div class="detail-about detail-about-reply">
                         <a class="jie-user" href="">
-                            <img src="../../res/images/avatar/default.png" alt="" layer-index="1">
+                            <img src="/images/userimages/{{$comment->profile_image}}" alt="" layer-index="1">
                             <cite>
-                                <i>纸飞机</i>
+                                <i>{{$comment->name}}</i>
                                 <!-- <em>(楼主)</em>
                                 <em style="color:#5FB878">(管理员)</em>
                                 <em style="color:#FF9E3F">（活雷锋）</em>
@@ -78,10 +79,10 @@ $article=$article;
                         <div class="detail-hits">
                             <span>3分钟前</span>
                         </div>
-                        <i class="iconfont icon-caina" title="最佳答案"></i>
+                        {{--<i class="iconfont icon-caina" title="最佳答案"></i>--}}
                     </div>
                     <div class="detail-body jieda-body">
-                        <p>么么哒</p>
+                        <p>{!! $comment->content !!}</p>
                     </div>
                     <div class="jieda-reply">
                         <span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>
@@ -93,38 +94,10 @@ $article=$article;
                         </div> -->
                     </div>
                 </li>
-
-                <li data-id="13">
-                    <a name="item-121212121212"></a>
-                    <div class="detail-about detail-about-reply">
-                        <a class="jie-user" href="">
-                            <img src="../../res/images/avatar/default.png" alt="" layer-index="2">
-                            <cite>
-                                <i>香菇</i>
-                                <em style="color:#FF9E3F">活雷锋</em>
-                            </cite>
-                        </a>
-                        <div class="detail-hits">
-                            <span>刚刚</span>
-                        </div>
-                    </div>
-                    <div class="detail-body jieda-body">
-                        <p>蓝瘦</p>
-                    </div>
-                    <div class="jieda-reply">
-                        <span class="jieda-zan" type="zan"><i class="iconfont icon-zan"></i><em>0</em></span>
-                        <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
-                        <div class="jieda-admin">
-                            <span type="edit">编辑</span>
-                            <span type="del">删除</span>
-                            <span class="jieda-accept" type="accept">采纳</span>
-                        </div>
-                    </div>
-                </li>
-
+                @endforeach
                 <!-- <li class="fly-none">没有任何回答</li> -->
             </ul>
-
+            {!! $comments->render() !!}
             <div class="layui-form layui-form-pane">
                 <form>
                     {!! csrf_field() !!}
@@ -178,7 +151,7 @@ $article=$article;
         index= layedit.build('LAY_demo1', {
          tool: ['face','image', 'link', 'unlink', 'left', 'center', 'right']
              ,uploadImage: {
-                 url: '{{route('forum.upload')}}' //接口url
+                 url: '{{route('forum.upload')}}?_token='+$("input[name='_token']").val() //接口url
                  ,type: 'post' //默认post
              }
          ,height: 200
