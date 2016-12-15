@@ -56,6 +56,11 @@ class UserController extends Controller
         if($request->hasFile('file'))
         {
             $images=$request->file('file'); //使用laravel 自带的request类来获取一下文件.
+            $imgsize=    $images->getClientSize();
+            if($imgsize>150*1024)
+            {
+                return response()->json(['code'=>'500','msg'=>'图片不能大于150KB','data'=>'','title'=>'']);
+            }
             $extension=$images->getClientOriginalExtension();//获取扩展名
             $newImageName=md5(time().random_int(5,5)).'.'.$extension;
             $images->move('images/userimages/',$newImageName);

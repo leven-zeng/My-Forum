@@ -45,8 +45,9 @@ class ForumController extends Controller
             ->leftjoin('articles', 'a.articleID', '=', 'articles.aid')
             ->leftjoin('users','a.userID','=','users.id')
             ->select('a.*','users.name','users.profile_image')
+            ->where('a.ID',$request->get('aid'))
             ->orderBy('a.ID','desc')
-            ->paginate(1);
+            ->paginate(15);
 
         return view('forum.detail',['article'=>$article,'comments'=>$comments]);
     }
@@ -56,6 +57,7 @@ class ForumController extends Controller
         return view('forum.add');
     }
 
+    ///发布新的文字
     public function postadd(Request $request)
     {
         $input=Input::all();
@@ -91,12 +93,20 @@ class ForumController extends Controller
         if($request->hasFile('file'))
         {
             $images=$request->file('file'); //使用laravel 自带的request类来获取一下文件.
+            $imgsize=    $images->getClientSize();
+            if($imgsize>150*1024)
+            {
+                return response()->json(['code'=>'500','msg'=>'图片不能大于150KB','data'=>'','title'=>'']);
+            }
+
             $extension=$images->getClientOriginalExtension();//获取扩展名
             $newImageName=md5(time().random_int(5,5)).'.'.$extension;
             $images->move('images/userimages/',$newImageName);
+
             return response()->json(['code'=>'0','msg'=>'','data'=>['src'=>'/images/userimages/'.$newImageName,'title'=>$newImageName]]);
 
         }
+
         return response()->json(['code'=>'500','msg'=>'','data'=>['src'=>'/images/userimages/','title'=>'']]);
     }
 

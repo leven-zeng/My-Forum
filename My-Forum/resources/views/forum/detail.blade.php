@@ -62,8 +62,13 @@ $article=$article;
             <h2 class="page-title">热忱回答<span>（<em id="jiedaCount">18</em>）</span></h2>
 
             <ul class="jieda photos" id="jieda">
+                @if($comments->count()<=0)
+                    <li class="fly-none">没有任何回答</li>
+                @endif
+                {{--==============评论============================--}}
+
                 @foreach($comments as $comment)
-                <li data-id="12" class="jieda-daan">
+                <li data-id="{{$comment->ID}}" class="jieda-daan">
                     <a name="item-121212121212"></a>
                     <div class="detail-about detail-about-reply">
                         <a class="jie-user" href="">
@@ -95,9 +100,35 @@ $article=$article;
                     </div>
                 </li>
                 @endforeach
-                <!-- <li class="fly-none">没有任何回答</li> -->
+                {{--==============评论============================--}}
+
+                    <li data-id="" id="temp_li_comment" class="jieda-daan" style="display: none">
+                        <a name="item-121212121212"></a>
+                        <div class="detail-about detail-about-reply">
+                            <a class="jie-user" href="">
+                                <img src="" alt="" layer-index="1">
+                                <cite>
+                                    <i>名字</i>
+                                </cite>
+                            </a>
+                            <div class="detail-hits">
+                                <span>刚刚</span>
+                            </div>
+                        </div>
+                        <div class="detail-body jieda-body">
+                            <p>评论的内容</p>
+                        </div>
+                        <div class="jieda-reply">
+                            <span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>
+                            <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
+                            <div class="jieda-admin">
+                              <span type="edit">编辑</span>
+                              <span type="del">删除</span>
+                            </div>
+                        </div>
+                    </li>
             </ul>
-            {!! $comments->render() !!}
+            {!! $comments->appends(['aid'=>$article->aid])->render() !!}
             <div class="layui-form layui-form-pane">
                 <form>
                     {!! csrf_field() !!}
@@ -159,9 +190,14 @@ $article=$article;
     });
 
     function postcomment(){
-
-        layer.load();
         var content= layedit.getContent(index);
+        var comment_li=$("#temp_li_comment").clone();
+        comment_li.find('.jieda-body p').html(content);
+        comment_li.attr('id','').css('display','block');
+        $('#jieda').append(comment_li);
+        return;
+        layer.load();
+
         if(content.length<=0){
             layer.msg('不允许空的回复', {shift: 6});
             return false;
