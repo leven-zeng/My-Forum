@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Comment;
 
 class ForumController extends Controller
 {
@@ -35,9 +36,19 @@ class ForumController extends Controller
             ->select('articles.*','users.profile_image','users.name')
             ->first();
 
+
         $article->clicknum++;
         $article->save();
-        return view('forum.detail',['article'=>$article]);
+
+        //读取评论
+        $comments = DB::table('comments as a')
+            ->leftjoin('articles', 'a.articleID', '=', 'articles.aid')
+            ->leftjoin('users','a.userID','=','users.id')
+            ->select('a.*','users.name','users.profile_image')
+            ->orderBy('a.ID','desc')
+            ->paginate(1);
+
+        return view('forum.detail',['article'=>$article,'comments'=>$comments]);
     }
 
     public function add()
@@ -62,7 +73,7 @@ class ForumController extends Controller
             return    $this->getJsonString('500',$v->errors()->first(),'','');
         }
 
-    $article=    Articles::create([
+         $article=    Articles::create([
             'userid'=>Auth::user()->id,
             'title'=>$request->get('title'),
             'content'=>$request->get('content'),
@@ -74,7 +85,7 @@ class ForumController extends Controller
 
     }
 
-
+    //上传图片
     public function upload(Request $request)
     {
         if($request->hasFile('file'))
@@ -87,5 +98,36 @@ class ForumController extends Controller
 
         }
         return response()->json(['code'=>'500','msg'=>'','data'=>['src'=>'/images/userimages/','title'=>'']]);
+    }
+
+    //添加评论
+    public  function postcomment(Request $request)
+    {
+        if(Auth::check()==false)
+        {
+            return $this->getJsonString('500','请先登录','','');
+        }
+
+        $input=Input::all();
+        $v=Validator::make($input,
+            [
+                'articleID'=>'required',
+                'content'=>'required'
+            ],[],[
+                'content'=>'内容',
+            ]);
+
+        if ($v->fails())
+        {
+            return    $this->getJsonString('500',$v->errors()->first(),'','');
+        }
+
+        $comment=    \App\Model\Comments::create([
+            'userid'=>Auth::user()->id,
+            'articleID'=>$request->get('articleID'),
+            'content'=>$request->get('content')
+        ]);
+
+        return  $this->getJsonString('0','提交回答已完成','',$comment->id);
     }
 }
