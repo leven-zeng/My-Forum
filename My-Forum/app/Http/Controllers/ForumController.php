@@ -83,7 +83,7 @@ class ForumController extends Controller
             'tagid'=>$request->get('tagid')
         ]);
 
-        return    $this->getJsonString('0','保存成功,即将为你跳转','',$article->id);
+        return    $this->getJsonString('0','保存成功,即将为你跳转','',$article->aid);
 
     }
 
