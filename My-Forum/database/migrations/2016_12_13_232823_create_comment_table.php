@@ -22,6 +22,7 @@ class CreateCommentTable extends Migration
             $table->integer('forUserID')->default(0)->comment('回复某用户的评论 形式如 @某人');
             $table->integer('status')->default('0')->comment('状态 0正常 1删除');
             $table->integer('likeNum')->default(0)->comment('点赞数');
+
             $table->timestamps();
         });
     }

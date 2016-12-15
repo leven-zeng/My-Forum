@@ -31,7 +31,7 @@ class ForumController extends Controller
 
     public function detail(Request $request)
     {
-        $article=  Articles::where('aid',$request->get('aid'))
+        $article=  Articles::where('articles.aid',$request->get('aid'))
             ->leftjoin('users','articles.userid','=','users.id')
             ->select('articles.*','users.profile_image','users.name')
             ->first();
@@ -41,12 +41,13 @@ class ForumController extends Controller
         $article->save();
 
         //读取评论
-        $comments = DB::table('comments as a')
-            ->leftjoin('articles', 'a.articleID', '=', 'articles.aid')
+        $comments = DB::table('comments')
+            ->leftjoin('articles as a', 'comments.articleID', '=', 'a.aid')
             ->leftjoin('users','a.userID','=','users.id')
-            ->select('a.*','users.name','users.profile_image')
-            ->where('a.ID',$request->get('aid'))
-            ->orderBy('a.ID','desc')
+            ->select('comments.*','users.name','users.profile_image')
+            ->where("a.aid",$request->get('aid'))
+            ->orderBy('comments.id')
+
             ->paginate(15);
 
         return view('forum.detail',['article'=>$article,'comments'=>$comments]);
@@ -83,7 +84,7 @@ class ForumController extends Controller
             'tagid'=>$request->get('tagid')
         ]);
 
-        return    $this->getJsonString('0','保存成功,即将为你跳转','',$article->id);
+        return    $this->getJsonString('0','保存成功,即将为你跳转','',$article->aid);
 
     }
 

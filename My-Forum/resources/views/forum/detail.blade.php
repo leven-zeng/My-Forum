@@ -90,8 +90,16 @@ $article=$article;
                         <p>{!! $comment->content !!}</p>
                     </div>
                     <div class="jieda-reply">
-                        <span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>
-                        <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
+                        <span class="jieda-zan " type="zan"><i class="iconfont icon-zan"></i><em>0</em></span>
+                       
+                        @if(\Illuminate\Support\Facades\Auth::check()==false)
+                            <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
+                        @else
+                            @if(\Illuminate\Support\Facades\Auth::user()->id<>$comment->userID)
+                            <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
+                            @endif
+                        @endif
+
                         <!-- <div class="jieda-admin">
                           <span type="edit">编辑</span>
                           <span type="del">删除</span>
@@ -119,14 +127,15 @@ $article=$article;
                             <p>评论的内容</p>
                         </div>
                         <div class="jieda-reply">
-                            <span class="jieda-zan zanok" type="zan"><i class="iconfont icon-zan"></i><em>12</em></span>
-                            <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
+                            <span class="jieda-zan " type="zan"><i class="iconfont icon-zan"></i><em>0</em></span>
+                            {{--<span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>--}}
                             <div class="jieda-admin">
                               <span type="edit">编辑</span>
                               <span type="del">删除</span>
                             </div>
                         </div>
                     </li>
+
             </ul>
             {!! $comments->appends(['aid'=>$article->aid])->render() !!}
             <div class="layui-form layui-form-pane">
@@ -191,13 +200,7 @@ $article=$article;
 
     function postcomment(){
         var content= layedit.getContent(index);
-        var comment_li=$("#temp_li_comment").clone();
-        comment_li.find('.jieda-body p').html(content);
-        comment_li.attr('id','').css('display','block');
-        $('#jieda').append(comment_li);
-        return;
         layer.load();
-
         if(content.length<=0){
             layer.msg('不允许空的回复', {shift: 6});
             return false;
@@ -214,7 +217,12 @@ $article=$article;
                 layer.closeAll('loading');
                 if(res.status === "0") {
                     layer.msg(res.msg, {shift: 6},function(){
-
+                        var comment_li=$("#temp_li_comment").clone();
+                        comment_li.find('.jieda-body p').html(content);
+                        comment_li.attr('id','').css('display','block');
+                        comment_li.find('.jie-user img').attr('src',$('.avatar img').attr('src'));
+                        comment_li.find('cite i').text($('.avatar cite').text());
+                        $('#jieda').append(comment_li);
                     });
 
                 } else {

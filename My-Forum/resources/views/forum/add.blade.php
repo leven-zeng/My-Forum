@@ -28,7 +28,7 @@
             <div class="layui-form-item layui-form-text">
                 <div class="layui-input-block">
                     <input type="hidden" name="content" id="content">
-                    <textarea class="layui-textarea" id="LAY_demo1" style="display: none">把编辑器的初始内容放在这textarea即可</textarea>
+                    <textarea class="layui-textarea" id="LAY_demo1" style="display: none"></textarea>
                 </div>
                 <label for="L_content" class="layui-form-label" style="top: -2px;">描述</label>
             </div>
