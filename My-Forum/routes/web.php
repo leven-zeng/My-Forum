@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
+Route::get('/',['as'=>'forum.index','uses'=> 'ForumController@index']);
 
 //Route::get('test/test', 'TestController@test')->name('test.test');
 

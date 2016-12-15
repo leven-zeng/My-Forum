@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 
 class Articles extends Model
 {
+    protected $primaryKey = 'aid';
+
     protected $fillable = [
         'userid', 'title', 'content','reward','status','isgood','tagid'
     ];

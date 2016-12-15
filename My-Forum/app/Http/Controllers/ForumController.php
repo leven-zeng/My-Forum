@@ -34,6 +34,9 @@ class ForumController extends Controller
             ->leftjoin('users','articles.userid','=','users.id')
             ->select('articles.*','users.profile_image','users.name')
             ->first();
+
+        $article->clicknum++;
+        $article->save();
         return view('forum.detail',['article'=>$article]);
     }
 
