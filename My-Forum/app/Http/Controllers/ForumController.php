@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Article\PermissionFormRequest;
 use App\Model\Articles;
+use App\Model\Comments;
+use App\Model\JsonString;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -133,12 +135,18 @@ class ForumController extends Controller
             return    $this->getJsonString('500',$v->errors()->first(),'','');
         }
 
-        $comment=    \App\Model\Comments::create([
+        $comment=    Comments::create([
             'userid'=>Auth::user()->id,
             'articleID'=>$request->get('articleID'),
             'content'=>$request->get('content')
         ]);
 
-        return  $this->getJsonString('0','提交回答已完成','',$comment->id);
+        //return  $this->getJsonString('0','提交回答已完成','',$comment->id);
+        $jsonstr= JsonString::create([
+            'status'=>'0',
+            'msg'=>'提交回答已完成',
+            'id'=>$comment->id
+        ]);
+        return $jsonstr->getJsonString($jsonstr);
     }
 }

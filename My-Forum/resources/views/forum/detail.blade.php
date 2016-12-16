@@ -59,7 +59,7 @@ $article=$article;
             </div>
 
             <a name="comment"></a>
-            <h2 class="page-title">热忱回答<span>（<em id="jiedaCount">18</em>）</span></h2>
+            <h2 class="page-title">热门回答<span>（<em id="jiedaCount">18</em>）</span></h2>
 
             <ul class="jieda photos" id="jieda">
                 @if($comments->count()<=0)
@@ -68,7 +68,7 @@ $article=$article;
                 {{--==============评论============================--}}
 
                 @foreach($comments as $comment)
-                <li data-id="{{$comment->ID}}" class="jieda-daan">
+                <li data-id="" class="jieda-daan">
                     <a name="item-121212121212"></a>
                     <div class="detail-about detail-about-reply">
                         <a class="jie-user" href="">
@@ -90,7 +90,7 @@ $article=$article;
                         <p>{!! $comment->content !!}</p>
                     </div>
                     <div class="jieda-reply">
-                        <span class="jieda-zan " type="zan"><i class="iconfont icon-zan"></i><em>0</em></span>
+                        <span class="jieda-zan " type="zan"><i class="iconfont icon-zan" onclick="addlike(this);" data-id="{{$comment->ID}}"></i><em>0</em></span>
                        
                         @if(\Illuminate\Support\Facades\Auth::check()==false)
                             <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
@@ -200,6 +200,7 @@ $article=$article;
 
     function postcomment(){
         var content= layedit.getContent(index);
+
         layer.load();
         if(content.length<=0){
             layer.msg('不允许空的回复', {shift: 6});
@@ -216,12 +217,14 @@ $article=$article;
             success: function(res){
                 layer.closeAll('loading');
                 if(res.status === "0") {
+                    layedit.setContent(index,'');
                     layer.msg(res.msg, {shift: 6},function(){
                         var comment_li=$("#temp_li_comment").clone();
                         comment_li.find('.jieda-body p').html(content);
                         comment_li.attr('id','').css('display','block');
                         comment_li.find('.jie-user img').attr('src',$('.avatar img').attr('src'));
                         comment_li.find('cite i').text($('.avatar cite').text());
+                        comment_li.find('.icon-zan').attr('data-id',res.title);
                         $('#jieda').append(comment_li);
                     });
 
@@ -231,7 +234,31 @@ $article=$article;
                 }
             }, error: function(e){
                 layer.closeAll('loading');
-                options.error || layer.msg('请求异常，请重试', {shift: 6});
+                layer.msg('请求异常，请重试', {shift: 6});
+            }
+        });
+    }
+    function addlike(t){
+        alert($(t).parent());
+        $(t).parent().attr('color','#666;');
+        var id= $(t).attr('data-id');
+        var data={id:id};
+        $.ajax({
+            type: 'post',
+            dataType:  'json',
+            data: data,
+            url: "{{route('forum.addlike')}}",
+            success: function(res){
+                if(res.status === "0") {
+                    layer.msg(res.msg, {shift: 6},function(){
+
+                    });
+
+                } else {
+                    layer.msg(res.msg, {shift: 6});
+                }
+            }, error: function(e){
+
             }
         });
     }
