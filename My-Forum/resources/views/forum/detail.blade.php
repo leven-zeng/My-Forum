@@ -90,7 +90,7 @@ $article=$article;
                         <p>{!! $comment->content !!}</p>
                     </div>
                     <div class="jieda-reply">
-                        <span class="jieda-zan " type="zan"><i class="iconfont icon-zan" onclick="addlike(this);" data-id="{{$comment->ID}}"></i><em>0</em></span>
+                        <span class="jieda-zan " type="zan"><i class="iconfont icon-zan" onclick="addlike(this);" data-id="{{$comment->ID}}"></i><em>{{$comment->likeNum}}</em></span>
                        
                         @if(\Illuminate\Support\Facades\Auth::check()==false)
                             <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
@@ -239,23 +239,21 @@ $article=$article;
         });
     }
     function addlike(t){
-        alert($(t).parent());
-        $(t).parent().attr('color','#666;');
+
         var id= $(t).attr('data-id');
         var data={id:id};
         $.ajax({
             type: 'post',
             dataType:  'json',
             data: data,
-            url: "{{route('forum.addlike')}}",
+            url: "{{route('forum.addlike')}}?_token="+$("input[name='_token']").val(),
             success: function(res){
                 if(res.status === "0") {
-                    layer.msg(res.msg, {shift: 6},function(){
-
-                    });
-
+                    $(t).parent().addClass('zanok');
+                    $(t).attr('onclick','');
+                    $(t).parent().find('em').html(parseInt($(t).parent().find('em').html())+1);
                 } else {
-                    layer.msg(res.msg, {shift: 6});
+
                 }
             }, error: function(e){
 

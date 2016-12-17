@@ -37,8 +37,11 @@ class JsonString extends Model
     public static function create(array $attributes = []){
         $json=new JsonString();
         $json->status=$attributes['status'];
-        $json->msg=$attributes['msg'];
 
+
+        if(array_key_exists('msg',$attributes)){
+            $json->msg=$attributes['msg'];
+        }
         if(array_key_exists('src',$attributes)){
             $json->src=$attributes['src'];
         }

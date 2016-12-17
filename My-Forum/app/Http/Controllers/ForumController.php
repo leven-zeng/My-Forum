@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Article\PermissionFormRequest;
+
 use App\Model\Articles;
 use App\Model\Comments;
 use App\Model\JsonString;
@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Comment;
 
 class ForumController extends Controller
 {
@@ -147,6 +146,23 @@ class ForumController extends Controller
             'msg'=>'提交回答已完成',
             'id'=>$comment->id
         ]);
+        return $jsonstr->getJsonString($jsonstr);
+    }
+
+    public function addlike(Request $request){
+       $comment= Comments::where('ID',$request->get('id'))->first();
+        $comment->likeNum++;
+        DB::connection()->enableQueryLog(); // 开启查询日志
+         $res= $comment->save();
+        if($res){
+           $jsonstr= JsonString::create([
+               'status'=>'0'
+           ]);
+       }else{
+           $jsonstr= JsonString::create([
+               'status'=>'500'
+           ]);
+       }
         return $jsonstr->getJsonString($jsonstr);
     }
 }
