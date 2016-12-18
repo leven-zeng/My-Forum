@@ -59,7 +59,7 @@ $article=$article;
             </div>
 
             <a name="comment"></a>
-            <h2 class="page-title">热门回答<span>（<em id="jiedaCount">18</em>）</span></h2>
+            <h2 class="page-title">热门回答<span>（<em id="jiedaCount">{{$comments->total()}}</em>）</span></h2>
 
             <ul class="jieda photos" id="jieda">
                 @if($comments->count()<=0)
@@ -82,7 +82,7 @@ $article=$article;
                             </cite>
                         </a>
                         <div class="detail-hits">
-                            <span>3分钟前</span>
+                            <span>{{\Carbon\Carbon::parse($comment->created_at)->diffForHumans()}}</span>
                         </div>
                         {{--<i class="iconfont icon-caina" title="最佳答案"></i>--}}
                     </div>
@@ -91,15 +91,7 @@ $article=$article;
                     </div>
                     <div class="jieda-reply">
                         <span class="jieda-zan " type="zan"><i class="iconfont icon-zan" onclick="addlike(this);" data-id="{{$comment->ID}}"></i><em>{{$comment->likeNum}}</em></span>
-                       
-                        @if(\Illuminate\Support\Facades\Auth::check()==false)
-                            <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
-                        @else
-                            @if(\Illuminate\Support\Facades\Auth::user()->id<>$comment->userID)
-                            <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
-                            @endif
-                        @endif
-
+                        <span type="reply" class="reply-comment" onclick="reply(this)" data-username="{{$comment->name}}" data-userid="{{$comment->userID}}"><i class="iconfont icon-svgmoban53"></i>回复</span>
                         <!-- <div class="jieda-admin">
                           <span type="edit">编辑</span>
                           <span type="del">删除</span>
@@ -153,6 +145,7 @@ $article=$article;
                     </div>
                     <input type="hidden" id="content" value="" name="content">
                     <input type="hidden" id="articleID" name="articleID" value="{{$article->aid}}">
+                    <input type="hidden" id="replyuserID" name="replyuserID">
                 </form>
                 <button class="layui-btn" lay-filter="*" lay-submit="" onclick="return postcomment();">提交回答</button>
             </div>
@@ -259,6 +252,11 @@ $article=$article;
 
             }
         });
+    }
+    function reply(t){
+        var name=$(t).attr('data-username');
+        layedit.setContent(index,'<span><span>@'+name+'&nbsp;&nbsp;</span></span>');
+        $('#replyuserID').val($(t).attr('data-userID'));
     }
 </script>
     @endsection

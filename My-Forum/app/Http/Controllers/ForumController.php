@@ -137,7 +137,8 @@ class ForumController extends Controller
         $comment=    Comments::create([
             'userid'=>Auth::user()->id,
             'articleID'=>$request->get('articleID'),
-            'content'=>$request->get('content')
+            'content'=>$request->get('content'),
+            'forUserID'=>$request->get('replyuserID')
         ]);
 
         //return  $this->getJsonString('0','提交回答已完成','',$comment->id);
