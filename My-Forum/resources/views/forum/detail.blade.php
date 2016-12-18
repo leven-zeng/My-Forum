@@ -87,7 +87,12 @@ $article=$article;
                         {{--<i class="iconfont icon-caina" title="最佳答案"></i>--}}
                     </div>
                     <div class="detail-body jieda-body">
-                        <p>{!! $comment->content !!}</p>
+                        <p>
+                            @if($comment->replyusername<>null)
+                            <span>@<a href="{{$comment->replyuserID}}">{{$comment->replyusername }}</a></span>
+
+                            @endif
+                            {!! $comment->content !!}</p>
                     </div>
                     <div class="jieda-reply">
                         <span class="jieda-zan " type="zan"><i class="iconfont icon-zan" onclick="addlike(this);" data-id="{{$comment->ID}}"></i><em>{{$comment->likeNum}}</em></span>
@@ -193,6 +198,14 @@ $article=$article;
 
     function postcomment(){
         var content= layedit.getContent(index);
+    var jqcontent    =$(content);
+        if( jqcontent.find('#hiddenusername').length > 0 ) {
+            $('#replyuserID').val( jqcontent.find('#hiddenusername').attr('data-userid'));
+            jqcontent.find('#hiddenusername').remove();
+            content=    jqcontent.html();
+        }else{
+            $('#replyuserID').val('0');
+        }
 
         layer.load();
         if(content.length<=0){
@@ -255,8 +268,10 @@ $article=$article;
     }
     function reply(t){
         var name=$(t).attr('data-username');
-        layedit.setContent(index,'<span><span>@'+name+'&nbsp;&nbsp;</span></span>');
-        $('#replyuserID').val($(t).attr('data-userID'));
+        var userid=$(t).attr('data-userID');
+        layedit.setContent(index,'<span><input type="button" data-userid="'+userid+'" style="border: none;background-color: transparent;" id="hiddenusername" value="@'+name+'&nbsp;&nbsp;" ></span>');
+//        layedit.setContent(index,'');
+//        $('#replyuserID').val(userid);
     }
 </script>
     @endsection

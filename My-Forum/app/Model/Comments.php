@@ -9,6 +9,6 @@ class Comments extends Model
     protected $primaryKey = 'ID';
     //
     protected $fillable = [
-        'userid', 'content','articleID','ID'
+        'userid', 'content','articleID','ID','forUserID'
     ];
 }
