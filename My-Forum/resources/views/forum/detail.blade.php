@@ -178,25 +178,45 @@ $article=$article;
 
     </div>
 </div>
+<div class="layui-form-item layui-form-text">
+    <div class="layui-input-block">
+        <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
+    </div>
+    <label for="L_content" class="layui-form-label" style="top: -2px;">描述</label>
+</div>
     @include('layouts.foot')
 <script src="../../res/layui/layui.js"></script>
 <script>
-    var layedit;
-    var index;
-    layui.use('layedit', function(){
-        layedit = layui.layedit
-                ,$ = layui.jquery;
+    layui.cache.user = {
+        username: '游客'
+        ,uid: -1
+        ,avatar: '../../res/images/avatar/00.jpg'
+        ,experience: 83
+        ,sex: '男'
+    };
+    layui.config({
+        version: "1.0.0"
+        ,base: '../../res/mods/'
+    }).extend({
+        fly: 'index'
+    }).use('fly');
 
-        //自定义工具栏
-        index= layedit.build('LAY_demo1', {
-         tool: ['face','image', 'link', 'unlink', 'left', 'center', 'right']
-             ,uploadImage: {
-                 url: '{{route('forum.upload')}}?_token='+$("input[name='_token']").val() //接口url
-                 ,type: 'post' //默认post
-             }
-         ,height: 200
-         })
-    });
+    {{--var layedit;--}}
+    {{--var index;--}}
+    {{--layui.use('layedit', function(){--}}
+        {{--layedit = layui.layedit--}}
+                {{--,$ = layui.jquery;--}}
+
+        {{--//自定义工具栏--}}
+        {{--index= layedit.build('LAY_demo1', {--}}
+         {{--tool: ['face','image', 'link', 'unlink', 'left', 'center', 'right']--}}
+             {{--,uploadImage: {--}}
+                 {{--url: '{{route('forum.upload')}}?_token='+$("input[name='_token']").val() //接口url--}}
+                 {{--,type: 'post' //默认post--}}
+             {{--}--}}
+         {{--,height: 200--}}
+         {{--})--}}
+    {{--});--}}
 
     function postcomment(){
         var content= layedit.getContent(index);
