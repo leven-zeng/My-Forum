@@ -135,13 +135,13 @@ $article=$article;
 
             </ul>
             {!! $comments->appends(['aid'=>$article->aid])->render() !!}
-            <div class="layui-form layui-form-pane">
+            <div class="layui-form layui-form-pane"  id="replyform">
                 <form>
                     {!! csrf_field() !!}
                     <div class="layui-form-item layui-form-text">
                         <div class="layui-input-block">
                             {{--<textarea id="L_content" name="content" required="" lay-verify="required" placeholder="我要回答'" class="layui-textarea fly-editor" style="height: 150px;"></textarea>--}}
-                            <textarea class="layui-textarea" id="LAY_demo1" style="display: none"></textarea>
+                            <textarea class="layui-textarea" id="LAY_demo1" ></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -161,10 +161,12 @@ $article=$article;
 
         <h3 class="page-title">最近热帖</h3>
         <ol class="fly-list-one">
+            @foreach($hotclicks as $hotclick)
             <li>
-                <a href=" ">Layui 官网 在线演示页面 全面增加 查看代码 功能</a>
-                <span><i class="iconfont"></i> 6087</span>
+                <a href="{{route('forum.detail',['aid'=>$hotclick->aid])}}">{{$hotclick->title}}</a>
+                <span><i class="iconfont"></i> {{$hotclick->clicknum}}</span>
             </li>
+                @endforeach
         </ol>
         <h3 class="page-title">近期热议</h3>
         <ol class="fly-list-one">
@@ -267,6 +269,10 @@ $article=$article;
         });
     }
     function reply(t){
+        $('html, body').animate({
+            scrollTop: $("#replyform").offset().top-300
+        }, 1000);
+
         var name=$(t).attr('data-username');
         var userid=$(t).attr('data-userID');
         layedit.setContent(index,'<span><input type="button" data-userid="'+userid+'" style="border: none;background-color: transparent;" id="hiddenusername" value="@'+name+'&nbsp;&nbsp;" ></span>');

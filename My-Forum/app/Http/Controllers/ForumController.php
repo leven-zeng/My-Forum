@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Validator;
 
 class ForumController extends Controller
 {
+//DB::connection()->enableQueryLog(); // 开启查询日志
+//$queries = DB::getQueryLog(); // 获取查询日志
+//dd($queries);
     //
     public function index()
     {
@@ -49,10 +52,17 @@ class ForumController extends Controller
             ->select('comments.*','users.name','users.profile_image','user2.name as replyusername','user2.ID as replyuserID')
             ->where("a.aid",$request->get('aid'))
             ->orderBy('comments.id')
-
             ->paginate(15);
 
-        return view('forum.detail',['article'=>$article,'comments'=>$comments]);
+        $hotclicks=Articles::where('articles.status',0)
+            ->select('articles.*')
+            ->orderBy('clickNum','desc')
+            ->limit(10)
+            ->get();
+
+
+
+        return view('forum.detail',['article'=>$article,'comments'=>$comments,'hotclicks'=>$hotclicks]);
     }
 
     public function add()
