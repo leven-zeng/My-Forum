@@ -141,7 +141,13 @@ $article=$article;
                     <div class="layui-form-item layui-form-text">
                         <div class="layui-input-block">
                             {{--<textarea id="L_content" name="content" required="" lay-verify="required" placeholder="我要回答'" class="layui-textarea fly-editor" style="height: 150px;"></textarea>--}}
-                            <textarea class="layui-textarea" id="LAY_demo1" ></textarea>
+                            {{--<textarea class="layui-textarea" id="LAY_demo1" ></textarea>--}}
+                            <div class="layui-form-item layui-form-text">
+                                <div class="layui-input-block">
+                                    <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
+                                </div>
+                                <label for="L_content" class="layui-form-label" style="top: -2px;">描述</label>
+                            </div>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -177,12 +183,6 @@ $article=$article;
         </ol>
 
     </div>
-</div>
-<div class="layui-form-item layui-form-text">
-    <div class="layui-input-block">
-        <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
-    </div>
-    <label for="L_content" class="layui-form-label" style="top: -2px;">描述</label>
 </div>
     @include('layouts.foot')
 <script src="../../res/layui/layui.js"></script>
