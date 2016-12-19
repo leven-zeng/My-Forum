@@ -7,7 +7,7 @@
 
 /* 公用 */
 html{overflow-x: hidden; overflow-y: auto; background-color:#fff; }
-html body{margin-top:80px; }
+html body{margin-top: 80px; }
 body{line-height:24px;   -webkit-font-feature-settings: 'kern' 1; -moz-font-feature-settings: 'kern' 1; text-rendering:geometricPrecision;}
 .main{width:1085px; min-height: 600px; margin: 0 auto 15px;}
 .wrap{float:left; width: 100%; min-height:300px;}

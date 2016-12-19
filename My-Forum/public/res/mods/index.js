@@ -23,24 +23,23 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
     var result, val = obj.value;
     obj.focus();
     if(document.selection){ //ie
-      result = document.selection.createRange();
-      document.selection.empty();
-      result.text = str;
+      result = document.selection.createRange(); 
+      document.selection.empty(); 
+      result.text = str; 
     } else {
       result = [val.substring(0, obj.selectionStart), str, val.substr(obj.selectionEnd)];
       obj.focus();
       obj.value = result.join('');
     }
   };
-
+  
   var gather = {
-
+    
     //Ajax
     json: function(url, data, success, options){
       var that = this;
       options = options || {};
       data = data || {};
-      console.log(data);
       return $.ajax({
         type: options.type || 'post',
         dataType: options.dataType || 'json',
@@ -50,8 +49,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
           if(res.status === 0) {
             success && success(res);
           } else {
-            console.log(res);
-            layer.msg(res.msg, {shift: 6});
+            layer.msg(res.msg||res.code, {shift: 6});
           }
         }, error: function(e){
           options.error || layer.msg('请求异常，请重试', {shift: 6});
@@ -67,7 +65,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
       }
       return len;
     }
-
+    
     ,form: {}
 
     //简易编辑器
@@ -115,7 +113,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                   }
                 }
               });
-
+              
               form.on('submit(uploadImages)', function(data){
                 var field = data.field;
                 if(!field.image) return image.focus();
@@ -170,8 +168,8 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
         }
         ,yulan: function(editor){ //预览
           var content = editor.val();
-
-          content = /^\{html\}/.test(content)
+          
+          content = /^\{html\}/.test(content) 
             ? content.replace(/^\{html\}/, '')
           : gather.content(content);
 
@@ -184,8 +182,8 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
           });
         }
       };
-
-      layui.use('/res/mods/face', function(face){
+      
+      layui.use('face', function(face){
         options = options || {};
         gather.faces = face;
         $(options.elem).each(function(index){
@@ -200,7 +198,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
           });
         });
       });
-
+      
     }
 
     ,escape: function(html){
@@ -228,7 +226,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
         var rel =  /^(http(s)*:\/\/)\b(?!(\w+\.)*(sentsin.com|layui.com))\b/.test(href.replace(/\s/g, ''));
         return '<a href="'+ href +'" target="_blank"'+ (rel ? ' rel="nofollow"' : '') +'>'+ (text||href) +'</a>';
       }).replace(html(), '\<$1\>').replace(html('/'), '\</$1\>') //转移代码
-      .replace(/\n/g, '<br>') //转义换行
+      .replace(/\n/g, '<br>') //转义换行   
       return content;
     }
     
@@ -335,7 +333,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
     var extend = {};
     layui.use(layui.cache.page);
   }
-
+  
   //加载IM
   if(!device.android && !device.ios){
     // layui.use('im');
