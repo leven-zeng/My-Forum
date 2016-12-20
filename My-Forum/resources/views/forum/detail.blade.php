@@ -135,13 +135,13 @@ $article=$article;
 
             </ul>
             {!! $comments->appends(['aid'=>$article->aid])->render() !!}
-            <div class="layui-form layui-form-pane"  id="replyform">
+            {{--<div class="layui-form layui-form-pane"  id="replyform">
                 <form>
                     {!! csrf_field() !!}
                     <div class="layui-form-item layui-form-text">
                         <div class="layui-input-block">
-                            {{--<textarea id="L_content" name="content" required="" lay-verify="required" placeholder="我要回答'" class="layui-textarea fly-editor" style="height: 150px;"></textarea>--}}
-                            {{--<textarea class="layui-textarea" id="LAY_demo1" ></textarea>--}}
+                            --}}{{--<textarea id="L_content" name="content" required="" lay-verify="required" placeholder="我要回答'" class="layui-textarea fly-editor" style="height: 150px;"></textarea>--}}{{--
+                            --}}{{--<textarea class="layui-textarea" id="LAY_demo1" ></textarea>--}}{{--
                             <div class="layui-form-item layui-form-text">
                                 <div class="layui-input-block">
                                     <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
@@ -159,6 +159,23 @@ $article=$article;
                     <input type="hidden" id="replyuserID" name="replyuserID">
                 </form>
                 <button class="layui-btn" lay-filter="*" lay-submit="" onclick="return postcomment();">提交回答</button>
+            </div>--}}
+
+            <div class="layui-form layui-form-pane">
+                <form {{--action="{{route('forum.postcomment')}}" method="post"--}}>
+                    {!! csrf_field() !!}
+                    <div class="layui-form-item layui-form-text">
+                        <div class="layui-input-block">
+                            <textarea id="L_content" name="content" required lay-verify="required" placeholder="我要回答'"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        {{--<input type="hidden" id="content" value="" name="content">--}}
+                        <input type="hidden" id="articleID" name="articleID" value="{{$article->aid}}">
+                        <input type="hidden" id="replyuserID" name="replyuserID">
+                        <button class="layui-btn" lay-filter="*" lay-submit onclick="postcomment()">提交回答</button>
+                    </div>
+                </form>
             </div>
 
         </div>
@@ -187,6 +204,7 @@ $article=$article;
     @include('layouts.foot')
 <script src="../../res/layui/layui.js"></script>
 <script>
+    var $;
     layui.cache.user = {
         username: '游客'
         ,uid: -1
@@ -194,39 +212,42 @@ $article=$article;
         ,experience: 83
         ,sex: '男'
     };
+
     layui.config({
-        version: "1.0.0"
+        version: "1.0.2"
         ,base: '../../res/mods/'
     }).extend({
         fly: 'index'
-    }).use('fly');
+    }).use(['fly','jie'],function(){
+        $ = layui.jquery;
+    });
 
-    {{--var layedit;--}}
-    {{--var index;--}}
-    {{--layui.use('layedit', function(){--}}
-        {{--layedit = layui.layedit--}}
-                {{--,$ = layui.jquery;--}}
+    /*var layedit;
+    var index;
+    layui.use('layedit', function(){
+        layedit = layui.layedit
+                ,$ = layui.jquery;
 
-        {{--//自定义工具栏--}}
-        {{--index= layedit.build('LAY_demo1', {--}}
-         {{--tool: ['face','image', 'link', 'unlink', 'left', 'center', 'right']--}}
-             {{--,uploadImage: {--}}
-                 {{--url: '{{route('forum.upload')}}?_token='+$("input[name='_token']").val() //接口url--}}
-                 {{--,type: 'post' //默认post--}}
-             {{--}--}}
-         {{--,height: 200--}}
-         {{--})--}}
-    {{--});--}}
+        //自定义工具栏
+        index= layedit.build('LAY_demo1', {
+         tool: ['face','image', 'link', 'unlink', 'left', 'center', 'right']
+             ,uploadImage: {
+                 url: '{{route('forum.upload')}}?_token='+$("input[name='_token']").val() //接口url
+                 ,type: 'post' //默认post
+             }
+         ,height: 200
+         })
+    });*/
 
     function postcomment(){
-        var content= layedit.getContent(index);
-    var jqcontent    =$(content);
-        if( jqcontent.find('#hiddenusername').length > 0 ) {
+        var content= layui.fly.content($("#L_content").val());
+        var jqcontent    =$(content);
+        if( jqcontent.find('.fly-aite').length > 0 ) {
             $('#replyuserID').val( jqcontent.find('#hiddenusername').attr('data-userid'));
             jqcontent.find('#hiddenusername').remove();
             content=    jqcontent.html();
         }else{
-            $('#replyuserID').val('0');
+            $('#replyuserID').val(0);
         }
 
         layer.load();
@@ -234,7 +255,7 @@ $article=$article;
             layer.msg('不允许空的回复', {shift: 6});
             return false;
         }
-        $('#content').val(content);
+//        $('#content').val(content);
 
         var data=$('form').serialize();
         $.ajax({
@@ -290,14 +311,15 @@ $article=$article;
     }
     function reply(t){
         $('html, body').animate({
-            scrollTop: $("#replyform").offset().top-300
+            scrollTop: $("#L_content").offset().top-300
         }, 1000);
 
         var name=$(t).attr('data-username');
         var userid=$(t).attr('data-userID');
-        layedit.setContent(index,'<span><input type="button" data-userid="'+userid+'" style="border: none;background-color: transparent;" id="hiddenusername" value="@'+name+'&nbsp;&nbsp;" ></span>');
+//        layedit.setContent(index,'<span><input type="button" data-userid="'+userid+'" style="border: none;background-color: transparent;" id="hiddenusername" value="@'+name+'&nbsp;&nbsp;" ></span>');
 //        layedit.setContent(index,'');
-//        $('#replyuserID').val(userid);
+        $('#replyuserID').val(userid);
+
     }
 </script>
     @endsection

@@ -106,8 +106,8 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
                 url: '/forum/upload?_token='+$('input[name="_token"]').val()
                 ,elem: '#fly-jie-upload .layui-upload-file'
                 ,success: function(res){
-                  if(res.status == 0){
-                    image.val(res.url);
+                  if(res.code == 0){
+                    image.val(res.data.src);
                   } else {
                     layer.msg(res.msg, {icon: 5});
                   }
@@ -215,7 +215,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
       content = gather.escape(content||'') //XSS
       .replace(/img\[([^\s]+?)\]/g, function(img){  //转义图片
         return '<img src="' + img.replace(/(^img\[)|(\]$)/g, '') + '">';
-      }).replace(/@(\S+)(\s+?|$)/g, '@<a href="javascript:;" class="fly-aite">$1</a>$2') //转义@
+      }).replace(/@(\S+)(\s+?|$)/g, '<a href="javascript:;" class="fly-aite">@$1</a>$2') //转义@
       .replace(/face\[([^\s\[\]]+?)\]/g, function(face){  //转义表情
         var alt = face.replace(/^face/g, '');
         return '<img alt="'+ alt +'" title="'+ alt +'" src="' + gather.faces[alt] + '">';

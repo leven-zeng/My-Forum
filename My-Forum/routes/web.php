@@ -44,6 +44,6 @@ Route::post('/forum/add/',['as'=>'forum.add','middleware'=>['auth'],'uses'=>'For
 
 Route::post('/forum/upload/',['as'=>'forum.upload','uses'=>'ForumController@upload']);
 
-Route::post('/form/postcomment',['as'=>'forum.postcomment','uses'=>'ForumController@postcomment']);
+Route::post('/forum/postcomment',['as'=>'forum.postcomment','uses'=>'ForumController@postcomment']);
 
 Route::post('/form/addlike',['as'=>'forum.addlike','uses'=>'ForumController@addlike']);

@@ -21,7 +21,7 @@ layui.define(['laypage', 'fly'], function(exports){
   };
 
   //提交回答
-  fly.form['/jie/reply/'] = function(data, required){
+  fly.form['/forum/postcomment'] = function(data, required){
     var tpl = '<li>\
       <div class="detail-about detail-about-reply">\
         <a class="jie-user" href="/user/">\

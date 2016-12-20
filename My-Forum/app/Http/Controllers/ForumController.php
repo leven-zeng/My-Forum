@@ -116,7 +116,8 @@ class ForumController extends Controller
             $newImageName=md5(time().random_int(5,5)).'.'.$extension;
             $images->move('images/userimages/',$newImageName);
 
-            return response()->json(['code'=>'0','msg'=>'','data'=>['src'=>'/images/userimages/'.$newImageName,'title'=>$newImageName]]);
+            $src='/images/userimages/'.$newImageName;
+            return response()->json(['code'=>'0','msg'=>'','data'=>['src'=>$src,'title'=>$newImageName]]);
 
         }
 
