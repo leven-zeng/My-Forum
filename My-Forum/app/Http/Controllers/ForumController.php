@@ -46,11 +46,11 @@ class ForumController extends Controller
 
         //读取评论
         $comments = DB::table('comments')
-            ->leftjoin('articles as a', 'comments.articleID', '=', 'a.aid')
-            ->leftjoin('users','a.userID','=','users.id')
+            //->leftjoin('articles as a', 'comments.articleID', '=', 'a.aid')
+            ->leftjoin('users','comments.userID','=','users.id')
             ->leftjoin('users as user2','comments.forUserID','=','user2.ID')
             ->select('comments.*','users.name','users.profile_image','user2.name as replyusername','user2.ID as replyuserID')
-            ->where("a.aid",$request->get('aid'))
+            ->where("comments.articleID",$request->get('aid'))
             ->orderBy('comments.id')
             ->paginate(15);
 

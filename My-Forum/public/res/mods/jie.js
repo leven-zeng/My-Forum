@@ -89,7 +89,7 @@ layui.define(['laypage', 'fly'], function(exports){
   //解答操作
   gather.jiedaActive = {
     zan: function(li){ //赞
-      var othis = $(this), ok = othis.hasClass('zanok');
+      /*var othis = $(this), ok = othis.hasClass('zanok');
       fly.json('/api/jieda-zan/', {
         ok: ok
         ,id: li.data('id')
@@ -101,7 +101,7 @@ layui.define(['laypage', 'fly'], function(exports){
         } else {
           layer.msg(res.msg);
         }
-      });
+      });*/
     }
     ,reply: function(li){ //回复
       var val = dom.content.val();

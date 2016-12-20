@@ -173,9 +173,10 @@ $article=$article;
                         {{--<input type="hidden" id="content" value="" name="content">--}}
                         <input type="hidden" id="articleID" name="articleID" value="{{$article->aid}}">
                         <input type="hidden" id="replyuserID" name="replyuserID">
-                        <button class="layui-btn" lay-filter="*" lay-submit onclick="return postcomment()">提交回答</button>
+
                     </div>
                 </form>
+                <button class="layui-btn" lay-filter="r" onclick="return postcomment()">提交回答</button>
             </div>
 
         </div>
@@ -242,14 +243,14 @@ $article=$article;
     function postcomment(){
         var content= layui.fly.content($("#L_content").val());
         var jqcontent    =$(content);
-        if( jqcontent.find('.fly-aite').length > 0 ) {
-            $('#replyuserID').val( jqcontent.find('#hiddenusername').attr('data-userid'));
-            jqcontent.find('#hiddenusername').remove();
-            content=    jqcontent.html();
+        if( jqcontent.find('fly-aite')) {
+           // $('#replyuserID').val( jqcontent.find('#hiddenusername').attr('data-userid'));
+            content=   content.replace(jqcontent.find('.fly-aite')[0],'');
         }else{
             $('#replyuserID').val(0);
         }
 
+        return;
         layer.load();
         if(content.length<=0){
             layer.msg('不允许空的回复', {shift: 6});
