@@ -173,7 +173,7 @@ $article=$article;
                         {{--<input type="hidden" id="content" value="" name="content">--}}
                         <input type="hidden" id="articleID" name="articleID" value="{{$article->aid}}">
                         <input type="hidden" id="replyuserID" name="replyuserID">
-                        <button class="layui-btn" lay-filter="*" lay-submit onclick="postcomment()">提交回答</button>
+                        <button class="layui-btn" lay-filter="*" lay-submit onclick="return postcomment()">提交回答</button>
                     </div>
                 </form>
             </div>
@@ -266,7 +266,7 @@ $article=$article;
             success: function(res){
                 layer.closeAll('loading');
                 if(res.status === "0") {
-                    layedit.setContent(index,'');
+                    //layedit.setContent(index,'');
                     layer.msg(res.msg, {shift: 6},function(){
                         var comment_li=$("#temp_li_comment").clone();
                         comment_li.find('.jieda-body p').html(content);
