@@ -13,7 +13,7 @@
       <a href="javascript:;" class="tab-this" hash="info">我的资料</a>
       <a href="javascript:;" hash="avatar">头像</a>
       <a href="javascript:;" hash="pass">密码</a>
-      <a href="javascript:;" hash="bind">帐号绑定</a>
+      {{--<a href="javascript:;" hash="bind">帐号绑定</a>--}}
     </span>
   </div>
   
@@ -104,7 +104,7 @@
             <i class="iconfont icon-qq"></i>
             <span>已成功绑定，您可以使用QQ帐号直接登录Fly社区，当然，您也可以</span>
             <a href="javascript:;" class="acc-unbind" type="qq_id">解除绑定</a>
-            
+
             <!-- <a href="" onclick="layer.msg('正在绑定微博QQ', {icon:16, shade: 0.1, time:0})" class="acc-bind" type="qq_id">立即绑定</a>
             <span>，即可使用QQ帐号登录Fly社区</span> -->
           </li>
@@ -112,7 +112,7 @@
             <i class="iconfont icon-weibo"></i>
             <!-- <span>已成功绑定，您可以使用微博直接登录Fly社区，当然，您也可以</span>
             <a href="javascript:;" class="acc-unbind" type="weibo_id">解除绑定</a> -->
-            
+
             <a href="" class="acc-weibo" type="weibo_id" onclick="layer.msg('正在绑定微博', {icon:16, shade: 0.1, time:0})">立即绑定</a>
             <span>，即可使用微博帐号登录Fly社区</span>
           </li>

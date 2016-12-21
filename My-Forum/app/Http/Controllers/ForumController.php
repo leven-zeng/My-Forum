@@ -23,8 +23,13 @@ class ForumController extends Controller
         //$articles=Articles::paginate(15)->leftjoin('users','aid','=','aid');
 
         $articles = DB::table('articles')
+            ->select(DB::raw('count(comments.articleID) as comment_count,articles.*,users.name,users.profile_image'))
             ->leftjoin('users', 'articles.userid', '=', 'users.id')
-            ->select('articles.*','users.name','users.profile_image')
+            ->leftjoin('comments','comments.articleID','=','articles.aid')
+
+            ->groupBy('comments.articleID', 'users.name','users.profile_image','articles.userID','articles.content','articles.reward','articles.status','articles.isdel'
+                ,'articles.tagid','articles.type','articles.updated_at','articles.aid','articles.title','articles.topNum','articles.isgood','articles.created_at','articles.clicknum')
+            ->orderBy('articles.topnum','desc')
             ->orderBy('articles.created_at','desc')
             ->paginate(15);
 

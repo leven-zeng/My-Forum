@@ -215,7 +215,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
       content = gather.escape(content||'') //XSS
       .replace(/img\[([^\s]+?)\]/g, function(img){  //转义图片
         return '<img src="' + img.replace(/(^img\[)|(\]$)/g, '') + '">';
-      }).replace(/@(\S+)(\s+?|$)/g, '<span><a href="javascript:;" class="fly-aite">@$1</a>$2</span>') //转义@
+      }).replace(/@(\S+)(\s+?|$)/g, '@<a href="javascript:;" class="fly-aite">$1</a>$2') //转义@
       .replace(/face\[([^\s\[\]]+?)\]/g, function(face){  //转义表情
         var alt = face.replace(/^face/g, '');
         return '<img alt="'+ alt +'" title="'+ alt +'" src="' + gather.faces[alt] + '">';
@@ -301,7 +301,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
     }
     text = text.replace(/^@|（[\s\S]+?）/g, '');
     othis.attr({
-      href: '/jump?username='+ text
+      href: '/user/'+ othis.parent().attr('data-id')
       ,target: '_blank'
     });
   });

@@ -30,9 +30,9 @@
             <a class="nav-this" href="{{route('forum.index')}}">
                 <i class="iconfont icon-wenda"></i>问答
             </a>
-            <a href="http://www.layui.com/" target="_blank">
+            {{--<a href="http://www.layui.com/" target="_blank">
                 <i class="iconfont icon-ui"></i>案例
-            </a>
+            </a>--}}
         </div>
 
         @if(Auth::guest())
@@ -40,10 +40,10 @@
             <!-- 未登入状态 -->
             <a title="登入" class="unlogin" href="{{url('/login')}}"><i class="iconfont icon-touxiang"></i></a>
             <span><a href="{{url('/login')}}" title="登入">登入</a><a href="{{url('register')}}"  title="注册">注册</a></span>
-            <p class="out-login">
+            {{--<p class="out-login">
                 <a href="" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-qq" title="QQ登入"></a>
                 <a href="" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-weibo" title="微博登入"></a>
-            </p>
+            </p>--}}
 
             <!-- 登入后的状态 -->
             <!--

@@ -87,11 +87,11 @@ $article=$article;
                         {{--<i class="iconfont icon-caina" title="最佳答案"></i>--}}
                     </div>
                     <div class="detail-body jieda-body">
-                        <p>
-                            @if($comment->replyusername<>null)
-                            <span>@<a href="{{$comment->replyuserID}}">{{$comment->replyusername }}</a></span>
+                        <p data-id="{{$comment->replyuserID}}">
+                            {{--@if($comment->replyusername<>null)--}}
+                            {{--<span>@<a href="{{$comment->replyuserID}}">{{$comment->replyusername }}</a></span>--}}
 
-                            @endif
+                            {{--@endif--}}
                             {!! $comment->content !!}</p>
                     </div>
                     <div class="jieda-reply">
@@ -166,13 +166,13 @@ $article=$article;
                     {!! csrf_field() !!}
                     <div class="layui-form-item layui-form-text">
                         <div class="layui-input-block">
-                            <textarea id="L_content" name="content" required lay-verify="required" placeholder="我要回答'"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+                            <textarea id="L_content" {{--name="content"--}} required lay-verify="required" placeholder="我要回答'"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        {{--<input type="hidden" id="content" value="" name="content">--}}
+                        <input type="hidden" id="content" value="" name="content">
                         <input type="hidden" id="articleID" name="articleID" value="{{$article->aid}}">
-                        <input type="hidden" id="replyuserID" name="replyuserID">
+                        <input type="hidden" id="replyuserID" name="replyuserID" value="0">
 
                     </div>
                 </form>
@@ -242,21 +242,20 @@ $article=$article;
 
     function postcomment(){
         var content= layui.fly.content($("#L_content").val());
-        var jqcontent    =$(content);
-        if( jqcontent.find('fly-aite')) {
+        //var $jqcontent =$(content);
+        if(! content.indexOf('fly-aite')>0) {
            // $('#replyuserID').val( jqcontent.find('#hiddenusername').attr('data-userid'));
-            content=   content.replace(jqcontent.find('.fly-aite')[0],'');
-        }else{
+            //content=   content.replace($jqcontent.find('.fly-aite')[0],'');
+           // var s=$jqcontent.find('.fly-aite').get(0);
             $('#replyuserID').val(0);
         }
 
-        return;
         layer.load();
         if(content.length<=0){
             layer.msg('不允许空的回复', {shift: 6});
             return false;
         }
-//        $('#content').val(content);
+        $('#content').val(content);
 
         var data=$('form').serialize();
         $.ajax({

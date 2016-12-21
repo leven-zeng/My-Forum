@@ -124,17 +124,19 @@ layui.define(['laypage', 'fly'], function(exports){
       layui.upload({
         elem: '.upload-img input'
         ,method: 'post'
-        ,url: '/user/upload/'
+        ,url: '/user/upload?_token='+$("input[name='_token']").val()
         ,before: function(){
           avatarAdd.find('.loading').show();
         }
         ,success: function(res){
           if(res.status == 0){
-            $.post('/user/set/', {
-              avatar: res.url
-            }, function(res){
-              location.reload();
-            });
+            //$.post('/user/set/', {
+            //  avatar: res.url
+            //}, function(res){
+            //  location.reload();
+            //});
+            //location.reload();
+            $('.avatar-add img').attr('src',res.data.src);
           } else {
             layer.msg(res.msg, {icon: 5});
           }

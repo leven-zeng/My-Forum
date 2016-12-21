@@ -27,15 +27,19 @@
                     </a>
                     <h2 class="fly-tip">
                         <a href="forum/detail?aid={{$article->aid}}">{{$article->title}}</a>
+                        @if($article->topNum>0)
                         <span class="fly-tip-stick">置顶</span>
+                        @endif
+                        @if($article->isgood==1)
                         <span class="fly-tip-jing">精帖</span>
+                        @endif
                     </h2>
                     <p>
                         <span><a href="user/home.html">{{$article->name}}</a></span>
                         <span>{{\Carbon\Carbon::parse($article->created_at)->diffForHumans()}}</span>
                         <span>layui框架综合</span>
             <span class="fly-list-hint"> 
-              <i class="iconfont" title="回答"></i> 317
+              <i class="iconfont" title="回答"></i> {{$article->comment_count}}
               <i class="iconfont" title="人气"></i> {{$article->clicknum}}
             </span>
                     </p>

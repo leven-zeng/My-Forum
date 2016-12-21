@@ -67,7 +67,7 @@ class UserController extends Controller
             Auth::user()->profile_image=$newImageName;
             if(Auth::user()->save())
             {
-                return $this->getJsonString('0','头像上传完成','images/userimages/',$newImageName);
+                return $this->getJsonString('0','头像上传完成','/images/userimages/'.$newImageName,$newImageName);
             }
         }
         return $this->getJsonString('500','头像不知道为什么丢了，再试一次吧','images/userimages/','');
