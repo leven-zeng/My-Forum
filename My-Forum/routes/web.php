@@ -22,7 +22,7 @@ Route::get('/',['as'=>'forum.index','uses'=> 'ForumController@index']);
 Route::any('/test/test',['as'=>'test.test','uses'=>'TestController@test']);
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/user/index',['as'=>'user.index','uses'=>'HomeController@index','middleware'=>['auth']] );
 
 Route::any('/user',['as'=>'user.index','middleware'=>['auth'],'uses'=>'UserController@index']);
 

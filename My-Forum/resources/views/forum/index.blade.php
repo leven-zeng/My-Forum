@@ -6,11 +6,11 @@
         <div class="content" style="margin-right:0">
             <div class="fly-tab">
         <span>
-          <a href="" class="tab-this">全部</a>
-          <a href="">未结帖</a>
-          <a href="">已采纳</a>
-          <a href="">精帖</a>
-          <a href="../user/index.html">我的帖</a>
+          <a href="{{route('forum.index')}}" class="{{$current==0?"tab-this":""}}">全部</a>
+          <a href="{{route('forum.index',['status'=>0])}}"  class="{{$current==1?"tab-this":""}}">未结帖</a>
+          <a href="{{route('forum.index',['status'=>1])}}"  class="{{$current==2?"tab-this":""}}">已采纳</a>
+          <a href="{{route('forum.index',['isgood'=>1])}}"  class="{{$current==3?"tab-this":""}}">精帖</a>
+          <a href="{{route('user.index')}}">我的帖</a>
         </span>
                 <form action="http://cn.bing.com/search" class="fly-search">
                     <i class="iconfont icon-sousuo"></i>

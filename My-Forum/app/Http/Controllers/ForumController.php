@@ -18,24 +18,51 @@ class ForumController extends Controller
 //$queries = DB::getQueryLog(); // 获取查询日志
 //dd($queries);
     //
-    public function index()
+    public function index(Request $request)
     {
         //$articles=Articles::paginate(15)->leftjoin('users','aid','=','aid');
+        $current=0;
+        if($request->has('status')){
+            if($request->get('status')=='0'){
+                $current=1;
+            }
+            if($request->get('status')=='1'){
+                $current=2;
+            }
+        }
+        if($request->has('isgood')){
+            $current=3;
+        }
 
         $articles = DB::table('articles')
             ->select(DB::raw('count(comments.articleID) as comment_count,articles.*,users.name,users.profile_image'))
             ->leftjoin('users', 'articles.userid', '=', 'users.id')
             ->leftjoin('comments','comments.articleID','=','articles.aid')
-
             ->groupBy('comments.articleID', 'users.name','users.profile_image','articles.userID','articles.content','articles.reward','articles.status','articles.isdel'
                 ,'articles.tagid','articles.type','articles.updated_at','articles.aid','articles.title','articles.topNum','articles.isgood','articles.created_at','articles.clicknum')
             ->orderBy('articles.topnum','desc')
             ->orderBy('articles.created_at','desc')
+            ->where(function($query) use($request){
+                if($request->has('status')){
+                    $query->where('articles.status','=',$request->get('status'));
+                    if($request->get('status')=='0'){
+                        $current=1;
+                    }
+                    if($request->get('status')=='1'){
+                        $current=2;
+                    }
+                }
+            })
+            ->where(function($query) use($request){
+                if($request->has('isgood')){
+                    $query->where('articles.isgood','=',$request->get('isgood'));
+                    $current=3;
+                }
+            })
             ->paginate(15);
 
-
         //dd($articles);
-        return view('forum.index',['articles'=>$articles]);
+        return view('forum.index',['articles'=>$articles,'current'=>$current]);
     }
 
     public function detail(Request $request)
