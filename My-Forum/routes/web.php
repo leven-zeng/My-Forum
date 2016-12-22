@@ -36,7 +36,8 @@ Route::post('/user/upload',['as'=>'user.upload','middleware'=>['auth'],'uses'=>'
 
 Route::get('/forum',['as'=>'forum.index','uses'=> 'ForumController@index']);
 
-Route::any('/forum/detail',['as'=>'forum.detail','uses'=>'ForumController@detail']);
+//Route::any('/forum/detail',['as'=>'forum.detail','uses'=>'ForumController@detail']);
+Route::get('/forum/{aid}',['as'=>'forum.detail','uses'=> 'ForumController@detail']);
 
 Route::any('/forum/add/',['as'=>'forum.add','middleware'=>['auth'],'uses'=>'ForumController@add']);
 
@@ -47,3 +48,5 @@ Route::post('/forum/upload/',['as'=>'forum.upload','uses'=>'ForumController@uplo
 Route::post('/forum/postcomment',['as'=>'forum.postcomment','uses'=>'ForumController@postcomment']);
 
 Route::post('/form/addlike',['as'=>'forum.addlike','uses'=>'ForumController@addlike']);
+
+Route::any('/api/mine-jie',['as'=>'api.mine-jie','uses'=>'ApiController@mine_jie']);

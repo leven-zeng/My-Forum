@@ -22,11 +22,12 @@
           <a href="javascript:;" class="tab-this" type="mine-jie">我的求解（<cite>0</cite>）</a>
           <a href="message.html">我的消息</a>
           <a href="home.html">我的主页</a>
+            {!! csrf_field() !!}
         </span>
                 </div>
                 <div class="user-mine">
                     <ul class="mine-view jie-row" style="display: block;">
-                        <li class="fly-none"><a>此处消息由Ajax读取，见mods/user.js</a></li>
+                        {{--<li class="fly-none"><a>此处消息由Ajax读取，见mods/user.js</a></li>--}}
                     </ul>
                 </div>
                 <div id="LAY-page"></div>
@@ -92,4 +93,22 @@
     </div>
 
 @include('layouts.foot')
+    <script src="../../res/layui/layui.js"></script>
+    <script>
+        layui.cache.page = 'user';
+        layui.cache.user = {
+            username: '{{$user->name}}}'
+            ,uid: {{$user->id}}
+            ,avatar: 'images/userimages/{{Auth::user()->profile_image}}'
+            //,experience: 83
+            ,sex: '{{$user->gender==1?"男":$user->gender==2?"女":"未知"}}'
+        };
+        layui.config({
+            version: "1.0.0"
+            ,base: '../../res/mods/'
+        }).extend({
+            fly: 'index'
+        }).use('fly');
+    </script>
+
 @endsection

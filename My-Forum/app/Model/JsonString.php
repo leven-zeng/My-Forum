@@ -11,6 +11,8 @@ class JsonString extends Model
     private $src;
     private $title;
     private $id;
+    private $rows;
+    private $count;
 
     public function __construct(){
     }
@@ -29,8 +31,11 @@ class JsonString extends Model
             'msg'=>$jsonString->msg,
             'data'=>[
                 'src'=>$jsonString->src,
-                'title'=>$jsonString->title],
-                'id'=>$jsonString->id
+                'title'=>$jsonString->title
+            ],
+                'rows'=>$jsonString->rows,
+                'id'=>$jsonString->id,
+                'count'=>$jsonString->count
         ]);
     }
 
@@ -51,7 +56,12 @@ class JsonString extends Model
         if(array_key_exists('id',$attributes)){
             $json->id=$attributes['id'];
         }
-
+        if(array_key_exists('rows',$attributes)){
+            $json->rows=$attributes['rows'];
+        }
+        if(array_key_exists('count',$attributes)){
+            $json->count=$attributes['count'];
+        }
         return $json;
     }
 }

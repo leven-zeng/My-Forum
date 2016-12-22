@@ -60,7 +60,7 @@
         </div>
         @else<div class="nav-user">
             <!-- 登入后的状态 -->
-            <a class="avatar" href="{{url('/home')}}">
+            <a class="avatar" href="{{route('user.index')}}">
                 <img src="/images/userimages/{{Auth::user()->profile_image}}">
                 <cite>{{\Illuminate\Support\Facades\Auth::user()->name}}</cite>
                 <i>{{""}}</i>{{--这里输出加粗字体--}}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Comments;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -112,6 +113,7 @@ class UserController extends Controller
         }
     }
 
+    //修改用户密码
     public function updataUserPassWord($input)
     {
         $v=Validator::make($input,[
@@ -148,5 +150,10 @@ class UserController extends Controller
         {
             return $this->getJsonString('6','更新未完成','','');
         }
+    }
+
+    //消息
+    public function message(){
+        Comments::where();
     }
 }

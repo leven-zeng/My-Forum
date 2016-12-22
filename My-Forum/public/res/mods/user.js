@@ -29,23 +29,24 @@ layui.define(['laypage', 'fly'], function(exports){
       //求解
       '{{# for(var i = 0; i < d.rows.length; i++){ }}\
       <li>\
-        {{# if(d.rows[i].status == 1){ }}\
+        {{# if(d.rows[i].isgood == 1){ }}\
         <span class="fly-jing">精</span>\
         {{# } }}\
-        {{# if(d.rows[i].accept >= 0){ }}\
+        {{# if(d.rows[i].status > 0){ }}\
         <span class="jie-status jie-status-ok">已解决</span>\
         {{# } }}\
-        <a class="jie-title" href="/jie/{{d.rows[i].id}}.html" target="_blank">{{= d.rows[i].title}}</a>\
-        <i>{{new Date(d.rows[i].time).toLocaleString()}}</i>\
+        <a class="jie-title" href="/forum/{{d.rows[i].aid}}" target="_blank">{{= d.rows[i].title}}</a>\
+        <i>{{new Date(d.rows[i].created_at).toLocaleDateString()}}</i>\
         {{# if(d.rows[i].accept == -1){ }}\
         <a class="mine-edit" href="/jie/edit/{{d.rows[i].id}}">编辑</a>\
         {{# } }}\
-        <em>{{d.rows[i].hits}}阅/{{d.rows[i].comment}}答</em>\
+        <em>{{d.rows[i].clicknum}}阅/{{d.rows[i].comment_count}}答</em>\
       </li>\
       {{# } }}'
     ];
     function view(res){
       var html = laytpl(tpl[index]).render(res);
+      debugger;
       dom.mine.find('a').eq(index).find('cite').html(res.count);
       dom.mineview.eq(index).html(res.rows.length === 0 ? '<div class="fly-msg">没有相关数据</div>' : html);
     }
@@ -54,7 +55,7 @@ layui.define(['laypage', 'fly'], function(exports){
       if(gather.minelog[type + 'page-' + curr]){
         view(gather.minelog[type + 'page-' + curr]);
       } else {
-        fly.json('/api/'+ type +'/', {
+        fly.json('/api/'+ type +'?_token='+$('input[name="_token"]').val(), {
           page: curr
         }, function(res){
           view(res);
