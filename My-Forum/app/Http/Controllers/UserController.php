@@ -154,6 +154,6 @@ class UserController extends Controller
 
     //消息
     public function message(){
-        Comments::where();
+        Comments::where('');
     }
 }
