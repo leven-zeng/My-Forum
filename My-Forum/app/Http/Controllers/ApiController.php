@@ -52,6 +52,7 @@ class ApiController extends Controller
         return $jsonstr->getJsonString($jsonstr);
     }
 
+    //获取消息 根据用户ID，可传递userID或者登陆用户的ID
     public function getMessage(Request $request){
         $userID=Auth::user()->id;
         if($request->has('userID')){
@@ -62,6 +63,7 @@ class ApiController extends Controller
             ->leftjoin('articles','articles.aid','=','comments.articleID')
             ->leftjoin('users','users.id','=','comments.userID')
             ->where('comments.forUserID','=',$userID)
+            ->where('comments.status','=',0)
             ->select('articles.title','users.name','comments.created_at','comments.ID','articles.aid','comments.isread')
             ->get();
 
@@ -78,12 +80,40 @@ class ApiController extends Controller
             array_push($arraymessage,$array);
         }
 
+        return  response()->json(['status'=>0,'rows'=>$arraymessage]);
+    }
+
+    //消息设为已读
+    public function msgread(){
+        $res= Comments::where('forUserID','=',Auth::user()->id)
+            ->where('isread','0')
+            ->update(['isread'=>1]);
 
         $jsonstr=    JsonString::create([
-            'status'=>0,
-            'rows'=>$arraymessage
+            'status'=>0
         ]);
-        return  response()->json(['status'=>0,'rows'=>$arraymessage]);
+        return  $jsonstr->getJsonString($jsonstr);
+    }
+
+    //删除阅读后的消息
+    public function msgdel(Request $request){
+         $re= Comments::where('forUserID','=',Auth::user()->id)
+             ->where(function($query) use($request){
+                 if($request->has('type') && $request->get('type')=='all'){
+
+                 }
+             })
+             ->where(function($query) use($request){
+                 if($request->has('id') && $request->get('id')!=null){
+                      $query->where('ID','=',$request->get('id'));
+                 }
+             })
+            ->update(['status'=>1]);
+
+        $jsonstr=    JsonString::create([
+            'status'=>0
+        ]);
+        return  $jsonstr->getJsonString($jsonstr);
     }
 
 }

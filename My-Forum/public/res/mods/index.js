@@ -240,9 +240,9 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
             var msg = $('<a class="nav-message" href="javascript:;" title="您有'+ res.count +'条未阅读的消息">'+ res.count +'</a>');
             $('.nav-user').append(msg);
             msg.on('click', function(){
-              gather.json('/api/msg-read', {}, function(res){
+              gather.json('/api/msgread?_token='+$('input[name="_token"]').val(), {}, function(res){
                 if(res.status === 0){
-                  location.href = '/user/message/';
+                  location.href = '/user/message';
                 }
               });
             });

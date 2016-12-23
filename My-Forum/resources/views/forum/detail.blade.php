@@ -275,6 +275,7 @@ $article=$article;
                         comment_li.find('cite i').text($('.avatar cite').text());
                         comment_li.find('.icon-zan').attr('data-id',res.title);
                         $('#jieda').append(comment_li);
+                        $("#L_content").val('')
                     });
 
                 } else {

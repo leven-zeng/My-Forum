@@ -195,7 +195,7 @@ layui.define(['laypage', 'fly'], function(exports){
     {{# } else { }}\
       <ul class="mine-msg">\
       {{# for(var i = 0; i < len; i++){ }}\
-        <li data-id="{{d.rows[i].ID}}"><a href="{{d.rows[i].href}}" target="_blank">{{ d.rows[i].content}}</a><p><span>{{d.rows[i].time}}</span><a href="javascript:;" class="layui-btn layui-btn-small fly-delete">删除</a></p></li>\
+        <li data-id="{{d.rows[i].id}}"><a href="{{d.rows[i].href}}" target="_blank">{{ d.rows[i].content}}</a><p><span>{{d.rows[i].time}}</span><a href="javascript:;" class="layui-btn layui-btn-small fly-delete">删除</a></p></li>\
       {{# } }}\
       </ul>\
     {{# } }}'
@@ -217,7 +217,7 @@ layui.define(['laypage', 'fly'], function(exports){
     //阅读后删除
     dom.minemsg.on('click', '.mine-msg li .fly-delete', function(){
       var othis = $(this).parents('li'), id = othis.data('id');
-      fly.json('/api/msg-del', {id: id}, function(res){
+      fly.json('/api/msg-del', {id: id,_token:$('input[name="_token"]').val()}, function(res){
         if(res.status === 0){
           othis.remove();
           delEnd();
@@ -229,7 +229,7 @@ layui.define(['laypage', 'fly'], function(exports){
     $('#LAY_delallmsg').on('click', function(){
       var othis = $(this);
       layer.confirm('确定清空吗？', function(index){
-        fly.json('/api/msg-del', {
+        fly.json('/api/msg-del?_token='+$('input[name="_token"]').val(), {
           type: 'all'
         }, function(res){
           if(res.status === 0){
