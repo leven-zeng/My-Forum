@@ -37,7 +37,7 @@ Route::post('/user/upload',['as'=>'user.upload','middleware'=>['auth'],'uses'=>'
 Route::get('/forum',['as'=>'forum.index','uses'=> 'ForumController@index']);
 
 //Route::any('/forum/detail',['as'=>'forum.detail','uses'=>'ForumController@detail']);
-Route::get('/forum/{aid}',['as'=>'forum.detail','uses'=> 'ForumController@detail']);
+Route::get('/forum/detail/',['as'=>'forum.detail','uses'=> 'ForumController@detail']);
 
 Route::any('/forum/add/',['as'=>'forum.add','middleware'=>['auth'],'uses'=>'ForumController@add']);
 
@@ -50,3 +50,9 @@ Route::post('/forum/postcomment',['as'=>'forum.postcomment','uses'=>'ForumContro
 Route::post('/form/addlike',['as'=>'forum.addlike','uses'=>'ForumController@addlike']);
 
 Route::any('/api/mine-jie',['as'=>'api.mine-jie','uses'=>'ApiController@mine_jie']);
+
+Route::any('/api/getmsgcount',['as'=>'api.getmsgcount','uses'=>'ApiController@getMsgCount']);
+
+Route::any('/user/message',['as'=>'user.message','uses'=>'UserController@message']);
+
+Route::post('/api/msg/',['as'=>'api.message','uses'=>'ApiController@getMessage']);

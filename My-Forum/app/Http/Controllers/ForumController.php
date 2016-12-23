@@ -65,9 +65,9 @@ class ForumController extends Controller
         return view('forum.index',['articles'=>$articles,'current'=>$current]);
     }
 
-    public function detail($aid)
+    public function detail(Request $request)
     {
-        $article=  Articles::where('articles.aid',$aid)
+        $article=  Articles::where('articles.aid',$request->get('aid'))
             ->leftjoin('users','articles.userid','=','users.id')
             ->select('articles.*','users.profile_image','users.name')
             ->first();
@@ -82,7 +82,7 @@ class ForumController extends Controller
             ->leftjoin('users','comments.userID','=','users.id')
             ->leftjoin('users as user2','comments.forUserID','=','user2.ID')
             ->select('comments.*','users.name','users.profile_image','user2.name as replyusername','user2.ID as replyuserID')
-            ->where("comments.articleID",$aid)
+            ->where("comments.articleID",$request->get('aid'))
             ->orderBy('comments.id')
             ->paginate(15);
 

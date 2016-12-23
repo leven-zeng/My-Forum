@@ -35,7 +35,7 @@ layui.define(['laypage', 'fly'], function(exports){
         {{# if(d.rows[i].status > 0){ }}\
         <span class="jie-status jie-status-ok">已解决</span>\
         {{# } }}\
-        <a class="jie-title" href="/forum/{{d.rows[i].aid}}" target="_blank">{{= d.rows[i].title}}</a>\
+        <a class="jie-title" href="/forum/detail?aid={{d.rows[i].aid}}" target="_blank">{{= d.rows[i].title}}</a>\
         <i>{{new Date(d.rows[i].created_at).toLocaleDateString()}}</i>\
         {{# if(d.rows[i].accept == -1){ }}\
         <a class="mine-edit" href="/jie/edit/{{d.rows[i].id}}">编辑</a>\
@@ -195,7 +195,7 @@ layui.define(['laypage', 'fly'], function(exports){
     {{# } else { }}\
       <ul class="mine-msg">\
       {{# for(var i = 0; i < len; i++){ }}\
-        <li data-id="{{d.rows[i].id}}"><a href="{{d.rows[i].href}}" target="_blank">{{ d.rows[i].content}}</a><p><span>{{d.rows[i].time}}</span><a href="javascript:;" class="layui-btn layui-btn-small fly-delete">删除</a></p></li>\
+        <li data-id="{{d.rows[i].ID}}"><a href="{{d.rows[i].href}}" target="_blank">{{ d.rows[i].content}}</a><p><span>{{d.rows[i].time}}</span><a href="javascript:;" class="layui-btn layui-btn-small fly-delete">删除</a></p></li>\
       {{# } }}\
       </ul>\
     {{# } }}'
@@ -206,7 +206,7 @@ layui.define(['laypage', 'fly'], function(exports){
     }
     
     
-    fly.json('/api/msg/', {}, function(res){
+    fly.json('/api/msg?_token='+$('input[name="_token"]').val(), {}, function(res){
       var html = laytpl(tpl).render(res);
       dom.minemsg.html(html);
       if(res.rows.length > 0){

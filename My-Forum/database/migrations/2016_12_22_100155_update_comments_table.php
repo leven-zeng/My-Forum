@@ -14,7 +14,7 @@ class UpdateCommentsTable extends Migration
     public function up()
     {
         Schema::table("comments",function(Blueprint $table){
-            $table->integer('isread')->default(0)->after('likeNum')->comment('0н╢╤а 1ря╤а йг╥Яря╤а');
+            $table->integer('isread')->default(0)->after('likeNum')->comment('0Ф°╙Х╞╩ 1Е╥╡Х╞╩ Ф≤╞Е░╕Е╥╡Х╞╩');
         });
     }
 

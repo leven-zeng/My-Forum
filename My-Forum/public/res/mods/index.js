@@ -233,7 +233,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
     //新消息通知
     ,newmsg: function(){
       if(layui.cache.user.uid !== -1){
-        gather.json('/api/msg-count', {
+        gather.json('/api/getmsgcount?_token='+$('input[name="_token"]').val(), {
           _: new Date().getTime()
         }, function(res){
           if(res.status === 0 && res.count > 0){

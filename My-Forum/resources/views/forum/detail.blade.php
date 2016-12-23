@@ -69,7 +69,7 @@ $article=$article;
 
                 @foreach($comments as $comment)
                 <li data-id="" class="jieda-daan">
-                    <a name="item-121212121212"></a>
+                    <a name="dataid-{{$comment->ID}}"></a>
                     <div class="detail-about detail-about-reply">
                         <a class="jie-user" href="">
                             <img src="/images/userimages/{{$comment->profile_image}}" alt="" layer-index="1">
