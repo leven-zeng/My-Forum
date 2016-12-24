@@ -301,7 +301,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
     }
     text = text.replace(/^@|（[\s\S]+?）/g, '');
     othis.attr({
-      href: '/user/'+ othis.parent().attr('data-id')
+      href: '/user/home/'+ othis.parent().attr('data-id')
       ,target: '_blank'
     });
   });

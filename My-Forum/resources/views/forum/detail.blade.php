@@ -68,7 +68,7 @@ $article=$article;
                 {{--==============评论============================--}}
 
                 @foreach($comments as $comment)
-                <li data-id="" class="jieda-daan">
+                <li data-id="{{$comment->ID}}" class="jieda-daan">
                     <a name="dataid-{{$comment->ID}}"></a>
                     <div class="detail-about detail-about-reply">
                         <a class="jie-user" href="">
@@ -88,10 +88,6 @@ $article=$article;
                     </div>
                     <div class="detail-body jieda-body">
                         <p data-id="{{$comment->replyuserID}}">
-                            {{--@if($comment->replyusername<>null)--}}
-                            {{--<span>@<a href="{{$comment->replyuserID}}">{{$comment->replyusername }}</a></span>--}}
-
-                            {{--@endif--}}
                             {!! $comment->content !!}</p>
                     </div>
                     <div class="jieda-reply">
@@ -102,6 +98,12 @@ $article=$article;
                           <span type="del">删除</span>
                           <span class="jieda-accept" type="accept">采纳</span>
                         </div> -->
+                     <div class="jieda-admin">
+                         @if($article->isCurrUser() && $article->status==0)
+                             <span class="jieda-accept" type="accept">采纳</span>
+                         @endif
+
+                        </div>
                     </div>
                 </li>
                 @endforeach

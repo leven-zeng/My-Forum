@@ -22,6 +22,7 @@ Route::get('/',['as'=>'forum.index','uses'=> 'ForumController@index']);
 Route::any('/test/test',['as'=>'test.test','uses'=>'TestController@test']);
 Auth::routes();
 
+#============================用户中心==============================
 Route::get('/user/index',['as'=>'user.index','uses'=>'HomeController@index','middleware'=>['auth']] );
 
 Route::any('/user',['as'=>'user.index','middleware'=>['auth'],'uses'=>'UserController@index']);
@@ -32,8 +33,13 @@ Route::post('/user/set',['as'=>'user.postset','middleware'=>['auth'],'uses'=>'Us
 
 Route::post('/user/upload',['as'=>'user.upload','middleware'=>['auth'],'uses'=>'UserController@upload']);
 
+Route::any('/user/message',['as'=>'user.message','middleware'=>['auth'],'uses'=>'UserController@message']);
+
+Route::get('/user/home/{userID}',['as'=>'user.home','uses'=>'UserController@home']);
+#============================用户中心==============================
 //Route::any('/forum',['as'=>'forum.index','uses'=>'ForumController@index']);
 
+#============================文章求解==============================
 Route::get('/forum',['as'=>'forum.index','uses'=> 'ForumController@index']);
 
 //Route::any('/forum/detail',['as'=>'forum.detail','uses'=>'ForumController@detail']);
@@ -49,14 +55,20 @@ Route::post('/forum/postcomment',['as'=>'forum.postcomment','middleware'=>['auth
 
 Route::post('/form/addlike',['as'=>'forum.addlike','uses'=>'ForumController@addlike']);
 
+#============================文章求解==============================
+
+#============================接口==============================
 Route::any('/api/mine-jie',['as'=>'api.mine-jie','uses'=>'ApiController@mine_jie']);
 
 Route::any('/api/getmsgcount',['as'=>'api.getmsgcount','uses'=>'ApiController@getMsgCount']);
 
-Route::any('/user/message',['as'=>'user.message','uses'=>'UserController@message']);
+
 //获取用户消息
 Route::post('/api/msg/',['as'=>'api.message','uses'=>'ApiController@getMessage']);
 //将消息设为已读
 Route::post('/api/msgread/',['as'=>'api.msgread','middleware'=>['auth'],'uses'=>'ApiController@msgread']);
 //删除阅读的消息
 Route::post('/api/msg-del/',['as'=>'api.msgdel','middleware'=>['auth'],'uses'=>'ApiController@msgdel']);
+//采纳解答
+Route::post('/api/jieda-accept/',['as'=>'api.jiedaaccept','middleware'=>['auth'],'uses'=>'ApiController@jiedaaccept']);
+#============================接口==============================

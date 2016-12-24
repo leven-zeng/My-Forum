@@ -116,4 +116,32 @@ class ApiController extends Controller
         return  $jsonstr->getJsonString($jsonstr);
     }
 
+    //采纳解答
+    public function jiedaaccept(Request $request){
+        $commentID=$request->get('id');
+
+        $comment= Comments::where('comments.ID',$commentID)
+            ->leftjoin('articles','comments.articleID','=','articles.aid')
+            ->select('articles.userID as articleUserID','articles.aid')
+            ->first();
+
+        $status=0;
+        //判断操作的是否作者本人
+        if($comment->articleUserID !=Auth::user()->id)
+        {
+            $status=500;
+            goto res;
+        }
+        Articles::where('aid',$comment->aid)
+            ->update(['status'=>1]);
+        Comments::where('ID',$commentID)
+        ->update(['']);
+
+        res:
+        $jsonstr=    JsonString::create([
+            'status'=>$status
+        ]);
+        return  $jsonstr->getJsonString($jsonstr);
+    }
+
 }

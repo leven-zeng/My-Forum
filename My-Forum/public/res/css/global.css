@@ -95,6 +95,8 @@ pre{padding: 10px 15px; margin: 10px 0; font-size:12px; border:1px solid #ddd; b
 .fly-error{color:#c00;}
 .loading{background-image: url(../images/loading.gif); background-position: center center; background-repeat: no-repeat;}
 
+html .fly-full{margin-top: 65px;}
+
 /* 404或提示 */
 .fly-none{min-height: 600px; text-align: center; padding-top:50px; color: #999;}
 .fly-none .iconfont{line-height: 300px; font-size: 300px; color: #393D49;}
@@ -225,23 +227,27 @@ body .leifeng-rank span a img{width: 78px; height: 78px; border-radius: 100%;}
 .mine-view{display:none;}
 
 /* 个人主页 */
-.fly-home{position: reltive; padding: 30px 0 98px; text-align: center; background-color: #f2f2f2;}
+
+
+/* ä¸ªäººä¸»é¡µ */
+.fly-home{position: relative; padding: 30px 0 30px; text-align: center; background-color: #f2f2f2;}
 .fly-home img{width:120px; height:120px; border-radius:100%;}
 .fly-home h1{font-size:26px; line-height:30px; margin-top:10px;}
 .fly-home h1 span{font-size:14px; color:#999;}
 .fly-home h1 .icon-nan{color:#4EBBF9}
 .fly-home h1 .icon-nv{color:#F581B1}
+.fly-home-sign{padding: 0 10px; color: #999; margin-top: 10px;}
+
 .home-nav{margin: 20px 0; text-align:center; font-size:0;}
 .home-nav a{position:relative; padding:0 30px;  display:inline-block; *display:inline; *zoom:1; vertical-align:top; font-size:18px; color:#666;}
 .home-nav a:first-child::before{display:none;}
 .home-nav a::before{content:''; position:absolute; left:0; top:5px; width:1px; height:16px; background-color:#ccc;}
-.home-left{width:680px; float:left;}
-.home-left h2{line-height:40px; margin-bottom:15px; padding:0 10px; background-color:#FAFAFA;}
-.home-right{width:300px; float:right;}
-.home-info{padding:20px 0; background-color:#FAFAFA;}
-.home-info li{padding:0 20px; line-height:30px;}
-.home-info li i{padding-right:10px; color:#666;}
-.home-info li span{color:#999;}
+.fly-home-info i{padding-right: 5px; padding-left: 10px; color: #666;}
+.fly-home-info span{color: #999;}
+.fly-sns{margin-top: 10px;}
+.fly-home-main{font-size: 0; text-align: center;}
+.fly-home-main>.layui-inline{width: 530px; vertical-align: top; font-size: 14px; text-align: left;}
+.fly-home-da{margin-left: 25px;}
 
 /*.home-jieda li{margin-bottom:20px; padding-bottom:10px; line-height:24px; border-bottom: 1px dotted #DFDFDF;}*/
 .home-jieda li{ margin-bottom:20px; line-height:24px;}

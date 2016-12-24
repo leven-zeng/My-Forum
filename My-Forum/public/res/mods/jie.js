@@ -115,7 +115,8 @@ layui.define(['laypage', 'fly'], function(exports){
       layer.confirm('是否采纳该回答为最佳答案？', function(index){
         layer.close(index);
         fly.json('/api/jieda-accept/', {
-          id: li.data('id')
+          id: li.data('id'),
+          _token:$('input[name="_token"]').val()
         }, function(res){
           if(res.status === 0){
             $('.jieda-accept').remove();

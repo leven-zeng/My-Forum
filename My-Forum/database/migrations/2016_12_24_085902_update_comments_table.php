@@ -14,7 +14,7 @@ class UpdateCommentsTable extends Migration
     public function up()
     {
         Schema::table("comments",function(Blueprint $table){
-
+            $table->timestamp('acceptTime')->after('isaccept')->comment('被采纳时间');
         });
     }
 

@@ -21,7 +21,7 @@
         <span id="LAY-mine">
           <a href="javascript:;" class="tab-this" type="mine-jie">我的求解（<cite>0</cite>）</a>
           <a href="{{route('user.message')}}">我的消息</a>
-          <a href="home.html">我的主页</a>
+          <a href="{{route('user.home',['userID'=>Auth::user()->id])}}">我的主页</a>
             {!! csrf_field() !!}
         </span>
                 </div>

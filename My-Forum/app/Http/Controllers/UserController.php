@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Articles;
 use App\Model\Comments;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
@@ -155,5 +156,16 @@ class UserController extends Controller
     //消息
     public function message(){
        return view('user.message');
+    }
+
+    //用户主页
+    public function home($userID){
+       $user= User::where('ID',$userID)->first();
+
+        $articles= Articles::getArticle($userID);
+
+        $comments=Comments::getCommentsByUserID($userID);
+
+        return view('user.home',with(['user'=>$user,'articles'=>$articles,'comments'=>$comments]));
     }
 }
