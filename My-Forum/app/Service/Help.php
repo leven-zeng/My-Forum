@@ -13,6 +13,10 @@ class Help {
     {
         return \Carbon\Carbon::parse($dateTime)->diffForHumans();
     }
+
+    public static function getImgSrc($imgName){
+        return '/images/userimages/'.$imgName;
+    }
 }
 
 ?>

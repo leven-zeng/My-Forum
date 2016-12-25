@@ -35,8 +35,8 @@
           </div>
           <div class="layui-inline">            
             <div class="layui-input-inline">              
-              <input type="radio" name="gender" value="1" {{$user->gender==1?"checked='checked'":""}} title="男"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>男</span></div>
-              <input type="radio" name="gender" value="0" {{$user->gender==0?"checked='checked'":""}} title="女"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
+              <input type="radio" name="gender" value="1" {{$user->gender=='1'?"checked='checked'":""}} title="男"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>男</span></div>
+              <input type="radio" name="gender" value="0" {{$user->gender=='0'?"checked='checked'":""}} title="女"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
             </div>          
           </div>
         </div>

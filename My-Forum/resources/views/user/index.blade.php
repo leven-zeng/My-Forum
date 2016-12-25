@@ -13,8 +13,8 @@
 
                 <div class="fly-msg">
                     @if(Auth::user()->isValiDataEmail==0)
-                     您的邮箱尚未验证，这比较影响您的帐号安全，<a href="/user/activate/">立即去激活？</a>
-                        @endif
+                        您的邮箱尚未验证，这比较影响您的帐号安全，<a href="/user/activate/">立即去激活？</a>
+                    @endif
                 </div>
 
                 <div class="fly-tab user-tab">
@@ -46,12 +46,12 @@
                 </p>
                 <p>
                     <span>加入时间：{{date('Y-m-d',strtotime( Auth::user()->created_at))}}</span>
-        {{--<span>
-          飞吻：<em style="color:#FF7200">5200</em>
-        </span>--}}
+                    {{--<span>
+                      飞吻：<em style="color:#FF7200">5200</em>
+                    </span>--}}
                 </p>
                 <p>
-                    <span>城市：{{$user->city}}</span>
+                    <span>城市：{{$user->city==''?'未知':$user->city}}</span>
                     <span>性别：
                         @if($user->gender==1)
                             <span>男</span>
@@ -65,34 +65,21 @@
 
                 <div class="user-looklog" style="padding-bottom:200px;">
                     <h3>最近访客</h3>
-        <span>
-          <a href="/u/168">
-              <img src="http://fly.layui.com/avatar/168.jpg">
-              <cite>贤心</cite>
-              <i>刚刚</i>
-          </a>
-          <a href="/u/336">
-              <img src="http://res.layui.com/images/fly/avatar/00.jpg">
-              <cite>Fly官方</cite>
-              <i>5分钟前</i>
-          </a>
-          <a href="/u/26880">
-              <img src="http://res.layui.com/images/fly/avatar/5.jpg">
-              <cite>小付</cite>
-              <i>1小时前</i>
-          </a>
-          <a href="/u/11928">
-              <img src="http://fly.layui.com/avatar/11928.jpg">
-              <cite>第一把菜刀</cite>
-              <i>3天前</i>
-          </a>
-        </span>
+                    <span>
+                        @foreach($lookusers as $lookuser)
+                            <a href="{{route('user.home',['userID'=>$lookuser->id])}}">
+                                <img src="{{\App\Service\Help::getImgSrc($lookuser->profile_image)}}">
+                                <cite>{{$lookuser->name}}</cite>
+                                <i>{{\App\Service\Help::getdiffForHumans($lookuser->updated_at)}}</i>
+                            </a>
+                        @endforeach
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 
-@include('layouts.foot')
+    @include('layouts.foot')
     <script src="../../res/layui/layui.js"></script>
     <script>
         layui.cache.page = 'user';

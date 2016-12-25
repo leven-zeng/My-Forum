@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Model\Articles;
 use App\Model\Comments;
-use App\Model\LookUser;
-use App\Model\UserLook;
+use App\Model\LookRecord;
+use App\Model\UserLookLog;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
@@ -36,7 +37,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $userID=Auth::user()->id;
+        //获取最近访问用户
+        $lookusers= UserLookLog::where('lookForUserID',$userID)
+            ->leftjoin('users','users.id','=','lookUserID')
+            ->select('users.name','users.profile_image','users.id','user_look_logs.updated_at')
+            ->limit(4)
+            ->orderBy('user_look_logs.updated_at','desc')
+            ->get();
+
+        return view('user.index',with(['lookusers'=>$lookusers]));
     }
 
     public function set(){
@@ -162,7 +172,7 @@ class UserController extends Controller
     }
 
     //用户主页
-    public function home($userID){
+    public function home( Request $request,$userID){
        $user= User::where('ID',$userID)->first();
 
         $articles= Articles::getArticle($userID);
@@ -175,9 +185,18 @@ class UserController extends Controller
             $currUserID=Auth::user()->id;
 
             if($currUserID!=$userID){
-                LookUser::create (['lookUserID'=>$currUserID,
-                    'lookForUserID'=>$userID
-                ]);
+                $look=UserLookLog::where('lookUserID',$currUserID)
+                    ->where('lookForUserID',$userID)
+                ->first();
+
+                if($look==null || $look->count()<=0) {
+                    $res = UserLookLog::create(['lookUserID' => $currUserID,
+                        'lookForUserID' => $userID
+                    ]);
+                }else{
+                    $look->created_at=date('Y-m-d H:m:s',time());
+                    $look->save();
+                }
             }
         }
 

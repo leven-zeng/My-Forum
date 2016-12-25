@@ -23,7 +23,8 @@ Route::any('/test/test',['as'=>'test.test','uses'=>'TestController@test']);
 Auth::routes();
 
 #============================用户中心==============================
-Route::get('/user/index',['as'=>'user.index','uses'=>'HomeController@index','middleware'=>['auth']] );
+//Route::get('/user/index',['as'=>'user.index','uses'=>'HomeController@index','middleware'=>['auth']] );
+Route::get('/user/index',['as'=>'user.index','uses'=>'UserController@index','middleware'=>['auth']] );
 
 Route::any('/user',['as'=>'user.index','middleware'=>['auth'],'uses'=>'UserController@index']);
 

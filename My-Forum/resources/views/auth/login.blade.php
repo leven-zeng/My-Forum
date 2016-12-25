@@ -12,7 +12,7 @@
                     <div class="layui-input-inline">
                         <input type="email" id="L_email" name="email" required="" lay-verify="required" value="{{ old('email') }}" required autofocus autocomplete="off" class="layui-input">
                         @if ($errors->has('email'))
-                            <span class="help-block">
+                            <span class="help-block" style="color: red;">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                         @endif
@@ -23,7 +23,7 @@
                     <div class="layui-input-inline">
                         <input type="password" id="L_pass" name="password" required="" lay-verify="required" autocomplete="off" class="layui-input" required>
                         @if ($errors->has('password'))
-                            <span class="help-block">
+                            <span class="help-block" style="color: red;">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                         @endif
