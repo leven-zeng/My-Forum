@@ -8,13 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>{{ $title or config('app.name', '追爱吧')  }}</title>
     <!-- Styles -->
     {{--<link href="/css/app.css" rel="stylesheet">--}}
     <link rel="stylesheet" href="/res/layui/css/layui.css">
     <link rel="stylesheet" href="/res/css/global.css">
-
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([

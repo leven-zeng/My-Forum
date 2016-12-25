@@ -8,7 +8,7 @@
 
         ?>
 
-@extends('layouts.head')
+@extends('layouts.head',['title'=>'发布话题_追爱吧'])
 
 @section('content')
     <div class="main layui-clear">
@@ -28,7 +28,7 @@
             <div class="layui-form-item layui-form-text">
                 <div class="layui-input-block">
                     <input type="hidden" name="content" id="content">
-                    <textarea class="layui-textarea" id="LAY_demo1" style="display: none"></textarea>
+                    <textarea class="layui-textarea" id="LAY_demo1" style=""></textarea>
                 </div>
                 <label for="L_content" class="layui-form-label" style="top: -2px;">描述</label>
             </div>
@@ -38,10 +38,12 @@
                     <div class="layui-input-block">
                         <select lay-verify="required" name="tagid">
                             <option></option>
-                            <option value="1">layui框架综合</option>
-                            <option value="2">layui.mobile模块</option>
-                            <option value="3">layer弹出层</option>
-                        </select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择" value="" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div><ul class="layui-anim layui-anim-upbit"><li lay-value="1">layui框架综合</li><li lay-value="2">layui.mobile模块</li><li lay-value="3">layer弹出层</li></ul></div>
+                            <option value="1" >案例分享</option>
+                            <option value="2" >经验闲谈</option>
+                            <option value="3" >聊天指南</option>
+                            <option value="4" >约会指南</option>
+                            <option value="5" >形象指南</option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">

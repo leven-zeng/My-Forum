@@ -83,6 +83,7 @@ class ForumController extends Controller
             ->leftjoin('users as user2','comments.forUserID','=','user2.ID')
             ->select('comments.*','users.name','users.profile_image','user2.name as replyusername','user2.ID as replyuserID')
             ->where("comments.articleID",$request->get('aid'))
+            ->where('comments.isdel',0)
             ->orderBy('comments.id')
             ->paginate(15);
 

@@ -1,5 +1,5 @@
 
-@extends('layouts.head')
+@extends('layouts.head',['title'=>$user->name.'的炫酷主页_追爱吧'])
 <style>
     body{
         margin-top: 65px !important;

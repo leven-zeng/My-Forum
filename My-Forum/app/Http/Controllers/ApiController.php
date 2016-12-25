@@ -64,6 +64,7 @@ class ApiController extends Controller
             ->leftjoin('users','users.id','=','comments.userID')
             ->where('comments.forUserID','=',$userID)
             ->where('comments.status','=',0)
+            ->where('comments.isdel',0)
             ->select('articles.title','users.name','comments.created_at','comments.ID','articles.aid','comments.isread')
             ->get();
 

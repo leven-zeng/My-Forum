@@ -1,4 +1,4 @@
-@extends('layouts.head')
+@extends('layouts.head',['title'=>'追爱吧'])
 
 @section('content')
 <div class="main layui-clear">
@@ -22,7 +22,7 @@
             <ul class="fly-list">
                 @foreach($articles as $article)
                 <li class="fly-list-li">
-                    <a href="user/home.html" class="fly-list-avatar">
+                    <a href="{{route('user.home',['userID'=>$article->userid])}}" class="fly-list-avatar">
                         <img src="images/userimages/{{$article->profile_image}}" alt="">
                     </a>
                     <h2 class="fly-tip">

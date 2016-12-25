@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Model\Articles;
 use App\Model\Comments;
+use App\Model\LookUser;
+use App\Model\UserLook;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -165,6 +168,18 @@ class UserController extends Controller
         $articles= Articles::getArticle($userID);
 
         $comments=Comments::getCommentsByUserID($userID);
+
+        //存储访问记录
+        $currUserID=0;
+        if(Auth::check()){
+            $currUserID=Auth::user()->id;
+
+            if($currUserID!=$userID){
+                LookUser::create (['lookUserID'=>$currUserID,
+                    'lookForUserID'=>$userID
+                ]);
+            }
+        }
 
         return view('user.home',with(['user'=>$user,'articles'=>$articles,'comments'=>$comments]));
     }

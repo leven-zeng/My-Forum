@@ -10,7 +10,7 @@ $article=$article;
 
  ?>
 
-@extends('layouts.head')
+@extends('layouts.head',['title'=>$article->title.'_追爱吧'])
 
 @section('content')
 <div class="main layui-clear">

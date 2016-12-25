@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('register_from')->default('web_form')->index()->comment('注册来源');
             $table->string('profile_image')->nullable(true)->default('default.jpg')->comment('头像');
             $table->string('description')->nullable(true)->comment('一句简短的说明性文字，个性签名');
+            $table->integer('wealth')->default(100)->comment('财富值 用户注册后默认有100 用户发布问答时奖励被采纳人');
             $table->rememberToken();
             $table->timestamps();
         });

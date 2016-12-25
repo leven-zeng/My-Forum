@@ -20,6 +20,7 @@ class Comments extends Model
             ->leftjoin('articles','articles.aid','=','comments.articleID')
             ->leftjoin('users','users.id','=','comments.userID')
             ->where('comments.userID','=',$userID)
+            ->where('comments.isdel',0)
             ->select('articles.title','users.name','comments.created_at','comments.ID','articles.aid','comments.isread','comments.content','comments.forUserID')
             ->get();
         return $messages;
