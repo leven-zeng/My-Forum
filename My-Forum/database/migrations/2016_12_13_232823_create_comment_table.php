@@ -22,7 +22,7 @@ class CreateCommentTable extends Migration
             $table->integer('forUserID')->default(0)->comment('回复某用户的评论 形式如 @某人');
             $table->integer('likeNum')->default(0)->comment('点赞数');
             $table->integer('isaccept')->default(0)->comment('0未被采纳 1已被采纳 解答是否被采纳');
-            $table->dateTime('acceptTime')->comment('被采纳时间');
+            $table->dateTime('acceptTime')->nullable(true)->comment('被采纳时间');
             $table->integer('isread')->default(0)->comment('0未读 1已读 是否已读');
             $table->integer('status')->default('0')->comment('状态 0正常 1用户自身删除，在消息列表不显示');
             $table->integer('isdel')->default('0')->comment('软删除 0正常 1删除');
