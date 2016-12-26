@@ -37,7 +37,9 @@
                     <p>
                         <span><a href="user/home.html">{{$article->name}}</a></span>
                         <span>{{\Carbon\Carbon::parse($article->created_at)->diffForHumans()}}</span>
-                        <span>layui框架综合</span>
+                        <span>
+                            {{\App\Service\Help::getTagNameByID($article->tagid)}}
+                        </span>
             <span class="fly-list-hint"> 
               <i class="iconfont" title="回答"></i> {{$article->comment_count}}
               <i class="iconfont" title="人气"></i> {{$article->clicknum}}
