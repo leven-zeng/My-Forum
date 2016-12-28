@@ -56,6 +56,11 @@ Route::post('/forum/postcomment',['as'=>'forum.postcomment','middleware'=>['auth
 
 Route::post('/form/addlike',['as'=>'forum.addlike','uses'=>'ForumController@addlike']);
 
+Route::get('/forum/edit/{aid}',['as'=>'forum.edit','middleware'=>['auth'],'uses'=>'ForumController@edit']);
+
+Route::post('/forum/postedit',['as'=>'forum.postedit','uses'=>'ForumController@postedit']);
+
+
 #============================文章求解==============================
 
 #============================接口==============================
