@@ -31,7 +31,7 @@ $article=$article;
                 <span class="jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> -->
 
                 <div class="fly-list-hint">
-                    <i class="iconfont" title="回答"></i> 517
+                    <i class="iconfont" title="回答"></i> {{$comments->total()}}
                     <i class="iconfont" title="人气"></i> {{$article->clicknum}}
                 </div>
             </div>
@@ -72,7 +72,7 @@ $article=$article;
                     <a name="dataid-{{$comment->ID}}"></a>
                     <div class="detail-about detail-about-reply">
                         <a class="jie-user" href="">
-                            <img src="/images/userimages/{{$comment->profile_image}}" alt="" layer-index="1">
+                            <img src="{{\App\Service\Help::getImgSrc($comment->profile_image)}}" alt="" layer-index="1">
                             <cite>
                                 <i>{{$comment->name}}</i>
                                 <!-- <em>(楼主)</em>

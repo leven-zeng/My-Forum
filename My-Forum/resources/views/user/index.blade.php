@@ -37,11 +37,11 @@
         <div class="edge">
             <div class="user-about">
                 <a href="{{url('user/set#avatar')}}" title="修改头像">
-                    <img class="user-avatar" src="images/userimages/{{Auth::user()->profile_image}}">
+                    <img class="user-avatar" src="{{\App\Service\Help::getImgSrc(Auth::user()->profile_image)}}">
                 </a>
                 <p>
                     <span style="color:#333">{{Auth::user()->name}}</span>
-                    <span style="color:#c00;">超级管理员</span>
+                    {{--<span style="color:#c00;">超级管理员</span>--}}
                     <!-- <span style="color:#5FB878;">管理员</span> -->
                 </p>
                 <p>

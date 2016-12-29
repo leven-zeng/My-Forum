@@ -22,7 +22,7 @@ Route::get('/',['as'=>'forum.index','uses'=> 'ForumController@index']);
 Route::any('/test/test',['as'=>'test.test','uses'=>'TestController@test']);
 Auth::routes();
 
-#============================ÓÃ»§ÖÐÐÄ==============================
+#============================ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½==============================
 //Route::get('/user/index',['as'=>'user.index','uses'=>'HomeController@index','middleware'=>['auth']] );
 Route::get('/user/index',['as'=>'user.index','uses'=>'UserController@index','middleware'=>['auth']] );
 
@@ -37,10 +37,10 @@ Route::post('/user/upload',['as'=>'user.upload','middleware'=>['auth'],'uses'=>'
 Route::any('/user/message',['as'=>'user.message','middleware'=>['auth'],'uses'=>'UserController@message']);
 
 Route::get('/user/home/{userID}',['as'=>'user.home','uses'=>'UserController@home']);
-#============================ÓÃ»§ÖÐÐÄ==============================
+#============================ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½==============================
 //Route::any('/forum',['as'=>'forum.index','uses'=>'ForumController@index']);
 
-#============================ÎÄÕÂÇó½â==============================
+#============================ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½==============================
 Route::get('/forum',['as'=>'forum.index','uses'=> 'ForumController@index']);
 
 //Route::any('/forum/detail',['as'=>'forum.detail','uses'=>'ForumController@detail']);
@@ -52,24 +52,24 @@ Route::post('/forum/add/',['as'=>'forum.add','middleware'=>['auth'],'middleware'
 
 Route::post('/forum/upload/',['as'=>'forum.upload','middleware'=>['auth'],'uses'=>'ForumController@upload']);
 
-Route::post('/forum/postcomment',['as'=>'forum.postcomment','middleware'=>['auth'],'uses'=>'ForumController@postcomment']);
+Route::post('/forum/postcomment',['as'=>'forum.postcomment','uses'=>'ForumController@postcomment']);
 
 Route::post('/form/addlike',['as'=>'forum.addlike','uses'=>'ForumController@addlike']);
 
-#============================ÎÄÕÂÇó½â==============================
+#============================ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½==============================
 
-#============================½Ó¿Ú==============================
+#============================ï¿½Ó¿ï¿½==============================
 Route::any('/api/mine-jie',['as'=>'api.mine-jie','uses'=>'ApiController@mine_jie']);
 
 Route::any('/api/getmsgcount',['as'=>'api.getmsgcount','uses'=>'ApiController@getMsgCount']);
 
 
-//»ñÈ¡ÓÃ»§ÏûÏ¢
+//ï¿½ï¿½È¡ï¿½Ã»ï¿½ï¿½ï¿½Ï¢
 Route::post('/api/msg/',['as'=>'api.message','uses'=>'ApiController@getMessage']);
-//½«ÏûÏ¢ÉèÎªÒÑ¶Á
+//ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Îªï¿½Ñ¶ï¿½
 Route::post('/api/msgread/',['as'=>'api.msgread','middleware'=>['auth'],'uses'=>'ApiController@msgread']);
-//É¾³ýÔÄ¶ÁµÄÏûÏ¢
+//É¾ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 Route::post('/api/msg-del/',['as'=>'api.msgdel','middleware'=>['auth'],'uses'=>'ApiController@msgdel']);
-//²ÉÄÉ½â´ð
+//ï¿½ï¿½ï¿½É½ï¿½ï¿½
 Route::post('/api/jieda-accept/',['as'=>'api.jiedaaccept','middleware'=>['auth'],'uses'=>'ApiController@jiedaaccept']);
-#============================½Ó¿Ú==============================
+#============================ï¿½Ó¿ï¿½==============================

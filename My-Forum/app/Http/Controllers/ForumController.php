@@ -59,6 +59,7 @@ class ForumController extends Controller
                     $current=3;
                 }
             })
+            ->where('articles.isdel',0)
             ->paginate(15);
 
         //dd($articles);
@@ -87,12 +88,14 @@ class ForumController extends Controller
             ->orderBy('comments.id')
             ->paginate(15);
 
-        $hotclicks=Articles::where('articles.status',0)
+        $hotclicks=Articles::where('articles.isdel',0)
             ->select('articles.*')
             ->orderBy('clickNum','desc')
+            ->where('articles.isdel',0)
             ->limit(10)
             ->get();
 
+        $hotreply=DB
 
 
         return view('forum.detail',['article'=>$article,'comments'=>$comments,'hotclicks'=>$hotclicks]);

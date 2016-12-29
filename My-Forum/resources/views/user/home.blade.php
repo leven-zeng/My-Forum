@@ -7,7 +7,7 @@
 </style>
 @section('content')
     <div class="fly-home"{{-- style="background-image: url('');"--}}>
-        <img src="/images/userimages/{{$user->profile_image}}" alt="{{$user->name}}" />
+        <img src="{{\App\Service\Help::getImgSrc($user->profile_image)}}" alt="{{$user->name}}" />
         <h1> {{$user->name}}&nbsp;<i class="iconfont {{$user->gender=='1'?'icon-nan':($user->gender=='0'?'icon-nv':'')}}"></i> </h1>
         <p class="fly-home-info"> <i class="iconfont icon-zuichun" title="飞吻"></i><span style="color: #FF7200;">95飞吻</span> <i class="iconfont icon-shijian"></i><span>{{date('Y-m-d',strtotime($user->created_at))}} 加入</span> <i class="iconfont icon-chengshi"></i><span>{{$user->city==''?'未知城市':'来自'.$user->city}}</span> </p>
         <p class="fly-home-sign">{{$user->description==''?"（这个人懒得留下签名）":'('.$user->description.')'}}</p>

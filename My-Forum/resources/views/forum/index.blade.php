@@ -23,7 +23,7 @@
                 @foreach($articles as $article)
                 <li class="fly-list-li">
                     <a href="{{route('user.home',['userID'=>$article->userid])}}" class="fly-list-avatar">
-                        <img src="images/userimages/{{$article->profile_image}}" alt="">
+                        <img src="{{\App\Service\Help::getImgSrc($article->profile_image)}}" alt="">
                     </a>
                     <h2 class="fly-tip">
                         <a href="forum/detail?aid={{$article->aid}}">{{$article->title}}</a>
