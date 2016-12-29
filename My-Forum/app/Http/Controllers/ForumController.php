@@ -95,7 +95,7 @@ class ForumController extends Controller
             ->limit(10)
             ->get();
 
-        $hotreply=DB
+       // $hotreply=DB
 
 
         return view('forum.detail',['article'=>$article,'comments'=>$comments,'hotclicks'=>$hotclicks]);

@@ -10,10 +10,10 @@ class TestController extends Controller
 {
     //
     public function test(){
-    $res=Mail::raw('暗示法撒发送邮件',function($message){
+    $res=Mail::raw('这是来自火星的邮件'.date('y-M-d h:m:s'),function($message){
             $message->subject('哈哈小子');
-            $message->to('18320003455@163.com');
-            $message->to('613767154@qq.com');
+            $message->to('m18707022909@163.com');
+            $message->to('1321101613@qq.com');
         });
 
         dd($res);
