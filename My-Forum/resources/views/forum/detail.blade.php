@@ -49,7 +49,7 @@ $article=$article;
                     <span style="color:#FF7200">悬赏：{{$article->reward}}飞吻</span>
                     @endif
                     @if($article->isCurrUser())
-                    <span class="jie-admin" type="edit"><a href="/jie/edit/">编辑此贴</a></span>
+                    <span class="jie-admin" type="edit"><a href="{{route('forum.edit',['aid'=>$article->aid])}}">编辑此贴</a></span>
                        @endif
                 </div>
             </div>

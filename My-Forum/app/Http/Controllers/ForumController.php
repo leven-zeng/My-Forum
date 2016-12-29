@@ -214,4 +214,51 @@ class ForumController extends Controller
        }
         return $jsonstr->getJsonString($jsonstr);
     }
+
+    //编辑文章
+    public function edit($aid){
+        $article= Articles::find($aid);
+
+        return view('forum.edit')->with(['article'=>$article]);
+    }
+
+    ///发布新的文字
+    public function postedit(Request $request)
+    {
+        if(Auth::check()==false)
+        {
+            return $this->getJsonString('500','请先登录','','');
+        }
+
+        $input=Input::all();
+        $v=Validator::make($input,
+            [
+                'title'=>'required|max:30',
+                'content'=>'required',
+                'tagid'=>'required',
+            ],[],[
+                'title'=>'标题',
+                'content'=>'内容',
+                'tagid'=>'类别'
+            ]);
+
+        if ($v->fails())
+        {
+            return    $this->getJsonString('500',$v->errors()->first(),'','');
+        }
+
+        if(!$request->has('aid')){
+            return $this->getJsonString('500','非法的请求','','');
+        }
+        Articles::where('aid',$request->get('aid'))
+            ->update ([
+                'title'=>$request->get('title'),
+                'content'=>$request->get('content'),
+                'reward'=>$request->get('reward'),
+                'tagid'=>$request->get('tagid')
+            ]);
+
+        return    $this->getJsonString('0','保存成功,即将为你跳转','',$request->get('aid'));
+
+    }
 }
