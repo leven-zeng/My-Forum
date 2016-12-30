@@ -19,6 +19,15 @@
                 'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?6612603b80d49e0c5e49d2488d688651";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </head>
 <body>
 <div class="header">
