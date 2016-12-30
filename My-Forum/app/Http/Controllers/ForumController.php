@@ -33,7 +33,7 @@ class ForumController extends Controller
         if($request->has('isgood')){
             $current=3;
         }
-
+        DB::connection()->enableQueryLog(); // 开启查询日志
         $articles = DB::table('articles')
             ->select(DB::raw('count(comments.articleID) as comment_count,articles.*,users.name,users.profile_image'))
             ->leftjoin('users', 'articles.userid', '=', 'users.id')
@@ -59,8 +59,16 @@ class ForumController extends Controller
                     $current=3;
                 }
             })
+            ->where(function($query) use($request){
+                if($request->has('q')){
+                    $query->where('articles.title','like','%'.$request->get('q').'%');
+                }
+            })
             ->where('articles.isdel',0)
             ->paginate(15);
+
+
+$queries = DB::getQueryLog(); // 获取查询日志
 
         //dd($articles);
         return view('forum.index',['articles'=>$articles,'current'=>$current]);

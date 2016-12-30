@@ -18,11 +18,18 @@ $article=$article;
         <div class="content detail">
             <h1>{{$article->title}}</h1>
             <div class="fly-tip fly-detail-hint" data-id="">
-                <span class="fly-tip-stick">置顶帖</span>
-                <span class="fly-tip-jing">精帖</span>
 
-                <span>未结贴</span>
-                <!-- <span class="fly-tip-jie">已采纳</span> -->
+                @if($article->topNum>0)
+                    <span class="fly-tip-stick">置顶帖</span>
+                @endif
+                @if($article->isgood==1)
+                        <span class="fly-tip-jing">精帖</span>
+                @endif
+                    @if($article->status==0)
+                        <span>未结贴</span>
+                    @elseif($article->status==1)
+                        <span class="fly-tip-jie">已采纳</span>
+                        @endif
 
                 <!-- <span class="jie-admin" type="del" style="margin-left: 20px;">删除</span>
                 <span class="jie-admin" type="set" field="stick" rank="1">置顶</span>
@@ -194,13 +201,13 @@ $article=$article;
             </li>
                 @endforeach
         </ol>
-        <h3 class="page-title">近期热议</h3>
+        {{--<h3 class="page-title">近期热议</h3>
         <ol class="fly-list-one">
             <li>
                 <a href=" ">盛赞！大赞狂赞！Layui完美兼容Vue.js</a>
                 <span><i class="iconfont"></i> 96</span>
             </li>
-        </ol>
+        </ol>--}}
 
     </div>
 </div>

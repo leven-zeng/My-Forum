@@ -12,13 +12,14 @@
           <a href="{{route('forum.index',['isgood'=>1])}}"  class="{{$current==3?"tab-this":""}}">精帖</a>
           <a href="{{route('user.index')}}">我的帖</a>
         </span>
-                <form action="http://cn.bing.com/search" class="fly-search">
+                <form action="{{route('forum.index')}}" class="fly-search">
                     <i class="iconfont icon-sousuo"></i>
                     <input class="layui-input" autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q">
                 </form>
                 <a href="{{route('forum.add')}}" class="layui-btn jie-add">发布问题</a>
             </div>
 
+            @if($articles->count()>0)
             <ul class="fly-list">
                 @foreach($articles as $article)
                 <li class="fly-list-li">
@@ -35,7 +36,7 @@
                         @endif
                     </h2>
                     <p>
-                        <span><a href="user/home.html">{{$article->name}}</a></span>
+                        <span><a href="{{route('user.home',['userID'=>$article->userid])}}">{{$article->name}}</a></span>
                         <span>{{\Carbon\Carbon::parse($article->created_at)->diffForHumans()}}</span>
                         <span>
                             {{\App\Service\Help::getTagNameByID($article->tagid)}}
@@ -49,13 +50,14 @@
 
                     @endforeach
             </ul>
+                {!! $articles->render() !!}
+            @else
+            <div class="fly-none">并无相关数据</div>
 
-            <!-- <div class="fly-none">并无相关数据</div> -->
-            {!! $articles->render() !!}
             {{--<div style="text-align: center">
                 <div class="laypage-main"><span class="laypage-curr">1</span><a href="/jie/page/2/">2</a><a href="/jie/page/3/">3</a><a href="/jie/page/4/">4</a><a href="/jie/page/5/">5</a><span>…</span><a href="/jie/page/148/" class="laypage-last" title="尾页">尾页</a><a href="/jie/page/2/" class="laypage-next">下一页</a></div>
             </div>--}}
-
+                @endif
 
         </div>
     </div>
