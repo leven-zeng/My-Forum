@@ -136,7 +136,7 @@ class ApiController extends Controller
         Articles::where('aid',$comment->aid)
             ->update(['status'=>1]);
         Comments::where('ID',$commentID)
-        ->update(['']);
+        ->update(['isaccept'=>1]);
 
         res:
         $jsonstr=    JsonString::create([

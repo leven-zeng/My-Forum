@@ -55,7 +55,7 @@ $article=$article;
                    @if($article->reward>0)
                     <span style="color:#FF7200">悬赏：{{$article->reward}}飞吻</span>
                     @endif
-                    @if($article->isCurrUser())
+                    @if($article->isCurrUser() && $article->status==0)
                     <span class="jie-admin" type="edit"><a href="{{route('forum.edit',['aid'=>$article->aid])}}">编辑此贴</a></span>
                        @endif
                 </div>
@@ -91,7 +91,9 @@ $article=$article;
                         <div class="detail-hits">
                             <span>{{\Carbon\Carbon::parse($comment->created_at)->diffForHumans()}}</span>
                         </div>
-                        {{--<i class="iconfont icon-caina" title="最佳答案"></i>--}}
+                        @if($comment->isaccept==1)
+                        <i class="iconfont icon-caina" title="最佳答案"></i>
+                            @endif
                     </div>
                     <div class="detail-body jieda-body">
                         <p data-id="{{$comment->replyuserID}}">

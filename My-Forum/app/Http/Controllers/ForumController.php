@@ -93,6 +93,7 @@ $queries = DB::getQueryLog(); // 获取查询日志
             ->select('comments.*','users.name','users.profile_image','user2.name as replyusername','user2.ID as replyuserID')
             ->where("comments.articleID",$request->get('aid'))
             ->where('comments.isdel',0)
+            ->orderBy('comments.isaccept','desc')
             ->orderBy('comments.id')
             ->paginate(15);
 
@@ -139,6 +140,12 @@ $queries = DB::getQueryLog(); // 获取查询日志
             'reward'=>$request->get('reward'),
             'tagid'=>$request->get('tagid')
         ]);
+
+        if( $article->aid>0){
+            $user=Auth::user();
+            $user->wealth=$user->wealth-$request->get('reward');
+            $user->save();
+        }
 
         return    $this->getJsonString('0','保存成功,即将为你跳转','',$article->aid);
 
