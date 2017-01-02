@@ -17,7 +17,47 @@ class ForumController extends Controller
 //DB::connection()->enableQueryLog(); // 开启查询日志
 //$queries = DB::getQueryLog(); // 获取查询日志
 //dd($queries);
-    //
+
+    //网站默认首页
+    public function defaultindex(){
+        $articles = DB::table('articles')
+            ->select(DB::raw('count(comments.articleID) as comment_count,articles.*,users.name,users.profile_image'))
+            ->leftjoin('users', 'articles.userid', '=', 'users.id')
+            ->leftjoin('comments','comments.articleID','=','articles.aid')
+            ->groupBy('comments.articleID', 'users.name','users.profile_image','articles.userID','articles.content','articles.reward','articles.status','articles.isdel'
+                ,'articles.tagid','articles.type','articles.updated_at','articles.aid','articles.title','articles.topNum','articles.isgood','articles.created_at','articles.clicknum')
+            ->orderBy('articles.topnum','desc')
+            ->orderBy('articles.created_at','desc')
+            ->where('articles.isdel',0)
+            ->limit(20)
+        ->get();
+
+        $hotclicks=Articles::where('articles.isdel',0)
+            ->select('articles.*')
+            ->orderBy('clickNum','desc')
+            ->where('articles.isdel',0)
+            ->limit(10)
+            ->get();
+
+        $hotreplys=DB::table('comments')
+            ->leftjoin('articles','articles.aid','=','comments.articleID')
+            ->groupBy('comments.articleID','articles.title')
+            ->orderBy('replyNum','desc')
+            ->select(DB::raw('COUNT(comments.articleID) AS replyNum,comments.articleID,articles.title'))
+            ->limit(10)
+            ->get();
+
+        $hotreplyuser=DB::table('comments')
+            ->leftjoin('users','users.id','=','comments.userID')
+            ->groupBy('comments.userID','users.name','users.profile_image')
+            ->orderBy('replyNum','desc')
+            ->select(DB::raw('COUNT(comments.articleID) AS replyNum,users.name,users.profile_image,comments.userID'))
+            ->limit(12)
+            ->get();
+
+        return view('index',['articles'=>$articles,'hotclicks'=>$hotclicks,'hotreplys'=>$hotreplys,'hotreplyusers'=>$hotreplyuser]);
+    }
+
     public function index(Request $request)
     {
         //$articles=Articles::paginate(15)->leftjoin('users','aid','=','aid');
@@ -65,12 +105,9 @@ class ForumController extends Controller
                 }
             })
             ->where('articles.isdel',0)
-            ->paginate(15);
+            ->paginate(20);
 
 
-$queries = DB::getQueryLog(); // 获取查询日志
-
-        //dd($articles);
         return view('forum.index',['articles'=>$articles,'current'=>$current]);
     }
 

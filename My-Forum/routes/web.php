@@ -15,7 +15,7 @@
     return view('welcome');
 });*/
 
-Route::get('/',['as'=>'forum.index','uses'=> 'ForumController@index']);
+Route::get('/',['as'=>'index','uses'=> 'ForumController@defaultindex']);
 
 //Route::get('test/test', 'TestController@test')->name('test.test');
 
