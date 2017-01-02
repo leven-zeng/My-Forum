@@ -104,10 +104,15 @@ $queries = DB::getQueryLog(); // 获取查询日志
             ->limit(10)
             ->get();
 
-       // $hotreply=DB
-
-
-        return view('forum.detail',['article'=>$article,'comments'=>$comments,'hotclicks'=>$hotclicks]);
+        $hotreplys=DB::table('comments')
+             ->leftjoin('articles','articles.aid','=','comments.articleID')
+             ->groupBy('comments.articleID','articles.title')
+             ->orderBy('replyNum','desc')
+            ->select(DB::raw('COUNT(comments.articleID) AS replyNum,comments.articleID,articles.title'))
+             ->limit(10)
+             ->get()
+            ->toArray();
+        return view('forum.detail',['article'=>$article,'comments'=>$comments,'hotclicks'=>$hotclicks,'hotreplys'=>$hotreplys]);
     }
 
     public function add()

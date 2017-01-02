@@ -203,13 +203,15 @@ $article=$article;
             </li>
                 @endforeach
         </ol>
-        {{--<h3 class="page-title">近期热议</h3>
+        <h3 class="page-title">近期热议</h3>
         <ol class="fly-list-one">
-            <li>
-                <a href=" ">盛赞！大赞狂赞！Layui完美兼容Vue.js</a>
-                <span><i class="iconfont"></i> 96</span>
-            </li>
-        </ol>--}}
+            @foreach($hotreplys as $hotreply)
+                <li>
+                    <a href="{{route('forum.detail',['aid'=>$hotreply->articleID])}}">{{$hotreply->title}}</a>
+                    <span><i class="iconfont"></i> {{$hotreply->replyNum}}</span>
+                </li>
+                @endforeach
+        </ol>
 
     </div>
 </div>
