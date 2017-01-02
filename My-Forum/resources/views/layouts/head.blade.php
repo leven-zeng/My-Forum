@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="z-love.com专业的追女生指导交流社区，集聊天指南、穿衣指南、形象指南、案例分享、经验闲谈与一体，给想要或者正在追求女神、男神的你最好的攻略！" />
+    <meta name="Keywords" content="网上社区,交流,追女生,追女神,追男神,追男生,聊天指南,穿衣指南,形象指南,案例分享,经验闲谈,攻略,泡妞攻略" />
+    <meta name="baidu-site-verification" content="xsXMNjV70Q" />
     <link rel="shortcut icon" type="image/x-icon" href="http://www.z-love.com/images/favicon.ico" media="screen" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
