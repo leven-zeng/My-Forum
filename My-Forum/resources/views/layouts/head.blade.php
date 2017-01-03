@@ -31,6 +31,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
+    <meta property="wb:webmaster" content="af85052732a074c2" />
 </head>
 <body>
 <div class="header">
