@@ -172,7 +172,8 @@ class UserController extends Controller
     }
 
     //用户主页
-    public function home( Request $request,$userID){
+    public function home( Request $request,$userID)
+    {
        $user= User::where('ID',$userID)->first();
 
         $articles= Articles::getArticle($userID);

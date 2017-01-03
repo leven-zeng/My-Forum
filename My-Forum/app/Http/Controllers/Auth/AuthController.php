@@ -19,7 +19,7 @@ class AuthController extends Controller
 
 
     public function callback() {
-       // $oauthUser = Socialite::with('weibo')->user();
+        $oauthUser = Socialite::with('weibo')->user();
 
 //        var_dump($oauthUser->getId());
 //        var_dump($oauthUser->getNickname());
@@ -42,6 +42,12 @@ class AuthController extends Controller
             $target=$request->get('target');
             return redirect($target);
         }
-            return redirect(route('user.bindAccount'));
+        bindAccount($oauthUser);
+    }
+
+    //第三方登录进行绑定（微博）
+    public function bindAccount($oauthUser)
+    {
+        return view('auth.bindaccount',['oauthUser'=>$oauthUser]);
     }
 }
