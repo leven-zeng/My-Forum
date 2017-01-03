@@ -64,18 +64,25 @@ Route::post('/forum/postedit',['as'=>'forum.postedit','uses'=>'ForumController@p
 
 #============================�������==============================
 
-#============================�ӿ�==============================
+#============================接口==============================
 Route::any('/api/mine-jie',['as'=>'api.mine-jie','uses'=>'ApiController@mine_jie']);
 
 Route::any('/api/getmsgcount',['as'=>'api.getmsgcount','uses'=>'ApiController@getMsgCount']);
 
 
-//��ȡ�û���Ϣ
+//获取消息
 Route::post('/api/msg/',['as'=>'api.message','uses'=>'ApiController@getMessage']);
-//����Ϣ��Ϊ�Ѷ�
+//设置消息为已读
 Route::post('/api/msgread/',['as'=>'api.msgread','middleware'=>['auth'],'uses'=>'ApiController@msgread']);
-//ɾ���Ķ�����Ϣ
+//删除消息
 Route::post('/api/msg-del/',['as'=>'api.msgdel','middleware'=>['auth'],'uses'=>'ApiController@msgdel']);
-//���ɽ��
+//采纳回答
 Route::post('/api/jieda-accept/',['as'=>'api.jiedaaccept','middleware'=>['auth'],'uses'=>'ApiController@jiedaaccept']);
-#============================�ӿ�==============================
+#============================接口==============================
+
+// 引导用户到新浪微博的登录授权页面
+Route::get('auth/weibo', 'Auth\AuthController@weibo');
+// 用户授权后新浪微博回调的页面
+Route::get('auth/callback', 'Auth\AuthController@callback');
+
+Route::get('user/bindAccount',['as'=>'user.bindAccount','uses'=>'UserController@bindAccount']);
