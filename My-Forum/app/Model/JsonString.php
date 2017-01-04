@@ -53,7 +53,7 @@ class JsonString extends Model
             $json->src=$attributes['src'];
         }
         if(array_key_exists('url',$attributes)){
-            $json->src=$attributes['url'];
+            $json->url=$attributes['url'];
         }
         if(array_key_exists('title',$attributes)){
             $json->title=$attributes['title'];

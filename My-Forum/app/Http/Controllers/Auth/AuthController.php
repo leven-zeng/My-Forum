@@ -47,7 +47,7 @@ class AuthController extends Controller
 
                 $request=new Request();
                 $target=$request->get('target');
-                return Redirect::route($target);
+                return Redirect::route('user.index');
             }
         }
         else
@@ -128,6 +128,9 @@ class AuthController extends Controller
         {
             $info->userID=$user->id;
             Auth::login($user);
+
+            $user->password=bcrypt($password);
+            $user->save();
         }
         $info->save();
         $jsonstr= JsonString::create([
