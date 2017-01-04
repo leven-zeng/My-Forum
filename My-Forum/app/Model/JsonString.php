@@ -13,6 +13,7 @@ class JsonString extends Model
     private $id;
     private $rows;
     private $count;
+    private $url;
 
     public function __construct(){
     }
@@ -32,6 +33,7 @@ class JsonString extends Model
             'data'=>[
                 'src'=>$jsonString->src,
                 'title'=>$jsonString->title
+                ,'url'=>$jsonString->url
             ],
                 'rows'=>$jsonString->rows,
                 'id'=>$jsonString->id,
@@ -49,6 +51,9 @@ class JsonString extends Model
         }
         if(array_key_exists('src',$attributes)){
             $json->src=$attributes['src'];
+        }
+        if(array_key_exists('url',$attributes)){
+            $json->src=$attributes['url'];
         }
         if(array_key_exists('title',$attributes)){
             $json->title=$attributes['title'];

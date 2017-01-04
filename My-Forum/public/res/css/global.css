@@ -17,7 +17,7 @@ body{line-height:24px;   -webkit-font-feature-settings: 'kern' 1; -moz-font-feat
 
 body input, body textarea{box-shadow:none;}
 body .layui-layer-prompt textarea.layui-layer-input{resize: both;}
-
+body .weight{font-weight: bold}
 /* 图标 */
 
 @font-face {font-family: "iconfont";

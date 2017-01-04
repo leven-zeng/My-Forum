@@ -48,6 +48,10 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
         success: function(res){
           if(res.status === 0) {
             success && success(res);
+          }else if(res.status === 7){
+            layer.msg(res.msg,function(){
+              window.location=res.data.url;
+            });
           } else {
             layer.msg(res.msg||res.code, {shift: 6});
           }
@@ -350,7 +354,7 @@ layui.define(['layer', 'laytpl', 'form', 'upload', 'util'], function(exports){
     bar1: true
     ,click: function(type){
       if(type === 'bar1'){
-        layer.msg('bar1');
+        //layer.msg('bar1');
       }
     }
   });

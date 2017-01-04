@@ -85,4 +85,6 @@ Route::get('auth/weibo', 'Auth\AuthController@weibo');
 // 用户授权后新浪微博回调的页面
 Route::get('auth/callback', 'Auth\AuthController@callback');
 
-Route::get('user/bindAccount',['as'=>'user.bindAccount','uses'=>'UserController@bindAccount']);
+Route::get('auth/bindAccount',['as'=>'auth.bindAccount','uses'=>'Auth\AuthController@bindAccount']);
+//提交绑定
+Route::post('auth/postBind',['as'=>'auth.postBind','uses'=>'Auth\AuthController@postBind']);
