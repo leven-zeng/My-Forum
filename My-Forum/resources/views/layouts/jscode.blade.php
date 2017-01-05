@@ -7,7 +7,7 @@
         layui.cache.user = {
             username: '{{$user->name}}}'
             ,uid: {{$user->id}}
-            ,avatar: 'images/userimages/{{Auth::user()->profile_image}}'
+            ,avatar:'{{\App\Service\Help::getImgSrc(Auth::user()->profile_image)}}'
             //,experience: 83
             ,sex: '{{$user->gender==1?"ÄÐ":$user->gender==2?"Å®":"Î´Öª"}}'
         };

@@ -65,7 +65,7 @@
             <div class="upload-img">
               <div class="layui-box layui-upload-button"><form target="layui-upload-iframe" method="post" key="set-mine" enctype="multipart/form-data" action="/user/upload/"><input type="file" name="file" id="LAY-file" lay-title="上传头像"></form><span class="layui-upload-icon"><i class="layui-icon"></i>上传头像</span></div>
             </div>
-            <img src="/images/userimages/{{$user->profile_image}}">
+            <img src="{{\App\Service\Help::getImgSrc($user->profile_image)}}">
             <span class="loading"></span>
           </div>
         </div>

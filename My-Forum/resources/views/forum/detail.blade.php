@@ -44,7 +44,7 @@ $article=$article;
             </div>
             <div class="detail-about">
                 <a class="jie-user" href="{{route('user.home',['userID'=>$article->userid])}}">
-                    <img src="{{$article->getprofile_image()}}" alt="">
+                    <img src="{{\App\Service\Help::getImgSrc($article->profile_image)}}" alt="">
                     <cite>
                         {{$article->name}}
                         <em>{{$article->getdiffForHumans()}}发布</em>

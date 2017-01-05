@@ -186,7 +186,7 @@ body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; co
 /* 右侧 - 雷锋榜 */
 body .leifeng-rank{width:110%; margin-top:10px; margin-bottom: 5px;}
 body .leifeng-rank span a{width:78px; height:98px; margin: 0 8px 10px 0;}
-body .leifeng-rank span a img{width: 78px; height: 78px; border-radius: 100%;}
+body .leifeng-rank span a img{width: 78px; height: 78px; border-radius: 2px;}
 
 /* 右侧 - 热门技术直播房 */
 .room-rank{margin-bottom:15px;}

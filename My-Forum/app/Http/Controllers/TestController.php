@@ -13,7 +13,6 @@ class TestController extends Controller
 {
 
     public function test(Request $request){
-
         //dd($this->getRedirectUrl());
     $res=Mail::raw('这是来自火星的邮件'.date('y-M-d h:m:s'),function($message){
             $message->subject('哈哈小子');

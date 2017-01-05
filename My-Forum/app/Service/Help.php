@@ -7,6 +7,9 @@
  */
 namespace App\Service;
 
+use Illuminate\Http\Request;
+
+
 class Help {
     //获取日期文字版
     public static function getdiffForHumans($dateTime)
@@ -14,7 +17,12 @@ class Help {
         return \Carbon\Carbon::parse($dateTime)->diffForHumans();
     }
 
+    //返回完整的图片路径
     public static function getImgSrc($imgName){
+        if(str_contains($imgName,'http'))
+        {
+            return $imgName;
+        }
         return '/images/userimages/'.$imgName;
     }
 
