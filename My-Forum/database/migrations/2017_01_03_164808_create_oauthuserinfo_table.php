@@ -19,7 +19,7 @@ class CreateOauthuserinfoTable extends Migration
             $table->string('token')->comment('第三方token');
             $table->string('location')->nullable(true)->comment('第三方获取地址信息');
             $table->string('description')->nullable(true)->comment('第三方获取用户描述信息');
-            $table->string('gender')->comment('第三方获取用户gender');
+            $table->string('gender')->comment('第三方获取用户gender m:男 f:女');
             $table->string('nickName')->nullable(true)->comment('第三方昵称');
             $table->string('avatar')->nullable(true)->comment('第三方用户头像');
             $table->string('email')->nullable(true)->comment('第三方用户邮箱');

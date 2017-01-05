@@ -110,5 +110,15 @@
     </div>
 </div>
     @include('layouts.foot')
-
+    @include('layouts.jscode')
+    <script>
+        layui.config({
+            version: "1.0.2"
+            ,base: '../../res/mods/'
+        }).extend({
+            fly: 'index'
+        }).use(['fly'],function(){
+            $ = layui.jquery;
+        });
+    </script>
 @endsection

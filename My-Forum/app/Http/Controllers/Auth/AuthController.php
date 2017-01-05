@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     public function weibo() {
-        session(['site'=>'LaravelAcademy.org']);
         return Socialite::with('weibo')->redirect();
         // return \Socialite::with('weibo')->scopes(array('email'))->redirect();
     }

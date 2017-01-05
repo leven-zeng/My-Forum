@@ -1,5 +1,5 @@
 <!-- Scripts -->
-<script src="../../res/layui/layui.js"></script>
+<script src="../../res/layui/layui.js?t={{str_random(10)}}"></script>
 @if(\Illuminate\Support\Facades\Auth::check())
     <?php $user=\Illuminate\Support\Facades\Auth::user()  ?>
     <script>
