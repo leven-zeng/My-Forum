@@ -18,11 +18,11 @@
                     <a href="{{route('forum.index',['status'=>1])}}"  class="">已采纳</a>
                     <a href="{{route('forum.index',['isgood'=>1])}}"  class="">精帖</a><a href="{{route('user.index')}}">我的帖</a>
                 </span>
-                <form action="http://cn.bing.com/search" class="fly-search">
+                <form action="{{route('forum.index')}}" class="fly-search">
                     <i class="iconfont icon-sousuo"></i>
-                    <input class="layui-input" autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q" />
+                    <input class="layui-input" autocomplete="off" placeholder="搜索内容，回车跳转" type="text" name="q">
                 </form>
-                <a href="/jie/add/" class="layui-btn jie-add">发布问题</a>
+                <a href="{{route('forum.add')}}" class="layui-btn jie-add">发布问题</a>
             </div>
             <ul class="fly-list">
                 @if($articles->count()>0)

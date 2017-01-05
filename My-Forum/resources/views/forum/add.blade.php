@@ -77,7 +77,8 @@
     </div>
 
     @include('layouts.foot')
-    <script src="../../res/layui/layui.js"></script>
+    @include('layouts.jscode')
+
     <script>
         var layedit;
         var index;

@@ -80,22 +80,16 @@
     </div>
 
     @include('layouts.foot')
-    <script src="../../res/layui/layui.js"></script>
+    @include('layouts.jscode')
     <script>
-        layui.cache.page = 'user';
-        layui.cache.user = {
-            username: '{{$user->name}}}'
-            ,uid: {{$user->id}}
-            ,avatar: 'images/userimages/{{Auth::user()->profile_image}}'
-            //,experience: 83
-            ,sex: '{{$user->gender==1?"男":$user->gender==2?"女":"未知"}}'
-        };
         layui.config({
-            version: "1.0.0"
+            version: "1.0.2"
             ,base: '../../res/mods/'
         }).extend({
             fly: 'index'
-        }).use('fly');
+        }).use(['fly'],function(){
+            $ = layui.jquery;
+        });
     </script>
 
 @endsection

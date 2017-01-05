@@ -123,52 +123,15 @@
   </div>
 
 @include('layouts.foot')
-<script src="../../res/layui/layui.js"></script>
-<script type="text/javascript">
-layui.cache.page = '/res/mods/user';
-layui.cache.user = {
-  username: '游客'
-  ,uid: -1
-  ,avatar: '../../res/images/avatar/00.jpg'
-  ,experience: 83
-  ,sex: '男'
-};
-layui.config({
-  version: "1.0.0"
-//  ,base: '../../res/mods/'
-}).extend({
-  fly: '/res/mods/index',
-}).use('fly');
-
-
-
-    /*$(function(){
-      $("#form_userinfo").submit(function(){
-        var postData=new FormData("#form_userinfo");
-        console.log(postData);
-
-        $.ajax({
-          type: "POST",
-          url: "{{ url('postset') }}",
-          dataType: 'json',
-          processData: false,
-          contentType: false,
-          cache: false,
-          data: articleData
-        })
-                .done(function (data) {
-                  $(".alert-success").prop("hidden", false);
-                })
-                .fail(function (data) {
-                  $.each(data.responseJSON, function (key, value) {
-                    var input = '#formArticle input[name=' + key + ']';
-                    $(input + '+span>strong').text(value);
-                    $(input).parent().parent().addClass('has-error');
-                  });
-
+    @include('layouts.jscode')
+    <script>
+      layui.config({
+        version: "1.0.2"
+        ,base: '../../res/mods/'
+      }).extend({
+        fly: 'index'
+      }).use(['fly'],function(){
+        $ = layui.jquery;
       });
-
-      });
-    });*/
-</script>
+    </script>
 @endsection

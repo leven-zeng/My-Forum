@@ -43,7 +43,7 @@ $article=$article;
                 </div>
             </div>
             <div class="detail-about">
-                <a class="jie-user" href="">
+                <a class="jie-user" href="{{route('user.home',['userID'=>$article->userid])}}">
                     <img src="{{$article->getprofile_image()}}" alt="">
                     <cite>
                         {{$article->name}}
@@ -78,11 +78,14 @@ $article=$article;
                 <li data-id="{{$comment->ID}}" class="jieda-daan">
                     <a name="dataid-{{$comment->ID}}"></a>
                     <div class="detail-about detail-about-reply">
-                        <a class="jie-user" href="">
+                        <a class="jie-user" href="{{route('user.home',['userID'=>$comment->userID])}}">
                             <img src="{{\App\Service\Help::getImgSrc($comment->profile_image)}}" alt="" layer-index="1">
                             <cite>
                                 <i>{{$comment->name}}</i>
-                                <!-- <em>(楼主)</em>
+                                @if($comment->userID==$article->userid)
+                                <em>(楼主)</em>
+                                @endif
+                                        <!--
                                 <em style="color:#5FB878">(管理员)</em>
                                 <em style="color:#FF9E3F">（活雷锋）</em>
                                 <em style="color:#999">（该号已被封）</em> -->
@@ -108,7 +111,7 @@ $article=$article;
                           <span class="jieda-accept" type="accept">采纳</span>
                         </div> -->
                      <div class="jieda-admin">
-                         @if($article->isCurrUser() && $article->status==0)
+                         @if($article->isCurrUser() && $article->status==0 && $comment->userID!=$article->userid)
                              <span class="jieda-accept" type="accept">采纳</span>
                          @endif
 
@@ -138,8 +141,8 @@ $article=$article;
                             <span class="jieda-zan " type="zan"><i class="iconfont icon-zan"></i><em>0</em></span>
                             {{--<span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>--}}
                             <div class="jieda-admin">
-                              <span type="edit">编辑</span>
-                              <span type="del">删除</span>
+                              {{--<span type="edit">编辑</span>--}}
+                              {{--<span type="del">删除</span>--}}
                             </div>
                         </div>
                     </li>
@@ -216,17 +219,10 @@ $article=$article;
     </div>
 </div>
     @include('layouts.foot')
-<script src="../../res/layui/layui.js"></script>
+@include('layouts.jscode')
+
 <script>
     var $;
-    layui.cache.user = {
-        username: '游客'
-        ,uid: -1
-        ,avatar: '../../res/images/avatar/00.jpg'
-        ,experience: 83
-        ,sex: '男'
-    };
-
     layui.config({
         version: "1.0.2"
         ,base: '../../res/mods/'

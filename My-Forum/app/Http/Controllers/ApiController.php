@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Articles;
 use App\Model\Comments;
 use App\Model\JsonString;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -123,7 +124,7 @@ class ApiController extends Controller
 
         $comment= Comments::where('comments.ID',$commentID)
             ->leftjoin('articles','comments.articleID','=','articles.aid')
-            ->select('articles.userID as articleUserID','articles.aid')
+            ->select('articles.userID as articleUserID','articles.aid','comments.userID as cuserID')
             ->first();
 
         $status=0;
@@ -133,11 +134,15 @@ class ApiController extends Controller
             $status=500;
             goto res;
         }
-        Articles::where('aid',$comment->aid)
-            ->update(['status'=>1]);
+        $article= Articles::where('aid',$comment->aid)->first();
+        $article ->status=1;
+        $article->save();
         Comments::where('ID',$commentID)
         ->update(['isaccept'=>1]);
+        $user=User::find($comment->cuserID);
 
+        $user->wealth=$user->wealth+$article->reward;
+        $user->save();
         res:
         $jsonstr=    JsonString::create([
             'status'=>$status

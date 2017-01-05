@@ -48,22 +48,16 @@
     </div>
 
     @include('layouts.foot')
-    <script src="../../res/layui/layui.js"></script>
+    @include('layouts.jscode')
     <script>
-        layui.cache.page = 'user';
-        layui.cache.user = {
-            username: '游客'
-            ,uid: -1
-            ,avatar: '../../res/images/avatar/00.jpg'
-            ,experience: 83
-            ,sex: '男'
-        };
         layui.config({
-            version: "1.0.0"
+            version: "1.0.2"
             ,base: '../../res/mods/'
         }).extend({
             fly: 'index'
-        }).use('fly');
+        }).use(['fly'],function(){
+            $ = layui.jquery;
+        });
     </script>
 
 @endsection
