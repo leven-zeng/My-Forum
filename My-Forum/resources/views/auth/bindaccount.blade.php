@@ -30,7 +30,7 @@
                 <div class="layui-form-item">
                     <button class="layui-btn" lay-filter="*" lay-submit>确定</button>
                 </div>
-                <input type="hidden" name="token" value="{{$token['token']}}">
+                <input type="hidden" name="token" value="{{$token['uid']}}">
             </form>
         </div>
     </div>

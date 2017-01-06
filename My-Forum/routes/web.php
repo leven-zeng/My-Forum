@@ -57,12 +57,12 @@ Route::post('/forum/postcomment',['as'=>'forum.postcomment','uses'=>'ForumContro
 Route::post('/form/addlike',['as'=>'forum.addlike','uses'=>'ForumController@addlike']);
 
 
-#============================�������==============================
+#============================问答内容==============================
 Route::get('/forum/edit/{aid}',['as'=>'forum.edit','middleware'=>['auth'],'uses'=>'ForumController@edit']);
 
 Route::post('/forum/postedit',['as'=>'forum.postedit','uses'=>'ForumController@postedit']);
 
-#============================�������==============================
+#============================问答内容==============================
 
 #============================接口==============================
 Route::any('/api/mine-jie',['as'=>'api.mine-jie','uses'=>'ApiController@mine_jie']);
@@ -83,7 +83,7 @@ Route::post('/api/jieda-accept/',['as'=>'api.jiedaaccept','middleware'=>['auth']
 // 引导用户到新浪微博的登录授权页面
 Route::get('auth/weibo', ['as'=>'auth.weibo','uses'=>'Auth\AuthController@weibo']);
 // 用户授权后新浪微博回调的页面
-Route::get('auth/callback', 'Auth\AuthController@callback');
+Route::get('auth/callback/{driver}', 'Auth\AuthController@callback');
 
 Route::get('auth/bindAccount',['as'=>'auth.bindAccount','uses'=>'Auth\AuthController@bindAccount']);
 //提交绑定

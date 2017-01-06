@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Model\JsonString;
 use App\Model\oAuthUserInfos;
+use App\Service\oAuth;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,14 +17,22 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    use oAuth;
+
     public function weibo() {
         return Socialite::with('weibo')->redirect();
         // return \Socialite::with('weibo')->scopes(array('email'))->redirect();
     }
 
+    protected $oauthDrivers=['weibo'=>'weibo','qq'=>'qq'];
 
-    public function callback() {
-        $oauthUser = Socialite::with('weibo')->user();
+    public function oauth($driver)
+    {
+
+    }
+
+    public function callback($driver) {
+        $oauthUser = Socialite::with($this->oauthDrivers[$driver])->user();
 
 //        var_dump($oauthUser->getId());
 //        var_dump($oauthUser->getNickname());
@@ -43,29 +52,26 @@ class AuthController extends Controller
                 //查找此用户，使其为登录状态
                 $user=  User::find($uinfo->userID);
                 Auth::login($user);
-
-                $request=new Request();
-                $target=$request->get('target');
                 return Redirect::route('user.index');
             }
         }
         else
         {
-            oAuthUserInfos::create([
-                'uid'=>$oauthUser->getId(),
-                'token'=>$oauthUser->token,
-                'location'=>$oauthUser->user['location'],
-                'description'=>$oauthUser->user['description'],
-                'gender'=>$oauthUser->user['gender'],
-                'nickName'=>$oauthUser->getNickname(),
-                'avatar'=>$oauthUser->getAvatar(),
-                'email'=>$oauthUser->getEmail(),
-                'type'=>1
-
-            ]);
+//            oAuthUserInfos::create([
+//                'uid'=>$oauthUser->getId(),
+//                'token'=>$oauthUser->token,
+//                'location'=>$oauthUser->user['location'],
+//                'description'=>$oauthUser->user['description'],
+//                'gender'=>$oauthUser->user['gender'],
+//                'nickName'=>$oauthUser->getNickname(),
+//                'avatar'=>$oauthUser->getAvatar(),
+//                'email'=>$oauthUser->getEmail(),
+//                'type'=>1
+//            ]);
+            $this->oAuthSave($oauthUser,$this->oauthDrivers[$driver]);
         }
         $array=[];
-        array_set($array,'token',$oauthUser->token);
+        array_set($array,'uid',$oauthUser->getId());
         array_set($array,'nickName',$oauthUser->getNickname());
         return Redirect::route('auth.bindAccount', array('token' => $array));
 
@@ -98,45 +104,48 @@ class AuthController extends Controller
             return  $jsonstr->getJsonString($jsonstr);
         }
 
-        $email=Input::get('email');
-        $password=Input::get('password');
-        $user=User::where('email','=',$email)
-            ->first();
-        $info=oAuthUserInfos::where('token','=',Input::get('token'))->first();
+     return   $this->bind();
 
-        //不存在此邮箱的用户，创建一个新的用户
-        if($user==null)
-        {
+//        $email=Input::get('email');
+//        $password=Input::get('password');
+//        $user=User::where('email','=',$email)
+//            ->first();
+//        $info=oAuthUserInfos::where('token','=',Input::get('token'))->first();
+//
+//        //不存在此邮箱的用户，创建一个新的用户
+//        if($user==null)
+//        {
+//
+//            $createuser=User::create([
+//                'name'=>$info->nickName
+//                , 'gender'=>$info->gender=='m'?'1':'0'
+//                ,'email'=>$email
+//                ,'city'=>$info->location
+//                ,'password'=>bcrypt($password)
+//                ,'register_from'=>'sina'
+//                ,'profile_image'=>$info->avatar
+//                ,'description'=>$info->description
+//            ]);
+//            $info->userID=$createuser->id;
+//            Auth::login($createuser);
+//        }
+//        else//存在此用户，直接将用户id更新到表中建立关联
+//        {
+//            $info->userID=$user->id;
+//            Auth::login($user);
+//
+//            $user->password=bcrypt($password);
+//            $user->save();
+//        }
+//        $info->save();
+//        $jsonstr= JsonString::create([
+//            'status'=>7
+//            ,'msg'=>'绑定成功！'
+//            ,'url'=>route('user.index')
+//        ]);
+//        return  $jsonstr->getJsonString($jsonstr);
 
-            $createuser=User::create([
-                'name'=>$info->nickName
-                , 'gender'=>$info->gender=='m'?'1':'0'
-                ,'email'=>$email
-                ,'city'=>$info->location
-                ,'password'=>bcrypt($password)
-                ,'register_from'=>'sina'
-                ,'profile_image'=>$info->avatar
-                ,'description'=>$info->description
-            ]);
-            $info->userID=$createuser->id;
-            Auth::login($createuser);
-
-
-        }
-        else//存在此用户，直接将用户id更新到表中建立关联
-        {
-            $info->userID=$user->id;
-            Auth::login($user);
-
-            $user->password=bcrypt($password);
-            $user->save();
-        }
-        $info->save();
-        $jsonstr= JsonString::create([
-            'status'=>7
-            ,'msg'=>'绑定成功！'
-            ,'url'=>route('user.index')
-        ]);
-        return  $jsonstr->getJsonString($jsonstr);
     }
+
+
 }

@@ -23,7 +23,8 @@ class CreateOauthuserinfoTable extends Migration
             $table->string('nickName')->nullable(true)->comment('第三方昵称');
             $table->string('avatar')->nullable(true)->comment('第三方用户头像');
             $table->string('email')->nullable(true)->comment('第三方用户邮箱');
-            $table->integer('type')->comment('第三方类型 1:新浪微博');
+            $table->string('type',20)->comment('第三方类型');
+            $table->integer('expires_in')->comment('access_token过期时间');
             $table->integer('userID')->nullable(true)->comment('本网站用户ID');
             $table->timestamps();
         });
