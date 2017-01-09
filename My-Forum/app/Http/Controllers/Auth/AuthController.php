@@ -19,17 +19,19 @@ class AuthController extends Controller
 {
     use oAuth;
 
-    public function weibo() {
-        return Socialite::with('weibo')->redirect();
-        // return \Socialite::with('weibo')->scopes(array('email'))->redirect();
-    }
-
     protected $oauthDrivers=['weibo'=>'weibo','qq'=>'qq'];
 
     public function oauth($driver)
     {
 
     }
+
+    public function weibo($driver) {
+        return Socialite::with('qq')->redirect();
+        // return \Socialite::with('weibo')->scopes(array('email'))->redirect();
+    }
+
+
 
     public function callback($driver) {
         $oauthUser = Socialite::with($this->oauthDrivers[$driver])->user();
@@ -40,41 +42,32 @@ class AuthController extends Controller
 //        var_dump($oauthUser->getEmail());
 //        var_dump($oauthUser->getAvatar());
 
-        $token= $oauthUser->token;
        //判断是否存在当前第三方uid
-        $uinfo=  oAuthUserInfos::where('token','=',$token)
+        $oinfo=  oAuthUserInfos::where('uid','=',$oauthUser->getId())
             ->first();
 
-        if($uinfo!=null)
+        if($oinfo!=null)
         {
-            if($uinfo->userID>0)
+            if($oinfo->userID>0)
             {
                 //查找此用户，使其为登录状态
-                $user=  User::find($uinfo->userID);
+                $user=  User::find($oinfo->userID);
                 Auth::login($user);
                 return Redirect::route('user.index');
             }
+
+            //存在时，更新access_token信息
+            $this->oAuthUpdate($oinfo,$oauthUser,$driver);
         }
         else
         {
-//            oAuthUserInfos::create([
-//                'uid'=>$oauthUser->getId(),
-//                'token'=>$oauthUser->token,
-//                'location'=>$oauthUser->user['location'],
-//                'description'=>$oauthUser->user['description'],
-//                'gender'=>$oauthUser->user['gender'],
-//                'nickName'=>$oauthUser->getNickname(),
-//                'avatar'=>$oauthUser->getAvatar(),
-//                'email'=>$oauthUser->getEmail(),
-//                'type'=>1
-//            ]);
+            //保存oAuth信息
             $this->oAuthSave($oauthUser,$this->oauthDrivers[$driver]);
         }
         $array=[];
         array_set($array,'uid',$oauthUser->getId());
         array_set($array,'nickName',$oauthUser->getNickname());
         return Redirect::route('auth.bindAccount', array('token' => $array));
-
     }
 
     //第三方登录进行绑定（微博）

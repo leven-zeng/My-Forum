@@ -22,6 +22,7 @@ class Comments extends Model
             ->where('comments.userID','=',$userID)
             ->where('comments.isdel',0)
             ->select('articles.title','users.name','comments.created_at','comments.ID','articles.aid','comments.isread','comments.content','comments.forUserID')
+            ->orderBy('comments.ID','desc')
             ->get();
         return $messages;
     }

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cf72809f4cbb58961278ccea7774c7d3",
-    "content-hash": "0e7dd6553d4f5b25efa3cdfade0e8879",
+    "hash": "ee170458b6065e8090199293c7157c3e",
+    "content-hash": "2df8672ec84d56689e1e066a691303c2",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1363,6 +1363,43 @@
             ],
             "description": "Easily add new or override built-in providers in Laravel Socialite.",
             "time": "2016-12-04 07:11:20"
+        },
+        {
+            "name": "socialiteproviders/qq",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/QQ.git",
+                "reference": "49dd74c7f1932f6f83ebf0d0cca071c8939963d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/SocialiteProviders/QQ/49dd74c7f1932f6f83ebf0d0cca071c8939963d6.zip",
+                "reference": "49dd74c7f1932f6f83ebf0d0cca071c8939963d6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\QQ\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "heui",
+                    "email": "runphp@qq.com"
+                }
+            ],
+            "description": "Qq.com OAuth2 Provider for Laravel Socialite",
+            "time": "2016-11-10 06:26:14"
         },
         {
             "name": "socialiteproviders/weibo",

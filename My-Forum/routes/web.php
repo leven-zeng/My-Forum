@@ -81,7 +81,7 @@ Route::post('/api/jieda-accept/',['as'=>'api.jiedaaccept','middleware'=>['auth']
 #============================接口==============================
 
 // 引导用户到新浪微博的登录授权页面
-Route::get('auth/weibo', ['as'=>'auth.weibo','uses'=>'Auth\AuthController@weibo']);
+Route::get('auth/weibo/{driver}', ['as'=>'auth.weibo','uses'=>'Auth\AuthController@weibo']);
 // 用户授权后新浪微博回调的页面
 Route::get('auth/callback/{driver}', 'Auth\AuthController@callback');
 

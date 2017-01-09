@@ -52,8 +52,8 @@
             <a title="登入" class="unlogin" href="{{url('/login')}}"><i class="iconfont icon-touxiang"></i></a>
             <span><a href="{{url('/login')}}" title="登入">登入</a><a href="{{url('register')}}"  title="注册">注册</a></span>
             <p class="out-login">
-                {{--<a href="" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-qq" title="QQ登入"></a>--}}
-                <a  href="{{route('auth.weibo')}}" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-weibo" title="微博登入"></a>
+                <a href="{{route('auth.weibo',['driver'=>'qq'])}}" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-qq" title="QQ登入"></a>
+                <a  href="{{route('auth.weibo',['driver'=>'weibo'])}}" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-weibo" title="微博登入"></a>
             </p>
 
             <!-- 登入后的状态 -->

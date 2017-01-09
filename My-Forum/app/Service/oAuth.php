@@ -8,15 +8,16 @@
 namespace App\Service;
 
 
+use App\Model\JsonString;
 use App\Model\oAuthUserInfos;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Laravel\Socialite\Facades\Socialite;
 
 trait oAuth{
 
 
-    //°ó¶¨¸÷ÖÖµÚÈı·½ÕË»§
+    //ç»‘å®šå„ç§ç¬¬ä¸‰æ–¹è´¦æˆ·
     public function bind()
     {
         $email=Input::get('email');
@@ -25,10 +26,10 @@ trait oAuth{
         $user=User::where('email','=',$email)
             ->first();
 
-        //ÕâÀïÆäÊµ·µ»ØµÄ²ÎÊıÊÇuid£¬nameÊÇtoken
+        //è¿™é‡Œå…¶å®è¿”å›çš„å‚æ•°æ˜¯uidï¼Œnameæ˜¯token
         $info=oAuthUserInfos::where('uid','=',Input::get('token'))->first();
 
-        //²»´æÔÚ´ËÓÊÏäµÄÓÃ»§£¬´´½¨Ò»¸öĞÂµÄÓÃ»§
+        //ä¸å­˜åœ¨æ­¤é‚®ç®±çš„ç”¨æˆ·ï¼Œåˆ›å»ºä¸€ä¸ªæ–°çš„ç”¨æˆ·
         if($user==null)
         {
             $info->email=$email;
@@ -39,10 +40,10 @@ trait oAuth{
             $info->update([]);
             Auth::login($createuser);
         }
-        else//´æÔÚ´ËÓÃ»§£¬Ö±½Ó½«ÓÃ»§id¸üĞÂµ½±íÖĞ½¨Á¢¹ØÁª
+        else//å­˜åœ¨æ­¤ç”¨æˆ·ï¼Œç›´æ¥å°†ç”¨æˆ·idæ›´æ–°åˆ°è¡¨ä¸­å»ºç«‹å…³è”
         {
             //$info->userID=$user->id;
-            oAuthUserInfos::where('token','=',Input::get('token'))->update(['userID'=>$user->id]);
+            oAuthUserInfos::where('uid','=',Input::get('token'))->update(['userID'=>$user->id]);
             Auth::login($user);
 
             $user->password=bcrypt($password);
@@ -51,13 +52,13 @@ trait oAuth{
         //$info->save();
         $jsonstr= JsonString::create([
             'status'=>7
-            ,'msg'=>'°ó¶¨³É¹¦£¡'
+            ,'msg'=>'ç»‘å®šæˆåŠŸï¼'
             ,'url'=>route('user.index')
         ]);
         return  $jsonstr->getJsonString($jsonstr);
     }
 
-    //±£´æoAuthÊı¾İ
+    //ä¿å­˜oAuthæ•°æ®
     public function oAuthSave($oauthUser,$driver)
     {
         $oAuth=new oAuthUserInfos();
@@ -80,7 +81,21 @@ trait oAuth{
         $oAuth->save();
     }
 
-    //Ğ´ÈëÓÃ»§Êı¾İ
+    //æ›´æ–°oAuthä¿¡æ¯
+    public function oAuthUpdate($oinfo,$oauthUser,$driver)
+    {
+        switch($driver)
+        {
+            case 'weibo':
+                $oinfo->token=$oauthUser->token;
+                $oinfo->expires_in=$oauthUser->expiresIn;
+                break;
+        }
+
+        $oinfo->save();
+    }
+
+    //å†™å…¥ç”¨æˆ·æ•°æ®
     public function profileSave($info)
     {
         $createuser=User::create([
