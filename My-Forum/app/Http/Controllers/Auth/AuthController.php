@@ -21,13 +21,8 @@ class AuthController extends Controller
 
     protected $oauthDrivers=['weibo'=>'weibo','qq'=>'qq'];
 
-    public function oauth($driver)
-    {
-
-    }
-
-    public function weibo($driver) {
-        return Socialite::with('qq')->redirect();
+    public function oauth($driver) {
+        return Socialite::with($driver)->redirect();
         // return \Socialite::with('weibo')->scopes(array('email'))->redirect();
     }
 
