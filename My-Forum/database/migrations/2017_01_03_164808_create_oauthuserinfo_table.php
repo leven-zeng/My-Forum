@@ -16,7 +16,8 @@ class CreateOauthuserinfoTable extends Migration
         Schema::create('o_auth_user_infos', function (Blueprint $table) {
             $table->increments('ID')->comment('ID');
             $table->string('uid')->comment('第三方uid');
-            $table->string('token')->comment('第三方token');
+            $table->string('token')->comment('第三方access_token');
+            $table->string('refresh_token')->nullable(true)->comment('第三方refresh_token');
             $table->string('location')->nullable(true)->comment('第三方获取地址信息');
             $table->string('description')->nullable(true)->comment('第三方获取用户描述信息');
             $table->string('gender')->comment('第三方获取用户gender m:男 f:女');

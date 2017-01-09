@@ -9,6 +9,6 @@ class oAuthUserInfos extends Model
     protected $primaryKey = 'ID';
     //
     protected $fillable = [
-        'uid', 'token','location','description','gender','nickName','avatar','email','type','userID'
+        'uid', 'token','location','description','gender','nickName','avatar','email','type','userID','refresh_token'
     ];
 }

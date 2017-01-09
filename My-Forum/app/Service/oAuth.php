@@ -35,21 +35,19 @@ trait oAuth{
             $info->email=$email;
             $info->password=$password;
             $createuser=  $this->profileSave($info);
-
-            $info->userID=$createuser->id;
-            $info->update([]);
+            //将本网站用户ID更新至o_auth_info表中
+            oAuthUserInfos::where('uid','=',Input::get('token'))->update(['userID'=>$createuser->id]);
             Auth::login($createuser);
         }
         else//存在此用户，直接将用户id更新到表中建立关联
         {
-            //$info->userID=$user->id;
+            //将本网站用户ID更新至o_auth_info表中
             oAuthUserInfos::where('uid','=',Input::get('token'))->update(['userID'=>$user->id]);
-            Auth::login($user);
-
             $user->password=bcrypt($password);
             $user->save();
+            Auth::login($user);
         }
-        //$info->save();
+
         $jsonstr= JsonString::create([
             'status'=>7
             ,'msg'=>'绑定成功！'
@@ -68,8 +66,15 @@ trait oAuth{
                 $oAuth->token=$oauthUser->token;
                 $oAuth->location=$oauthUser->user['location'];
                 $oAuth->description=$oauthUser->user['description'];
-                $oAuth->gender=$oauthUser->user['gender'];
+                $oAuth->gender=$oauthUser->user['gender']=='m'?1:0;
                 $oAuth->expires_in=$oauthUser->expiresIn;
+                break;
+            case 'qq':
+                $oAuth->token=$oauthUser->token;
+                $oAuth->location=$oauthUser->user['city'];
+                $oAuth->gender=$oauthUser->user['gender']=='男'?1:0;
+                $oAuth->expires_in=$oauthUser->expiresIn;
+                $oAuth->refresh_token=$oauthUser->refreshToken;
                 break;
         }
 
@@ -78,6 +83,7 @@ trait oAuth{
         $oAuth->avatar=$oauthUser->getAvatar();
         $oAuth->email=$oauthUser->getEmail();
         $oAuth->type=$driver;
+        //保存
         $oAuth->save();
     }
 
@@ -100,11 +106,11 @@ trait oAuth{
     {
         $createuser=User::create([
             'name'=>$info->nickName
-            , 'gender'=>$info->gender=='m'?'1':'0'
+            , 'gender'=>$info->gender
             ,'email'=>$info->email
             ,'city'=>$info->location
             ,'password'=>bcrypt($info->password)
-            ,'register_from'=>'sina'
+            ,'register_from'=>$info->type
             ,'profile_image'=>$info->avatar
             ,'description'=>$info->description
         ]);

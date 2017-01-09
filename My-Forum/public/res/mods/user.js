@@ -46,7 +46,6 @@ layui.define(['laypage', 'fly'], function(exports){
     ];
     function view(res){
       var html = laytpl(tpl[index]).render(res);
-      debugger;
       dom.mine.find('a').eq(index).find('cite').html(res.count);
       dom.mineview.eq(index).html(res.rows.length === 0 ? '<div class="fly-msg">没有相关数据</div>' : html);
     }

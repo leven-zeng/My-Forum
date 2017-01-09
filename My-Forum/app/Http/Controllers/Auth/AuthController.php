@@ -30,7 +30,6 @@ class AuthController extends Controller
 
     public function callback($driver) {
         $oauthUser = Socialite::with($this->oauthDrivers[$driver])->user();
-
 //        var_dump($oauthUser->getId());
 //        var_dump($oauthUser->getNickname());
 //        var_dump($oauthUser->getName());
@@ -93,47 +92,5 @@ class AuthController extends Controller
         }
 
      return   $this->bind();
-
-//        $email=Input::get('email');
-//        $password=Input::get('password');
-//        $user=User::where('email','=',$email)
-//            ->first();
-//        $info=oAuthUserInfos::where('token','=',Input::get('token'))->first();
-//
-//        //不存在此邮箱的用户，创建一个新的用户
-//        if($user==null)
-//        {
-//
-//            $createuser=User::create([
-//                'name'=>$info->nickName
-//                , 'gender'=>$info->gender=='m'?'1':'0'
-//                ,'email'=>$email
-//                ,'city'=>$info->location
-//                ,'password'=>bcrypt($password)
-//                ,'register_from'=>'sina'
-//                ,'profile_image'=>$info->avatar
-//                ,'description'=>$info->description
-//            ]);
-//            $info->userID=$createuser->id;
-//            Auth::login($createuser);
-//        }
-//        else//存在此用户，直接将用户id更新到表中建立关联
-//        {
-//            $info->userID=$user->id;
-//            Auth::login($user);
-//
-//            $user->password=bcrypt($password);
-//            $user->save();
-//        }
-//        $info->save();
-//        $jsonstr= JsonString::create([
-//            'status'=>7
-//            ,'msg'=>'绑定成功！'
-//            ,'url'=>route('user.index')
-//        ]);
-//        return  $jsonstr->getJsonString($jsonstr);
-
     }
-
-
 }
